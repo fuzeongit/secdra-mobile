@@ -5,10 +5,10 @@ module.exports = {
   mode: 'universal',
   server: {
     port: 3001, // default: 3000
-    host: '0.0.0.0', // default: localhost
+    host: 'localhost', // default: localhost
   },
   /*
-  ** Headers of the page
+  ** Headers of the pages
   */
   head: {
     title: 'Secdra',

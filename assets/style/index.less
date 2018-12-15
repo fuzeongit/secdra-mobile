@@ -2,10 +2,12 @@
 @import "./color";
 @import "./mixin";
 @import "./cropper";
+@import "~vue2-animate/src/less/vue2-animate";
 
 * {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
   color: @font-color;
+  font-size: @big-font-size;
   box-sizing: border-box;
   margin: 0;
   text-decoration: none;
@@ -118,6 +120,11 @@ h4, h5, h6 {
       border: transparent;
       color: @realColor;
     }
+
+    &.big{
+      line-height: @big-input-line-height;
+      font-size: @medium-font-size;
+    }
   }
   .btn-color(@color);
   &[disabled] {
@@ -205,6 +212,10 @@ h4, h5, h6 {
   }
   &textarea {
     line-height: @small-input-line-height;
+  }
+  &.big{
+    line-height: @big-input-line-height;
+    font-size: @medium-font-size;
   }
 }
 

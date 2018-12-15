@@ -4,7 +4,8 @@ import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
 import filters from "../assets/js/filter"
 import directive from "../assets/js/directive"
-
+import {Tooltip} from "../components/global/Tooltip"
+Vue.prototype.$tooltip = Tooltip;
 Vue.prototype.$http = Http;
 
 Vue.prototype.$img = Img;
