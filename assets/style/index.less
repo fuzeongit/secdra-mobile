@@ -1,0 +1,474 @@
+@import "./config";
+@import "./color";
+@import "./mixin";
+@import "./cropper";
+
+* {
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
+  color: @font-color;
+  box-sizing: border-box;
+  margin: 0;
+  text-decoration: none;
+  outline: none;
+  border: 0;
+  padding: 0;
+  list-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  width: 4px;
+  height: 1px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #BBB;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: #EDEDED;
+}
+
+html, body {
+  background-color: @theme-background-color;
+}
+
+img {
+  vertical-align: middle;
+}
+
+h1, h2, h3 {
+  font-weight: 400;
+}
+
+h4, h5, h6 {
+  font-weight: 200;
+}
+
+//弹性盒子
+.flex-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+//整屏居中
+.container {
+  height: 100vh;
+  .flex-box();
+}
+
+.page {
+  min-height: calc(100vh - (@herder-height + @herder-border-height));
+  margin-top: @herder-height;
+}
+
+/*--------------------------------------*/
+.input-group {
+  line-height: @input-line-height+2;
+  font-size: @default-font-size;
+  margin-bottom: 15px;
+}
+
+.btn(@color) {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  transition: .1s;
+  font-weight: 500;
+  padding: 0 1.5em;
+  user-select: none;
+  border-radius: @smallest-border-radius;
+  font-size: @default-font-size;
+  line-height: @input-line-height;
+  margin: 0;
+
+  .btn-color(@realColor) {
+    background-color: @realColor;
+    border: 1px solid @realColor;
+    color: @white;
+
+    &.is-plain {
+      background-color: transparent;
+      color: @realColor;
+      &:hover {
+        background-color: @realColor;
+        border: 1px solid @realColor;
+        color: @white;
+      }
+    }
+
+    &.is-suspend {
+      background-color: @white;
+      padding: 0;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 1px solid @border-color;
+      box-shadow: 0 5px 10px rgba(180, 180, 180, 0.55);
+    }
+
+    &.is-text {
+      background-color: transparent;
+      border: transparent;
+      color: @realColor;
+    }
+  }
+  .btn-color(@color);
+  &[disabled] {
+    cursor: not-allowed;
+    .btn-color(@disabled-color);
+  }
+
+  &.block {
+    width: 100%;
+    display: block;
+  }
+}
+
+.btn {
+  .btn(@theme-color);
+}
+
+.btn-red {
+  .btn(@red);
+}
+
+.btn-orange {
+  .btn(@orange);
+}
+
+.btn-yellow {
+  .btn(@yellow);
+}
+
+.btn-green {
+  .btn(@green);
+}
+
+.btn-cyan {
+  .btn(@cyan);
+}
+
+.btn-blue {
+  .btn(@blue);
+}
+
+.btn-color {
+  .btn(@purple);
+}
+
+.input(@color) {
+  width: 200px;
+  display: inline-block;
+  margin: 0;
+  transition: 0.1s;
+  padding: 0 1.5em;
+  font-size: @default-font-size;
+  color: @font-color;
+  border: 1px solid @border-color;
+  box-shadow: none;
+  outline: none;
+  user-select: none;
+  line-height: @input-line-height;
+  border-radius: @smallest-border-radius;
+
+  .input-color(@realColor) {
+    &:focus {
+      border: 1px solid @color;
+    }
+
+    &.is-plain {
+      border-left: 1px solid transparent;
+      border-top: 1px solid transparent;
+      border-right: 1px solid transparent;
+      background-color: transparent;
+      &:focus {
+        border-bottom: 1px solid @color;
+      }
+    }
+  }
+  .input-color(@color);
+  &[disabled] {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    .input-color(@disabled-color);
+  }
+  &.block {
+    display: block;
+    width: 100%;
+  }
+  &textarea {
+    line-height: @small-input-line-height;
+  }
+}
+
+.input {
+  .input(@theme-color)
+}
+
+.input-red {
+  .input(@red);
+}
+
+.input-orange {
+  .input(@orange);
+}
+
+.input-yellow {
+  .input(@yellow);
+}
+
+.input-green {
+  .input(@green);
+}
+
+.input-cyan {
+  .input(@cyan);
+}
+
+.input-blue {
+  .input(@blue);
+}
+
+.input-purple {
+  .input(@purple);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.mask {
+  background-color: fade(black, 30);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  z-index: @mask-index;
+  text-align: center;
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    vertical-align: middle;
+  }
+}
+
+/*--------------------------------------*/
+.card {
+  border-radius: @smallest-border-radius;
+  background-color: @white;
+  margin: 0 auto;
+
+  .card-header {
+    border-bottom: 1px solid @border-color;
+  }
+
+  .card-body {
+
+  }
+
+  .card-footer {
+    border-top: 1px solid @border-color;
+  }
+}
+
+/*--------------------------------------*/
+.duration {
+  animation-duration: @default-animate-time;
+}
+
+.short-duration {
+  animation-duration: @short-animate-time;
+}
+
+.mask-duration {
+  animation-duration: @short-animate-time;
+}
+
+.cover {
+  background: no-repeat 50%;
+  background-size: cover;
+}
+
+/*---------------------------------------*/
+.popper {
+  .popper__arrow {
+    &:after {
+      content: " ";
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+    }
+    & {
+      filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .03));
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border: 6px solid transparent;
+    }
+
+  }
+  &[x-placement^=top] {
+    .popper__arrow {
+      bottom: -6px;
+      left: 50%;
+      margin-right: 3px;
+      border-top-color: @border-color;
+      border-bottom-width: 0;
+      &:after {
+        bottom: 1px;
+        margin-left: -6px;
+        border-top-color: #fff;
+        border-bottom-width: 0;
+      }
+    }
+  }
+  &[x-placement^=right] {
+    .popper__arrow {
+      top: 50%;
+      left: -6px;
+      margin-bottom: 3px;
+      border-right-color: @border-color;
+      border-left-width: 0;
+      &:after {
+        bottom: -6px;
+        left: 1px;
+        border-right-color: #fff;
+        border-left-width: 0;
+      }
+    }
+  }
+  &[x-placement^=bottom] {
+    .popper__arrow {
+      top: -6px;
+      left: 50%;
+      margin-right: 3px;
+      border-top-width: 0;
+      border-bottom-color: @border-color;
+      &:after {
+        top: 1px;
+        margin-left: -6px;
+        border-top-width: 0;
+        border-bottom-color: #fff;
+      }
+    }
+  }
+  &[x-placement^=left] {
+    .popper__arrow {
+      top: 50%;
+      right: -6px;
+      margin-bottom: 3px;
+      border-right-width: 0;
+      border-left-color: @border-color;
+      &:after {
+        right: 1px;
+        bottom: -6px;
+        margin-left: -6px;
+        border-right-width: 0;
+        border-left-color: #fff;
+      }
+    }
+  }
+}
+
+.popover {
+  position: absolute;
+  background: @white;
+  border: 1px solid @border-color;
+  z-index: @mask-index - 1;
+  border-radius: @smallest-border-radius;
+  box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
+  &[x-placement^=top] {
+    margin-bottom: 12px;
+  }
+  &[x-placement^=right] {
+    margin-left: 12px;
+  }
+  &[x-placement^=bottom] {
+    margin-top: 12px;
+  }
+  &[x-placement^=left] {
+    margin-right: 12px;
+  }
+}
+
+/*---------------------------------------*/
+.loading-parent {
+  position: relative !important;
+}
+
+/*---------------------------------------*/
+//一共30列
+.row {
+  width: 100%;
+  &:before {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+    display: table;
+    content: "";
+  }
+
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      float: left;
+      width: @number*@width;
+    }
+    @media only screen and (max-width: @grid-xs-width) {
+      .col-xs-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-sm-width) and (max-width: @grid-md-width) {
+      .col-sm-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media (min-width: @grid-md-width) and (max-width: @grid-lg-width) {
+      .col-md-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    @media only screen and (min-width: @grid-lg-width) {
+      .col-lg-@{number} {
+        float: left;
+        width: @number*@width;
+      }
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
+}
+
+//一共30列
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  .col(@number,@width) when (@number <= 30) {
+    .col-@{number} {
+      width: @number*@width;
+    }
+    .col((@number+1), @width)
+  }
+  .col(1, @grid-column-width);
+}
