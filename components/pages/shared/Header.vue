@@ -2,12 +2,12 @@
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav class="row">
       <div class="col-3 center">
-        <i class="icon s-guanzhu1"></i>
+        <i class="icon s-guanzhu1" @click="menuIsShow=true"></i>
       </div>
-      <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
       <div class="col-18 center title">
         测试
       </div>
+      <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
       <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
       <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
     </nav>
@@ -44,6 +44,14 @@
           this.hid = true
         }
         return isShow
+      },
+      menuIsShow: {
+        get() {
+          return this.$store.state.menu.isShow
+        },
+        set(val) {
+          this.$store.state.menu.isShow = val
+        }
       },
       user() {
         return this.$store.state.user.user || {}

@@ -2,6 +2,7 @@
   <div>
     <section>
       <Header></Header>
+      <Menu></Menu>
         <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
           <nuxt />
         </transition>
@@ -10,10 +11,12 @@
 </template>
 <script>
   import Header from "../components/pages/shared/Header"
+  import Menu from "../components/pages/shared/Menu"
   export default {
     middleware: 'auth',
     components: {
-      Header
+      Header,
+      Menu
     }
   }
 </script>
