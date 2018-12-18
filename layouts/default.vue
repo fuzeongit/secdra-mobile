@@ -3,6 +3,7 @@
     <section>
       <Header></Header>
       <Menu></Menu>
+      <Search></Search>
         <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
           <nuxt />
         </transition>
@@ -12,14 +13,16 @@
 <script>
   import Header from "../components/pages/shared/Header"
   import Menu from "../components/pages/shared/Menu"
+  import Search from "../components/pages/shared/Search"
   export default {
     middleware: 'auth',
     components: {
       Header,
-      Menu
+      Menu,
+      Search
     }
   }
 </script>
 <style type="text/less" lang="less">
-  @import "//at.alicdn.com/t/font_896802_48n1sgou2yi.css";
+  @import "//at.alicdn.com/t/font_896802_qh8o7c20nuj.css";
 </style>

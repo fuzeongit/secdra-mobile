@@ -1,18 +1,99 @@
 <template>
-  <div :class="{mask:isShow}">
+  <div>
+    <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
+      <div class="mask" v-show="isShow" @click.stop="close">
+      </div>
+    </transition>
     <div class="menu" :class="{active:isShow}">
-
+      <div class="cover"
+           :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
+      </div>
+      <div class="center" style="margin-top: -10vw;margin-bottom: 5vw">
+        <nuxt-link :to="`/user/${user.id}`" class="head-box">
+          <img :src="$img.head(user.head)">
+        </nuxt-link>
+      </div>
+      <ul class="list">
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-new"></i>
+            最新发现
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-hearto"></i>
+            我的收藏
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-zhuanyeyukecheng"></i>
+            我的作品
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-zuji"></i>
+            我的足迹
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-guanzhu1"></i>
+            关注用户
+          </nuxt-link>
+        </li>
+        <li>
+          <nuxt-link to="/">
+            <i class="icon s-upload"></i>
+            我要上传
+          </nuxt-link>
+        </li>
+        <li>
+          <a @click="logout">
+            <i class="icon s-zhuxiao"></i>
+            退出登录
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
+  import Cookie from 'js-cookie'
+
   export default {
     componentName: "Menu",
+
     computed: {
-      isShow() {
-        return this.$store.state.menu.isShow
+      user() {
+        return this.$store.state.user.user || {}
+      },
+      isShow: {
+        get() {
+          return this.$store.state.menu.isShow
+        },
+        set(val) {
+          this.$store.state.menu.isShow = val
+        }
       }
+    },
+    methods: {
+      close() {
+        this.isShow = false
+      },
+      logout() {
+        this.close();
+        this.$confirm({
+          message: `你确定要退出登录吗？`,
+          okCallback: () => {
+            Cookie.remove("token");
+            this.$router.replace("/login")
+          }
+        });
+      },
     }
   }
 </script>
@@ -23,17 +104,43 @@
   @import "../../../assets/style/mixin";
 
   .menu {
+    @width: 70vw;
     height: 100vh;
-    width: 70vw;
+    width: @width;
     background-color: white;
     position: fixed;
     top: 0;
     left: 0;
+    transform: translateX(-@width - 1vw);
     transition: @short-animate-time;
-    transform: translateX(-70vw);
     z-index: @mask-index+1;
     &.active {
       transform: translateX(0);
+    }
+    .cover {
+      height: @width / 2;
+    }
+    .head-box {
+      display: block;
+      position: relative;
+      img {
+        border-radius: 50%;
+        width: @width / 3;
+      }
+    }
+    .list {
+      li {
+        line-height: 55px;
+        a {
+          font-size: @big-font-size + 4px;
+          display: block;
+          padding: 0 60px;
+        }
+        .icon {
+          margin-right: 30px;
+          vertical-align: middle;
+        }
+      }
     }
   }
 </style>

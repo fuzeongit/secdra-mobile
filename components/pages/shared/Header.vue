@@ -2,14 +2,14 @@
   <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
     <nav class="row">
       <div class="col-3 center">
-        <i class="icon s-guanzhu1" @click="menuIsShow=true"></i>
+        <a class="icon s-menu" @click="menuIsShow=true"></a>
       </div>
       <div class="col-18 center title">
         测试
       </div>
-      <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
-      <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
-      <div class="col-3 center"><i class="icon s-guanzhu1"></i></div>
+      <div class="col-3 center"><nuxt-link class="icon s-home" to="/"></nuxt-link></div>
+      <div class="col-3 center"><nuxt-link class="icon s-faxian" to="/"></nuxt-link></div>
+      <div class="col-3 center"><a class="icon s-chaxun" @click="searchIsShow = true"></a></div>
     </nav>
   </header>
 </template>
@@ -51,6 +51,14 @@
         },
         set(val) {
           this.$store.state.menu.isShow = val
+        }
+      },
+      searchIsShow: {
+        get() {
+          return this.$store.state.menu.searchIsShow
+        },
+        set(val) {
+          this.$store.state.menu.searchIsShow = val
         }
       },
       user() {
@@ -110,7 +118,7 @@
     right: 0;
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
     border-bottom: 1px solid #e2e2e2;
-    background-color: @white;
+    background-color: @theme-color;
     z-index: 10;
     user-select: none;
     nav {
@@ -119,13 +127,14 @@
       font-size: 0;
       height: @herder-nav-height;
       line-height: @herder-nav-height;
-      color: @font-color;
       .icon {
         font-size: @big-font-size + 4px;
+        color:@white;
       }
       .title {
         .ellipsis();
         font-size: @big-font-size+4px;
+        color:@white;
       }
     }
   }
