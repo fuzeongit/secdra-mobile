@@ -1,12 +1,13 @@
 <template>
   <div class="model" :class="{active:isShow}" ref="model" v-swipe:swipedown="close">
-    <header >
+    <header>
       <nav class="row">
         <div class="col-3 center">
           <a class="icon s-fanhui" @click="close"></a>
         </div>
-        <div class="col-27 center title">
-
+        <div class="col-27 center search-box">
+          <input type="search" @search="search" title="search" class="input" v-model="tag"
+                 placeholder="输入标签搜索" ref="search">
         </div>
       </nav>
     </header>
@@ -16,7 +17,17 @@
 <script>
   export default {
     componentName: "Search",
-    mounted(){
+    data() {
+      return {
+        tag: ""
+      }
+    },
+    watch:{
+      "$store.state.menu.searchIsShow":function(val){
+        if(val){
+         this.$refs["search"].focus()
+        }
+      }
     },
     computed: {
       isShow: {
@@ -27,12 +38,15 @@
           this.$store.state.menu.searchIsShow = val
         }
       }
+    },  mounted() {
     },
-    methods:{
-      close($event){
-        this.isShow = false
-        console.log(this.$refs["model"].manager);
-      }
+    methods: {
+      close($event) {
+        this.isShow = false;
+      },
+      search() {
+        this.$router.push(`/draw/search/${this.tag}`)
+      },
     }
   }
 </script>
@@ -77,12 +91,13 @@
         line-height: @herder-nav-height;
         .icon {
           font-size: @big-font-size + 4px;
-          color:@white;
+          color: @white;
         }
-        .title {
-          .ellipsis();
-          font-size: @big-font-size+4px;
-          color:@white;
+        .search-box {
+          padding: 0 30px;
+          input{
+            width: 100%;
+          }
         }
       }
     }
