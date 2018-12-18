@@ -1,6 +1,3 @@
-const pkg = require('./package');
-
-
 module.exports = {
   mode: 'universal',
   server: {
@@ -18,7 +15,7 @@ module.exports = {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no'
       },
-      {hid: 'description', name: 'description', content: pkg.description}
+      {hid: 'description', name: 'description', content: "My unreal Nuxt.js project"}
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},

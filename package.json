@@ -1,7 +1,7 @@
 {
-  "name": "y",
+  "name": "secdra-mobile",
   "version": "1.0.0",
-  "description": "y",
+  "description": "My unreal Nuxt.js project",
   "author": "JunJie Fu",
   "private": true,
   "scripts": {
