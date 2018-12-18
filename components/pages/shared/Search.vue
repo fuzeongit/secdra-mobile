@@ -45,6 +45,7 @@
         this.isShow = false;
       },
       search() {
+        this.close();
         this.$router.push(`/draw/search/${this.tag}`)
       },
     }
