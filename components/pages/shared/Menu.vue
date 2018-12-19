@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-swipe:swipeleft="close">
     <transition name="fade" enter-active-class="fadeIn mask-duration" leave-active-class="fadeOut mask-duration">
       <div class="mask" v-show="isShow" @click.stop="close">
       </div>
@@ -15,40 +15,40 @@
       </div>
       <ul class="list">
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/new`)">
             <i class="icon s-new"></i>
             最新发现
-          </nuxt-link>
+          </a>
         </li>
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/collection/${user.id||''}`)">
             <i class="icon s-hearto"></i>
             我的收藏
-          </nuxt-link>
+          </a>
         </li>
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/works/${user.id||''}`)">
             <i class="icon s-zhuanyeyukecheng"></i>
             我的作品
-          </nuxt-link>
+          </a>
         </li>
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/footprint`)">
             <i class="icon s-zuji"></i>
             我的足迹
-          </nuxt-link>
+          </a>
         </li>
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/follower/${user.id||''}`)">
             <i class="icon s-guanzhu1"></i>
             关注用户
-          </nuxt-link>
+          </a>
         </li>
         <li>
-          <nuxt-link to="/">
+          <a @click="to(`/upload`)">
             <i class="icon s-upload"></i>
             我要上传
-          </nuxt-link>
+          </a>
         </li>
         <li>
           <a @click="logout">
@@ -83,6 +83,11 @@
     methods: {
       close() {
         this.isShow = false
+      },
+      to(path) {
+        if(this.$route.path === path) return;
+        this.close();
+        this.$router.push(path);
       },
       logout() {
         this.close();
@@ -132,13 +137,13 @@
       li {
         line-height: 55px;
         a {
-          font-size: @big-font-size + 4px;
+          font-size: @big-font-size;
           display: block;
           padding: 0 60px;
         }
         .icon {
           margin-right: 30px;
-          vertical-align: middle;
+          font-size: @big-font-size;
         }
       }
     }

@@ -5,9 +5,12 @@
         <div class="col-3 center">
           <a class="icon s-fanhui" @click="close"></a>
         </div>
-        <div class="col-27 center search-box">
-          <input type="search" @search="search" title="search" class="input" v-model="tag"
+        <div class="col-24 center search-box">
+          <input type="text" title="search" class="input" v-model="tag"
                  placeholder="输入标签搜索" ref="search">
+        </div>
+        <div class="col-3 center">
+          <a class="icon s-chaxun"  @click="search" ></a>
         </div>
       </nav>
     </header>
@@ -91,7 +94,7 @@
         height: @herder-nav-height;
         line-height: @herder-nav-height;
         .icon {
-          font-size: @big-font-size + 4px;
+          font-size: @big-font-size;
           color: @white;
         }
         .search-box {

@@ -5,16 +5,22 @@
         <a class="icon s-menu" @click="menuIsShow=true"></a>
       </div>
       <div class="col-18 center title">
-        测试
+        {{menuList[activeName]}}
       </div>
-      <div class="col-3 center"><nuxt-link class="icon s-home" to="/"></nuxt-link></div>
-      <div class="col-3 center"><nuxt-link class="icon s-faxian" to="/"></nuxt-link></div>
+      <div class="col-3 center">
+        <nuxt-link class="icon s-home" to="/"></nuxt-link>
+      </div>
+      <div class="col-3 center">
+        <nuxt-link class="icon s-faxian" to="/find"></nuxt-link>
+      </div>
       <div class="col-3 center"><a class="icon s-chaxun" @click="searchIsShow = true"></a></div>
     </nav>
   </header>
 </template>
 
 <script>
+  import {Menu} from '../../../assets/js/constant/base'
+
   import Cookie from 'js-cookie'
 
   export default {
@@ -29,6 +35,7 @@
       return {
         hid: false,
         tag: "",
+        menuList:new Menu()
       }
     },
     watch: {
@@ -84,8 +91,8 @@
     },
     methods: {
       documentScroll(event) {
-        this.scrollTop = event.target.documentElement.scrollTop;
-        this.$store.state.window.scrollBottom = event.target.documentElement.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight
+        this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
       },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
@@ -128,13 +135,13 @@
       height: @herder-nav-height;
       line-height: @herder-nav-height;
       .icon {
-        font-size: @big-font-size + 4px;
-        color:@white;
+        font-size: @big-font-size;
+        color: @white;
       }
       .title {
         .ellipsis();
-        font-size: @big-font-size+4px;
-        color:@white;
+        font-size: @big-font-size;
+        color: @white;
       }
     }
   }
