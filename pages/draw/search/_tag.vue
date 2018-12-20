@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="item last-card" v-if="page.last"
-           :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`,width:listConstant.colWidth+`px`}">
+           :style="{left:`${listContentOffset.lastCardLeft}vw`,top:`${listContentOffset.lastCardTop}vw`,width:listConstant.colWidth+`vw`}">
         <img src="../../../assets/image/error/404.jpg">
       </div>
     </div>
@@ -44,7 +44,7 @@
 export default {
   async asyncData({store, req, redirect, route, $axios}) {
     store.state.menu.name = "tag";
-    store.state.menu.title = route.params.tag;
+    store.state.menu.title = route.params.tag||"发现";
     let pageable = new Pageable();
     pageable.size = 16;
     pageable.sort = "likeAmount,desc";
@@ -124,7 +124,7 @@ export default {
         height: colNumberHeight.max()
       };
       if (this.page.last) {
-        let lastCardHeight = 300;
+        let lastCardHeight = 61;
         offset.lastCardLeft = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
         offset.lastCardTop = colNumberHeight.min();
         let h = colNumberHeight.min() + lastCardHeight + this.listConstant.heightOffset;

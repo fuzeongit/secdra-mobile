@@ -10,25 +10,31 @@
                  placeholder="输入标签搜索" ref="search">
         </div>
         <div class="col-3 center">
-          <a class="icon s-chaxun"  @click="search" ></a>
+          <a class="icon s-chaxun" @click="search()"></a>
         </div>
       </nav>
     </header>
+    <div class="page">
+      <button v-for="item in tagList" class="btn" style="margin: 2vw 2vw 0 2vw;" @click="search(item.name)">{{item.name}}</button>
+    </div>
   </div>
 </template>
 
 <script>
+  import {mapActions} from "vuex"
+
   export default {
     componentName: "Search",
     data() {
       return {
-        tag: ""
+        tag: "",
+        tagList:[]
       }
     },
-    watch:{
-      "$store.state.menu.searchIsShow":function(val){
-        if(val){
-         this.$refs["search"].focus()
+    watch: {
+      "$store.state.menu.searchIsShow": function (val) {
+        if (val) {
+          this.$refs["search"].focus()
         }
       }
     },
@@ -41,16 +47,32 @@
           this.$store.state.menu.searchIsShow = val
         }
       }
-    },  mounted() {
+    },
+    mounted() {
+      this.listTagOrderByLikeAmount()
     },
     methods: {
+      ...mapActions("draw", ["AListTagOrderByLikeAmount"]),
       close($event) {
         this.isShow = false;
       },
-      search() {
+      search(tag) {
         this.close();
-        this.$router.push(`/draw/search/${this.tag}`)
+        if(tag){
+          this.$router.push(`/draw/search/${tag}`)
+        }else{
+          this.$router.push(`/draw/search/${this.tag}`)
+        }
+
       },
+      async listTagOrderByLikeAmount() {
+        let result = await this.AListTagOrderByLikeAmount();
+        if (result.status !== 200) {
+          this.$tooltip({message: result.error});
+          return;
+        }
+        this.tagList = result.data
+      }
     }
   }
 </script>
@@ -99,7 +121,7 @@
         }
         .search-box {
           padding: 0 30px;
-          input{
+          input {
             width: 100%;
           }
         }

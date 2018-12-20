@@ -52,6 +52,10 @@ const actions = {
   //批量更新图片
   async ABatchUpdate(context,params){
     return await httpUtil.post("/draw/batchUpdate",params);
+  },
+  //获取推荐标签
+  async AListTagOrderByLikeAmount(context,params){
+    return await httpUtil.get("/tag/listTagOrderByLikeAmount",params);
   }
 };
 

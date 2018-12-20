@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="item last-card" v-if="page.last"
-           :style="{left:`${listContentOffset.lastCardLeft}px`,top:`${listContentOffset.lastCardTop}px`,width:listConstant.colWidth+`px`}">
+           :style="{left:`${listContentOffset.lastCardLeft}vw`,top:`${listContentOffset.lastCardTop}vw`,width:listConstant.colWidth+`vw`}">
         <img src="../assets/image/error/404.jpg">
       </div>
     </div>
