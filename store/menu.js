@@ -7,7 +7,8 @@
 const state = {
   name:"home",
   isShow:false,
-  searchIsShow:false
+  searchIsShow:false,
+  title:""
 };
 
 const mutations = {

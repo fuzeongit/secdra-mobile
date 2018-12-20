@@ -5,7 +5,7 @@
         <a class="icon s-menu" @click="menuIsShow=true"></a>
       </div>
       <div class="col-18 center title">
-        {{menuList[activeName]}}
+        {{menuList[activeName]||$store.state.menu.title}}
       </div>
       <div class="col-3 center">
         <nuxt-link class="icon s-home" to="/"></nuxt-link>
