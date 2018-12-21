@@ -167,7 +167,7 @@ export default {
       this.pageLoading = false;
       let data = result.data;
       if (result.status !== 200) {
-        this.$notify({message: result.message});
+        this.$tooltip({message: result.message});
         this.pageable.page = sourcePage;
         return
       }
@@ -179,7 +179,7 @@ export default {
         drawId: draw.id
       });
       if (result.status !== 200) {
-        this.$notify({message: result.message});
+        this.$tooltip({message: result.message});
         return
       }
       draw.focus = result.data
