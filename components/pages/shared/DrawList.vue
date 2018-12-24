@@ -8,7 +8,7 @@
       </nuxt-link>
       <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
          :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-         @click.stop="$emit(`collection`,draw)"></a>
+         @click.stop="$emit(`collection`,draw,index)"></a>
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`vw`,height:listConstant.infoHeight+`vw`}">
         <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
           <img :src="$img.head(draw.user.head)" :title="draw.user.name">
