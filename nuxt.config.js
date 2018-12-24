@@ -25,12 +25,12 @@ module.exports = {
   /*
   ** Customize the progress-bar color
   */
-  loading: {
-    name: 'nuxt',
-    color: '#0b99ff',
-    background: '#fff'
-  },
-
+  // loading: {
+  //   name: 'nuxt',
+  //   color: '#0b99ff',
+  //   background: '#fff'
+  // },
+  loading: '~/components/Loading.vue',
   /*
   ** Global CSS
   */
