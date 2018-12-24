@@ -41,7 +41,6 @@
         type:Array,
         default:[],
       },
-      pageable:Object,
       pageLoading:{
         type:Boolean,
         default:false
@@ -144,6 +143,7 @@
         position: absolute;
         bottom: @info-box-height + 5px;
         right: 5px;
+        font-size: @big-font-size + 8px;
       }
       .img-box {
         img {
