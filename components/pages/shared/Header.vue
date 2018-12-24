@@ -1,5 +1,5 @@
 <template>
-  <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow}">
+  <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow,transparent:activeName===`detail`}">
     <nav class="row">
       <div class="col-3 center">
         <a class="icon s-menu" @click="menuIsShow=true"></a>
@@ -128,6 +128,12 @@
     background-color: @theme-color;
     z-index: 10;
     user-select: none;
+    &.transparent{
+      background-color: transparent;
+      border-bottom:none;
+      box-shadow:none;
+      text-shadow: 1px 1px 3px #000;
+    }
     nav {
       width: 100%;
       margin: 0 auto;
