@@ -13,7 +13,7 @@
                    :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+           :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
         ></a>
       </div>
     </div>
@@ -30,7 +30,7 @@
                    :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏"
+           :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
         ></a>
       </div>
     </div>
@@ -47,7 +47,7 @@
 <script>
   import config from "../assets/js/config";
   import {Pageable} from "../assets/js/model/base";
-
+  import {mapActions} from "vuex"
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
@@ -84,6 +84,19 @@
       scrollTop() {
         return this.$store.state.window.scrollTop
       },
+    },
+    methods:{
+      ...mapActions("draw", ["ACollection"]),
+      async collection(draw) {
+        let result = await this.ACollection({
+          drawId: draw.id
+        });
+        if (result.status !== 200) {
+          this.$tooltip({message: result.message});
+          return
+        }
+        draw.focus = result.data;
+      }
     }
   }
 </script>
