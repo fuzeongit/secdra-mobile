@@ -7,13 +7,14 @@ import directive from "../assets/js/directive"
 import {Alert} from "../components/global/Alert"
 import {Confirm} from "../components/global/Confirm"
 import {Tooltip} from "../components/global/Tooltip"
-
+import Pageable from "../components/global/Pageable"
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
 Vue.prototype.$tooltip = Tooltip;
-Vue.prototype.$http = Http;
+Vue.component("Pageable",Pageable);
 
+Vue.prototype.$http = Http;
 Vue.prototype.$img = Img;
 
 Vue.prototype.$filter = filters;

@@ -1,8 +1,10 @@
 <template>
-  <header class="animated duration" :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow,transparent:activeName===`detail`}">
+  <header class="animated duration"
+          :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow,transparent:activeName===`detail`}">
     <nav class="row">
       <div class="col-3 center">
-        <a class="icon s-menu" @click="menuIsShow=true"></a>
+        <a class="icon s-left" v-if="canBack" @click="$router.back()"></a>
+        <a class="icon s-menu" v-else @click="menuIsShow=true"></a>
       </div>
       <div class="col-18 center title">
         {{menuList[activeName]||$store.state.menu.title}}
@@ -35,7 +37,7 @@
       return {
         hid: false,
         tag: "",
-        menuList:new Menu()
+        menuList: new Menu()
       }
     },
     watch: {
@@ -45,6 +47,10 @@
       },
     },
     computed: {
+      canBack() {
+        let canBackList = ["detail"];
+        return canBackList.indexOf(this.$store.state.menu.name) !== -1;
+      },
       isShow() {
         let isShow = this.scrollTop < this.offset;
         if (!isShow && !this.hid) {
@@ -128,10 +134,10 @@
     background-color: @theme-color;
     z-index: 10;
     user-select: none;
-    &.transparent{
+    &.transparent {
       background-color: transparent;
-      border-bottom:none;
-      box-shadow:none;
+      border-bottom: none;
+      box-shadow: none;
       text-shadow: 1px 1px 3px #000;
     }
     nav {
