@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import VueLazyload from 'vue-lazyload'
 import Http from '../assets/js/util/httpUtil'
 import Img from '../assets/js/util/imgUrlUtil'
 import filters from "../assets/js/filter"
@@ -26,3 +26,9 @@ Vue.directive("goTop", directive.goTop);
 Vue.directive("popover", directive.popover);
 Vue.directive("loading", directive.loading);
 Vue.directive("swipe", directive.swipe);
+
+
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  attempt: 1
+});

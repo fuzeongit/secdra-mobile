@@ -2,7 +2,7 @@
   <div class="content row">
     <div class="card " v-for="(draw,index) in list" :key="index">
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
-        <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+        <img v-lazy="$img.secdra(draw.url,`specifiedWidth500`)"
              style="width: 100%">
       </nuxt-link>
     </div>

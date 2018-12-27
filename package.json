@@ -21,6 +21,7 @@
     "nuxt": "^2.3.1",
     "postcss-px-to-viewport": "0.0.3",
     "qs": "^6.6.0",
+    "vue-lazyload": "^1.2.6",
     "vue2-animate": "^2.1.0"
   },
   "devDependencies": {

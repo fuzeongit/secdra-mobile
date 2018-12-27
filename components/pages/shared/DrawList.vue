@@ -3,7 +3,7 @@
     <div class="card item" :style="{left:`${offset[index].left}vw`,top:`${offset[index].top}vw`}"
          v-for="(draw,index) in list" :key="index">
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
-        <img :src="$img.scedra(draw.url,`specifiedWidth`)"
+        <img v-lazy="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`vw`,height:getHeight(draw)+`vw`}">
       </nuxt-link>
       <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
@@ -11,7 +11,7 @@
          @click.stop="$emit(`collection`,draw,index)"></a>
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`vw`,height:listConstant.infoHeight+`vw`}">
         <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-          <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+          <img v-lazy="$img.head(draw.user.head)" :title="draw.user.name">
         </nuxt-link>
         <div class="user-info-box">
           <p class="nickname">
@@ -35,18 +35,18 @@
 
   export default {
     componentName: "DrawList",
-    props:{
-      page:Object,
-      list:{
-        type:Array,
-        default:[],
+    props: {
+      page: Object,
+      list: {
+        type: Array,
+        default: [],
       },
-      pageLoading:{
-        type:Boolean,
-        default:false
+      pageLoading: {
+        type: Boolean,
+        default: false
       }
     },
-    data(){
+    data() {
       return {
         listConstant: new ListConstant(),
       }
@@ -107,7 +107,7 @@
         }
       }
     },
-    methods:{
+    methods: {
       //初始化高度数组
       initColNumberHeight(listConstant) {
         let t = [];
@@ -163,6 +163,7 @@
           img {
             border-radius: 50%;
             width: @img-size;
+            height: @img-size;
           }
         }
         .user-info-box {

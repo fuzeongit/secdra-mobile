@@ -9,8 +9,7 @@
     </p>
     <div class="row">
       <div class="col-15 img-box center" v-for="(draw,index) in likeList" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                   :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}">
+        <nuxt-link :to="`/draw/${draw.id}`" class="cover"  v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
            :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
@@ -26,8 +25,7 @@
     </p>
     <div class="row">
       <div class="col-15 img-box center" v-for="(draw,index) in newList" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                   :style="{backgroundImage: `url(${$img.scedra(draw.url,'specifiedWidth')})`}">
+        <nuxt-link :to="`/draw/${draw.id}`" class="cover" v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
            :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
