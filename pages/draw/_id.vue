@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div style="background-color: #efefef;width: 100vw" :style="{height:`${100 * proportion}vw`} ">
-      <img :src="$img.secdra(draw.url)" style="width: 100%">
+      <img :src="$img.secdra(draw.url,`specifiedWidth500`)" style="width: 100%">
     </div>
   </div>
 </template>

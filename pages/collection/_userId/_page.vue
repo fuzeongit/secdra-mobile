@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <DrawCardList :list="list"></DrawCardList>
+    <DrawCardList :list="list" @collection="collection"></DrawCardList>
     <br>
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
