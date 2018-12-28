@@ -1,0 +1,220 @@
+<template>
+  <div style="padding-bottom: 5vw">
+    <div class="user-bk cover"
+         :style="{backgroundImage: `url(${$img.back(user.background)})`}">
+    </div>
+    <div class="info-box">
+      <img :src="$img.head(user.head)">
+      <p class="nickname">
+        {{user.name}}
+        <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
+      </p>
+      <p class="introduction">
+        {{user.introduction}}
+      </p>
+      <div class="draw-box">
+        <div class="works-box" v-loading="worksLoading">
+          <h3 class="line center">
+            <span>我的作品</span>
+          </h3>
+          <div class="row">
+            <div class="col-15 img-box center" v-for="(draw,index) in worksList" :key="index">
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="worksList.length===8">
+            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
+        <div class="collection-box" v-loading="collectionLoading">
+          <h3 class="line center">
+            <span>我的收藏</span>
+          </h3>
+          <div class="row">
+            <div class="col-15 img-box center" v-for="(draw,index) in collectionList" :key="index">
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="collectionList.length===8">
+            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {mapActions} from "vuex"
+  import {Pageable} from "../../../assets/js/model/base";
+
+  export default {
+    data() {
+      return {
+        worksLoading: false,
+        worksList: [],
+        collectionLoading: false,
+        collectionList: [],
+
+        isShowEdit: false,
+        userForm: Object.assign({}, this.$store.state.user.user), //需要脱离vuex
+        editLoading: false
+      }
+    },
+    computed: {
+      user: {
+        get() {
+          return this.$store.state.user.user || {}
+        },
+        set(val) {
+          this.$store.state.user.user = val
+        }
+      },
+      scrollTop: {
+        get() {
+          return this.$store.state.window.scrollTop || 0
+        },
+        set(val) {
+          this.$store.state.window.scrollTop = val || 0
+        }
+      }
+    },
+    mounted() {
+      this.pagingWorks();
+      this.pagingCollection();
+    },
+    methods: {
+      ...mapActions("user", ["AUpdate"]),
+      ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
+      async pagingWorks() {
+        this.worksLoading = true;
+        let result = await this.APagingByUserId(new Pageable(0, 8, "createDate,desc"));
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.worksLoading = false;
+        this.worksList = result.data.content;
+      },
+      async pagingCollection() {
+        this.collectionLoading = true;
+        let result = await this.APagingCollection(new Pageable(0, 8, "createDate,desc"));
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.collectionLoading = false;
+        this.collectionList = result.data.content;
+      },
+      getProportion(draw) {
+        return draw.height / draw.width
+      },
+      async update() {
+        this.editLoading = true;
+        let result = await this.AUpdate(this.userForm);
+        this.editLoading = false;
+        if (result.status !== 200) {
+          this.$notify({message: result.message});
+          return
+        }
+        this.isShowEdit = false;
+        this.$notify({message: `修改成功`});
+        this.user = result.data;
+        this.userForm = Object.assign({}, this.user);
+      }
+    }
+  }
+</script>
+
+<style type="text/less" lang="less" scoped>
+  @import "../../../assets/style/color";
+  @import "../../../assets/style/config";
+  @import "../../../assets/style/mixin";
+
+  .user-bk {
+    width: 100vw;
+    height: 50vw;
+  }
+
+  .info-box {
+    @img-size: 150px;
+    margin-top: -(@img-size/2);
+    padding: 0 20px;
+    .center();
+    img {
+      height: @img-size;
+      width: @img-size;
+      border-radius: 50%;
+      border: @small-border-radius solid @white;
+    }
+    .nickname {
+      font-size: @big-font-size;
+      margin-top: 20px;
+      font-weight: 600;
+      .ellipsis();
+      .icon {
+        margin-left: 10px;
+        vertical-align: baseline;
+        &.s-xingbie-nv {
+          color: #ff74cd;
+        }
+        &.s-xingbie-nan {
+          color: #0b99ff;
+        }
+      }
+    }
+    .introduction {
+      font-size: @smallest-font-size;
+      line-height: 30px;
+      margin-top: 20px;
+      color: @gray;
+      padding: 0 60px;
+    }
+  }
+
+  .works-box, .collection-box {
+    margin-top: 30px;
+    .line {
+      width: 100%;
+      border-bottom: 1px dashed @border-color;
+      margin-bottom: 30px;
+      span {
+        vertical-align: middle;
+        background-color: white;
+        margin-bottom: -20px;
+        display: inline-block;
+        padding: 0 15px;
+      }
+    }
+    .row {
+      min-height: 50vw;
+      margin: 0 -20px;
+      width: 100vw;
+    }
+
+    .move {
+      .right();
+      a {
+        color: @theme-color;
+        font-size: @small-font-size;
+      }
+    }
+  }
+
+  .img-box {
+    @size: 50vw;
+    height: @size;
+    position: relative;
+    .cover {
+      width: 98%;
+      height: 98%;
+      margin: 1%;
+      display: block;
+    }
+  }
+
+</style>

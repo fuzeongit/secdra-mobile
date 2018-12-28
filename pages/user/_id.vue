@@ -1,26 +1,25 @@
 <template>
   <div class="page">
-    <div class="user-bk cover"
-         :style="{backgroundImage: `url(${$img.back(user.background)})`}">
-    </div>
-    <div class="info-box">
-      <img :src="$img.head(user.head)">
-      <p class="nickname">
-        {{user.name}}
-        <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
-      </p>
-      <p class="introduction">
-        {{user.introduction}}
-      </p>
-    </div>
+    <SelfHome v-if="isSelf"></SelfHome>
+    <OtherHome v-else :user="user" @follow="follow"></OtherHome>
+    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
+      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
+        <i class="icon s-zhiding"></i></button>
+    </transition>
   </div>
 </template>
 
 <script>
   import config from "../../assets/js/config";
+  import SelfHome from "../../components/pages/user/SelfHome";
+  import OtherHome from "../../components/pages/user/OtherHome";
   import {mapActions} from "vuex"
 
   export default {
+    components: {
+      SelfHome,
+      OtherHome
+    },
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
@@ -48,6 +47,25 @@
         user
       }
     },
+    data() {
+      return {
+        showGoTop: false
+      }
+    },
+    watch: {
+      /**
+       * 如果直接用计算属性计算showGoTop的话，
+       * 可能会导致渲染过度，导致页面卡顿
+       */
+      scrollTop(newVal, oldVal) {
+        let threshold = 150;
+        if (newVal > threshold && oldVal <= threshold) {
+          this.showGoTop = true
+        } else if (newVal <= threshold && oldVal > threshold) {
+          this.showGoTop = false
+        }
+      }
+    },
     computed: {
       isSelf() {
         return this.$store.state.user.user.id === this.$route.params.id
@@ -56,54 +74,8 @@
         return this.$store.state.window.scrollTop || 0
       }
     },
-    data(){
-      return{
-        worksLoading: false,
-        worksList: [],
-        collectionLoading: false,
-        collectionList: [],
-        followerLoading: false,
-        followerList: []
-      }
-    },
-    mounted(){
-      this.pagingWorks();
-      this.pagingCollection();
-      this.pagingFollower();
-    },
     methods: {
-      ...mapActions("user", ["AFollow", "APagingFollower"]),
-      ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
-      async pagingWorks() {
-        this.worksLoading = true;
-        let result = await this.APagingByUserId(new Pageable(0, 8, "createDate,desc"));
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        this.worksLoading = false;
-        this.worksList = result.data.content;
-      },
-      async pagingCollection() {
-        this.collectionLoading = true;
-        let result = await this.APagingCollection(new Pageable(0, 8, "createDate,desc"));
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        this.collectionLoading = false;
-        this.collectionList = result.data.content;
-      },
-      async pagingFollower() {
-        this.followerLoading = true;
-        let result = await this.APagingFollower(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
-        if (result.status !== 200) {
-          this.$notify({message: result.message});
-          return
-        }
-        this.followerLoading = false;
-        this.followerList = result.data.content;
-      },
+      ...mapActions("user", ["AFollow"]),
       async follow() {
         let result = await this.AFollow({
           followerId: this.user.id
@@ -126,44 +98,10 @@
   .page {
     min-height: 100vh;
     margin-top: 0;
-    .user-bk {
-      width: 100vw;
-      height: 50vw;
-    }
-    .info-box {
-      @img-size: 150px;
-      margin-top: -(@img-size/2);
-      padding: 0 20px;
-      .center();
-      img {
-        height: @img-size;
-        width: @img-size;
-        border-radius: 50%;
-        border: @small-border-radius solid @white;
-      }
-      .nickname{
-        font-size: @big-font-size;
-        margin-top: 20px;
-        font-weight: 600;
-        .center();
-        .icon {
-          margin-left: 10px;
-          vertical-align: baseline;
-          &.s-xingbie-nv {
-            color: #ff74cd;
-          }
-          &.s-xingbie-nan {
-            color: #0b99ff;
-          }
-        }
-      }
-      .introduction{
-        font-size: @smallest-font-size;
-        line-height: 30px;
-        margin-top: 20px;
-        color:@gray;
-        padding: 0 60px;
-      }
-    }
+  }
+  .go-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
   }
 </style>
