@@ -14,6 +14,9 @@
               </nuxt-link>
             </p>
           </div>
+          <div class="follower-btn-box">
+            <button class="btn block" @click="follow(follower)">{{follower.focus?`已关注`:`关注`}}</button>
+          </div>
         </div>
       </div>
     </div>
@@ -79,9 +82,19 @@
       }
     },
     methods: {
-      ...mapActions("user", ["APagingFollower"]),
+      ...mapActions("user", ["APagingFollower","AFollow"]),
       paging(page){
         this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
+      },
+      async follow(follower) {
+        let result = await this.AFollow({
+          followerId: follower.id
+        });
+        if (result.status !== 200) {
+          this.$tooltip({message: result.message});
+          return
+        }
+        follower.focus = result.data
       },
     }
   }
@@ -110,6 +123,7 @@
     .info-box {
       @padding-size: 20px;
       @img-size: @info-box-height - @padding-size;
+      @follower-btn-size:100px;
       padding: @padding-size;
 
       .head-box {
@@ -124,8 +138,15 @@
           height:@img-size ;
         }
       }
+      .follower-btn-box{
+        width: @follower-btn-size;
+        .btn{
+          padding: 0;
+          .center();
+        }
+      }
       .user-info-box {
-        width: calc(100% - @img-size);
+        width: calc(100% - @img-size - @follower-btn-size);
         padding: 0 30px;
         transition: @default-animate-time;
 
