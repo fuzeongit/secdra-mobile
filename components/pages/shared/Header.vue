@@ -10,12 +10,14 @@
         {{menuList[activeName]||$store.state.menu.title}}
       </div>
       <div class="col-3 center">
-        <nuxt-link class="icon s-home" to="/"></nuxt-link>
+        <nuxt-link class="icon s-home" to="/" :class="{active:activeName===`home`}"></nuxt-link>
       </div>
       <div class="col-3 center">
-        <nuxt-link class="icon s-faxian" to="/find"></nuxt-link>
+        <nuxt-link class="icon s-faxian" to="/find" :class="{active:activeName===`find`}"></nuxt-link>
       </div>
-      <div class="col-3 center"><a class="icon s-chaxun" @click="searchIsShow = true"></a></div>
+      <div class="col-3 center">
+        <a class="icon s-chaxun" @click="searchIsShow = true"></a>
+      </div>
     </nav>
   </header>
 </template>
@@ -154,6 +156,9 @@
         .ellipsis();
         font-size: @big-font-size;
         color: @white;
+      }
+      .active{
+        color:rgba(255,255,255,.6)
       }
     }
   }

@@ -9,42 +9,42 @@
            :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
       </div>
       <div class="center" style="margin-top: -10vw;margin-bottom: 5vw">
-        <nuxt-link :to="`/user/${user.id}`" class="head-box">
+        <a @click="to(`/user/${user.id}`)" class="head-box">
           <img :src="$img.head(user.head)">
-        </nuxt-link>
+        </a>
       </div>
       <ul class="list">
-        <li>
+        <li :class="{active:activeName===`new`}">
           <a @click="to(`/new`)">
             <i class="icon s-new"></i>
             最新发现
           </a>
         </li>
-        <li>
+        <li :class="{active:activeName===`collection`}">
           <a @click="to(`/collection/${user.id||''}`)">
             <i class="icon s-hearto"></i>
             我的收藏
           </a>
         </li>
-        <li>
+        <li :class="{active:activeName===`works`}">
           <a @click="to(`/works/${user.id||''}`)">
             <i class="icon s-zhuanyeyukecheng"></i>
             我的作品
           </a>
         </li>
-        <li>
+        <li :class="{active:activeName===`footprint`}">
           <a @click="to(`/footprint`)">
             <i class="icon s-zuji"></i>
             我的足迹
           </a>
         </li>
-        <li>
+        <li :class="{active:activeName===`follower`}">
           <a @click="to(`/follower/${user.id||''}`)">
             <i class="icon s-guanzhu1"></i>
             关注用户
           </a>
         </li>
-        <li>
+        <li :class="{active:activeName===`upload`}">
           <a @click="to(`/upload`)">
             <i class="icon s-upload"></i>
             我要上传
@@ -78,14 +78,17 @@
         set(val) {
           this.$store.state.menu.isShow = val
         }
-      }
+      },
+      activeName() {
+        return this.$store.state.menu.name
+      },
     },
     methods: {
       close() {
         this.isShow = false
       },
       to(path) {
-        if(this.$route.path === path) return;
+        if (this.$route.path === path) return;
         this.close();
         this.$router.push(path);
       },
@@ -135,15 +138,24 @@
     }
     .list {
       li {
-        line-height: 55px;
+        line-height: 50px;
         a {
-          font-size: @big-font-size;
+          font-size: @medium-font-size;
           display: block;
           padding: 0 60px;
         }
         .icon {
           margin-right: 30px;
-          font-size: @big-font-size;
+          font-size: @medium-font-size;
+        }
+        &.active {
+          background-color: #f8f8f8;
+          a {
+            color: @theme-color;
+          }
+          .icon {
+            color: @theme-color;
+          }
         }
       }
     }
