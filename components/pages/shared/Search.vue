@@ -1,5 +1,5 @@
 <template>
-  <div class="model" :class="{active:isShow}" ref="model" v-swipe:swipedown="close">
+  <Model v-model="isShow">
     <header>
       <nav class="row">
         <div class="col-3 center">
@@ -14,17 +14,21 @@
         </div>
       </nav>
     </header>
-    <div class="page">
+    <div class="page" v-swipe:swipedown="close">
       <button v-for="item in tagList" class="btn" style="margin: 2vw 2vw 0 2vw;" @click="search(item.name)">{{item.name}}</button>
     </div>
-  </div>
+  </Model>
 </template>
 
 <script>
   import {mapActions} from "vuex"
+  import Model from "../../global/Model"
 
   export default {
     componentName: "Search",
+    components:{
+      Model
+    },
     data() {
       return {
         tag: "",
@@ -82,48 +86,33 @@
   @import "../../../assets/style/config.less";
   @import "../../../assets/style/mixin";
 
-  .model {
-    height: 100vh;
-    width: 100vw;
-    background-color: white;
+  header {
+    width: 100%;
+    height: @herder-height;
+    font-size: @big-font-size;
     position: fixed;
     top: 0;
     left: 0;
-    transform: translateY(100vh);
-    transition: @short-animate-time;
-    z-index: @mask-index+1;
-    &.active {
-      transform: translateX(0);
-    }
-
-    header {
+    right: 0;
+    box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+    border-bottom: 1px solid #e2e2e2;
+    background-color: @theme-color;
+    z-index: 10;
+    user-select: none;
+    nav {
       width: 100%;
-      height: @herder-height;
-      font-size: @big-font-size;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-      border-bottom: 1px solid #e2e2e2;
-      background-color: @theme-color;
-      z-index: 10;
-      user-select: none;
-      nav {
-        width: 100%;
-        margin: 0 auto;
-        font-size: 0;
-        height: @herder-nav-height;
-        line-height: @herder-nav-height;
-        .icon {
-          font-size: @big-font-size;
-          color: @white;
-        }
-        .search-box {
-          padding: 0 30px;
-          input {
-            width: 100%;
-          }
+      margin: 0 auto;
+      font-size: 0;
+      height: @herder-nav-height;
+      line-height: @herder-nav-height;
+      .icon {
+        font-size: @big-font-size;
+        color: @white;
+      }
+      .search-box {
+        padding: 0 30px;
+        input {
+          width: 100%;
         }
       }
     }

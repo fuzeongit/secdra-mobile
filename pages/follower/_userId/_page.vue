@@ -3,17 +3,13 @@
     <div class="content row">
       <div class="card" v-for="(follower,index) in list" :key="index">
         <nuxt-link :to="`/user/${follower.id}`" class="cover" v-lazy:background-image="$img.back(follower.background,`specifiedWidth500`)"></nuxt-link>
-        <div class="flex-box info-box" v-if="follower.id!==user.id">
+        <div class="flex-box user-info-box" v-if="follower.id!==user.id">
           <nuxt-link :to="`/user/${follower.id}`" class="head-box">
             <img v-lazy="$img.head(follower.head)" :title="follower.name">
           </nuxt-link>
-          <div class="user-info-box">
-            <p class="nickname">
-              <nuxt-link :to="`/user/${follower.id}`" >
-                {{follower.name}}
-              </nuxt-link>
-            </p>
-          </div>
+          <nuxt-link :to="`/user/${follower.id}`" class="nickname">
+            {{follower.name}}
+          </nuxt-link>
           <div class="follower-btn-box">
             <button class="btn block" @click="follow(follower)">{{follower.focus?`已关注`:`关注`}}</button>
           </div>
@@ -120,47 +116,37 @@
       display: block;
     }
 
-    .info-box {
+    .user-info-box {
+      @info-box-height: 130px;
       @padding-size: 20px;
       @img-size: @info-box-height - @padding-size;
-      @follower-btn-size:100px;
+      @follow-btn-size:100px;
       padding: @padding-size;
-
-      .head-box {
+      .head-box{
         display: block;
         position: relative;
-        transition: @default-animate-time;
-        margin-top: -(@img-size/2);
-
+        margin-top: -(@img-size / 2);
         img {
           border-radius: 50%;
           width: @img-size;
           height:@img-size ;
         }
       }
-      .follower-btn-box{
-        width: @follower-btn-size;
-        .btn{
+      .nickname {
+        width: calc(100% - @img-size - @follow-btn-size);
+        padding: 0 30px;
+        .left();
+        .ellipsis();
+      }
+      .follower-btn-box {
+        width: @follow-btn-size;
+        .btn {
           padding: 0;
           .center();
         }
       }
-      .user-info-box {
-        width: calc(100% - @img-size - @follower-btn-size);
-        padding: 0 30px;
-        transition: @default-animate-time;
-
-        .nickname {
-          .ellipsis()
-        }
-        .introduction {
-          font-size: @small-font-size;
-          margin-top: 10px;
-          color: @gray;
-          .ellipsis()
-        }
-      }
     }
+
   }
   .go-top {
     position: fixed;
