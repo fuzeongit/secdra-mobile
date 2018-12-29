@@ -4,7 +4,7 @@
       <img :src="$img.secdra(draw.url,`specifiedWidth500`)" style="width: 100%">
     </div>
     <template v-if="draw.user.id!==user.id">
-      <div class="flex-box user-info-box" >
+      <div class="flex-box user-info-box">
         <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
           <img :src="$img.head(draw.user.head)" :title="draw.user.name">
         </nuxt-link>
@@ -44,19 +44,57 @@
       </div>
     </div>
     <template>
-      <button class="btn is-suspend tool-btn" v-if="draw.user.id===user.id">
+      <button class="btn is-suspend tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
         <i class="icon s-bianji"></i></button>
       <button class="btn is-suspend tool-btn" v-else @click="collection(draw)">
         <i class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
            :style="{color:draw.focus?`red`:`gray`}"></i></button>
     </template>
+    <Model v-model="isShowEdit" v-loading="editLoading">
+      <div class="edit-model">
+        <header class="edit-header">
+          <nav class="row">
+            <div class="col-3 center">
+              <a class="icon s-fanhui" @click="isShowEdit = false"></a>
+            </div>
+            <div class="col-18 center title">
+              编辑
+            </div>
+          </nav>
+        </header>
+        <div class="form">
+          <div class="input-group">
+            <h5 class="sub-name">名称：</h5>
+            <input type="text" title="name" v-model="drawForm.name" class="input block big">
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">简介：</h5>
+            <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="5"></textarea>
+          </div>
+          <div class="input-group">
+            <h5 class="sub-name">性别：</h5>
+            <RadioGroup v-model="drawForm.isPrivate">
+              <Radio :value="true" label="隐藏"></Radio>
+              <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
+            </RadioGroup>
+          </div>
+          <div class="input-group">
+            <button class="btn block big" @click="save">保存</button>
+          </div>
+        </div>
+      </div>
+    </Model>
   </div>
 </template>
 <script>
   import config from "../../assets/js/config";
   import {mapActions} from "vuex"
+  import Model from "../../components/global/Model"
 
   export default {
+    components: {
+      Model
+    },
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "detail";
       let id = route.params.id;
@@ -76,6 +114,13 @@
         drawForm
       }
     },
+    data() {
+      return {
+        isShowEdit: false,
+        editLoading: false,
+        inputTag: ""
+      }
+    },
     computed: {
       proportion() {
         return this.draw.height / this.draw.width
@@ -85,7 +130,7 @@
       }
     },
     methods: {
-      ...mapActions("draw", ["ACollection"]),
+      ...mapActions("draw", ["ACollection", "AUpdate"]),
       ...mapActions("user", ["AFollow"]),
       async collection(draw) {
         let result = await this.ACollection({
@@ -107,6 +152,19 @@
         }
         this.draw.user.focus = result.data
       },
+      async save() {
+        this.editLoading = true;
+        let result = await this.AUpdate(this.drawForm);
+        this.editLoading = false;
+        if (result.status !== 200) {
+          this.$tooltip({message: result.message});
+          return
+        }
+        this.$tooltip({message: `修改成功`});
+        this.isShowEdit = false;
+        this.draw = result.data;
+        this.reset();
+      }
     }
   }
 </script>
@@ -194,13 +252,53 @@
         padding: 0 1em;
       }
     }
-    .tag-box{
+    .tag-box {
       padding: 20px;
     }
     .tool-btn {
       position: fixed;
       right: 20px;
       bottom: 20px;
+    }
+  }
+
+  .edit-model {
+    .edit-header {
+      width: 100%;
+      height: @herder-height;
+      font-size: @big-font-size;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+      border-bottom: 1px solid #e2e2e2;
+      background-color: @theme-color;
+      z-index: 10;
+      user-select: none;
+      nav {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 0;
+        height: @herder-nav-height;
+        line-height: @herder-nav-height;
+        .icon {
+          font-size: @big-font-size;
+          color: @white;
+        }
+        .title {
+          color: @white;
+        }
+      }
+    }
+
+    .form {
+      margin-top: @herder-height;
+      padding: 25px;
+      .sub-name {
+        font-size: @small-font-size;
+        color: #999;
+      }
     }
   }
 </style>
