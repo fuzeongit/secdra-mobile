@@ -8,11 +8,15 @@ import {Alert} from "../components/global/Alert"
 import {Confirm} from "../components/global/Confirm"
 import {Tooltip} from "../components/global/Tooltip"
 import Pageable from "../components/global/Pageable"
+import RadioGroup from "../components/form/RadioGroup"
+import Radio from "../components/form/Radio"
 
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
 Vue.prototype.$tooltip = Tooltip;
 Vue.component("Pageable",Pageable);
+Vue.component("RadioGroup",RadioGroup);
+Vue.component("Radio",Radio);
 
 Vue.prototype.$http = Http;
 Vue.prototype.$img = Img;

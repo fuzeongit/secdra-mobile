@@ -94,7 +94,7 @@
           height: colNumberHeight.max()
         };
         if (this.page.last) {
-          let lastCardHeight = 300;
+          let lastCardHeight = 61;
           offset.lastCardLeft = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
           offset.lastCardTop = colNumberHeight.min();
           let h = colNumberHeight.min() + lastCardHeight + this.listConstant.heightOffset;

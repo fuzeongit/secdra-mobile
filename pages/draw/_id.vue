@@ -3,18 +3,20 @@
     <div style="background-color: #efefef;width: 100vw" :style="{height:`${100 * proportion}vw`} ">
       <img :src="$img.secdra(draw.url,`specifiedWidth500`)" style="width: 100%">
     </div>
-    <div class="flex-box user-info-box" v-if="draw.user.id!==user.id">
-      <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-        <img :src="$img.head(draw.user.head)" :title="draw.user.name">
-      </nuxt-link>
-      <nuxt-link :to="`/user/${draw.user.id}`" class="nickname">
-        {{draw.user.name}}
-      </nuxt-link>
-      <div class="follower-btn-box">
-        <button class="btn block" @click="follow(draw.user)">{{draw.user.focus?`已关注`:`关注`}}</button>
+    <template v-if="draw.user.id!==user.id">
+      <div class="flex-box user-info-box" >
+        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+          <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+        </nuxt-link>
+        <nuxt-link :to="`/user/${draw.user.id}`" class="nickname">
+          {{draw.user.name}}
+        </nuxt-link>
+        <div class="follower-btn-box">
+          <button class="btn block" @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</button>
+        </div>
       </div>
-    </div>
-    <div class="line"></div>
+      <div class="line"></div>
+    </template>
     <div class="info-box">
       <h3 class="name"><strong>{{draw.name}}</strong></h3>
       <p class="introduction">{{draw.introduction}}</p>
@@ -84,6 +86,7 @@
     },
     methods: {
       ...mapActions("draw", ["ACollection"]),
+      ...mapActions("user", ["AFollow"]),
       async collection(draw) {
         let result = await this.ACollection({
           drawId: draw.id
@@ -93,6 +96,16 @@
           return
         }
         draw.focus = result.data;
+      },
+      async follow(id) {
+        let result = await this.AFollow({
+          followerId: id
+        });
+        if (result.status !== 200) {
+          this.$tooltip({message: result.message});
+          return
+        }
+        this.draw.user.focus = result.data
       },
     }
   }

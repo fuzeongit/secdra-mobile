@@ -39,10 +39,8 @@
       if (store.state.user.user.id === user.id) {
         store.state.user.user = user;
         store.state.user.uploadToken = resultList[1].data;
-        store.state.menu.title = user.name;
-      } else {
-        store.state.menu.name = "";
       }
+      store.state.menu.title = user.name;
       return {
         user
       }
@@ -81,7 +79,7 @@
           followerId: this.user.id
         });
         if (result.status !== 200) {
-          this.$notify({message: result.message});
+          this.$tooltip({message: result.message});
           return
         }
         this.user.focus = result.data

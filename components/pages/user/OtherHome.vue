@@ -1,10 +1,11 @@
 <template>
-  <div class="page">
+  <div style="padding-bottom: 5vw">
     <div class="user-bk cover"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
     </div>
     <div class="info-box">
       <img :src="$img.head(user.head)">
+      <button class="btn is-plain follower"  @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
       <p class="nickname">
         {{user.name}}
         <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
@@ -12,6 +13,38 @@
       <p class="introduction">
         {{user.introduction}}
       </p>
+      <div class="draw-box">
+        <div class="works-box" v-loading="worksLoading">
+          <h3 class="line center">
+            <span>{{user.gender==='FEMALE'?"她":"他"}}的作品</span>
+          </h3>
+          <div class="row">
+            <div class="col-15 img-box center" v-for="(draw,index) in worksList" :key="index">
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="worksList.length===8">
+            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
+        <div class="collection-box" v-loading="collectionLoading">
+          <h3 class="line center">
+            <span>{{user.gender==='FEMALE'?"她":"他"}}的收藏</span>
+          </h3>
+          <div class="row">
+            <div class="col-15 img-box center" v-for="(draw,index) in collectionList" :key="index">
+              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
+              </nuxt-link>
+            </div>
+          </div>
+          <p class="move" v-if="collectionList.length===8">
+            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,14 +82,11 @@
     methods: {
       ...mapActions("user", ["APagingFollower"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
-      getProportion(draw) {
-        return draw.height / draw.width
-      },
       async pagingWorks() {
         this.worksLoading = true;
         let result = await this.APagingByUserId(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
-          this.$notify({message: result.message});
+          this.$tooltip({message: result.message});
           return
         }
         this.worksLoading = false;
@@ -66,7 +96,7 @@
         this.collectionLoading = true;
         let result = await this.APagingCollection(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
-          this.$notify({message: result.message});
+          this.$tooltip({message: result.message});
           return
         }
         this.collectionLoading = false;
@@ -76,7 +106,7 @@
         this.followerLoading = true;
         let result = await this.APagingFollower(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
-          this.$notify({message: result.message});
+          this.$tooltip({message: result.message});
           return
         }
         this.followerLoading = false;
@@ -95,18 +125,22 @@
     width: 100vw;
     height: 50vw;
   }
+
   .info-box {
     @img-size: 150px;
     margin-top: -(@img-size/2);
     padding: 0 20px;
-    .center();
     img {
       height: @img-size;
       width: @img-size;
       border-radius: 50%;
       border: @small-border-radius solid @white;
     }
-    .nickname{
+    .follower{
+      margin-top: @img-size * 2 / 3;
+      float: right;
+    }
+    .nickname {
       font-size: @big-font-size;
       margin-top: 20px;
       font-weight: 600;
@@ -123,12 +157,54 @@
         }
       }
     }
-    .introduction{
+    .introduction {
       font-size: @smallest-font-size;
       line-height: 30px;
       margin-top: 20px;
-      color:@gray;
+      color: @gray;
       padding: 0 60px;
     }
   }
+
+  .works-box, .collection-box {
+    margin-top: 30px;
+    .line {
+      width: 100%;
+      border-bottom: 1px dashed @border-color;
+      margin-bottom: 30px;
+      span {
+        vertical-align: middle;
+        background-color: white;
+        margin-bottom: -20px;
+        display: inline-block;
+        padding: 0 15px;
+      }
+    }
+    .row {
+      min-height: 50vw;
+      margin: 0 -20px;
+      width: 100vw;
+    }
+
+    .move {
+      .right();
+      a {
+        color: @theme-color;
+        font-size: @small-font-size;
+      }
+    }
+  }
+
+  .img-box {
+    @size: 50vw;
+    height: @size;
+    position: relative;
+    .cover {
+      width: 98%;
+      height: 98%;
+      margin: 1%;
+      display: block;
+    }
+  }
+
 </style>
