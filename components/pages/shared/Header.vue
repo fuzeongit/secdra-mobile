@@ -2,21 +2,27 @@
   <header class="animated duration"
           :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow,transparent:activeName===`detail`}">
     <nav class="row">
-      <div class="col-3 center">
-        <a class="icon s-left" v-if="canBack" @click="$router.back()"></a>
-        <a class="icon s-menu" v-else @click="menuIsShow=true"></a>
-      </div>
+      <template v-if="canBack">
+        <div class="col-3 center" @click="$router.back()">
+          <i class="icon s-left"></i>
+        </div>
+      </template>
+      <template v-else>
+        <div class="col-3 center">
+          <i class="icon s-menu" @click="menuIsShow=true"></i>
+        </div>
+      </template>
       <div class="col-18 center title">
         {{menuList[activeName]||$store.state.menu.title}}
       </div>
-      <div class="col-3 center">
-        <nuxt-link class="icon s-home" to="/" :class="{active:activeName===`home`}"></nuxt-link>
-      </div>
-      <div class="col-3 center">
-        <nuxt-link class="icon s-faxian" to="/find" :class="{active:activeName===`find`}"></nuxt-link>
-      </div>
-      <div class="col-3 center">
-        <a class="icon s-chaxun" @click="searchIsShow = true"></a>
+      <nuxt-link class="col-3 center" to="/">
+        <i class="icon s-home" :class="{active:activeName===`home`}"></i>
+      </nuxt-link>
+      <nuxt-link class="col-3 center" to="/find">
+        <i class="icon s-faxian" :class="{active:activeName===`find`}"></i>
+      </nuxt-link>
+      <div class="col-3 center" @click="searchIsShow = true">
+        <i class="icon s-chaxun" ></i>
       </div>
     </nav>
   </header>
@@ -45,7 +51,7 @@
     watch: {
       $route() {
         this.scrollTop = 0;
-        window.scrollTo(0,0)
+        window.scrollTo(0, 0)
       },
     },
     computed: {
@@ -157,8 +163,8 @@
         font-size: @big-font-size;
         color: @white;
       }
-      .active{
-        color:rgba(255,255,255,.6)
+      .active {
+        color: rgba(255, 255, 255, .6)
       }
     }
   }

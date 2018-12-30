@@ -2,15 +2,15 @@
   <Model v-model="isShow">
     <header>
       <nav class="row">
-        <div class="col-3 center">
-          <a class="icon s-fanhui" @click="close"></a>
+        <div class="col-3 center" @click="close">
+          <i class="icon s-fanhui" ></i>
         </div>
         <div class="col-24 center search-box">
           <input type="text" title="search" class="input" v-model="tag"
                  placeholder="输入标签搜索" ref="search">
         </div>
-        <div class="col-3 center">
-          <a class="icon s-chaxun" @click="search()"></a>
+        <div class="col-3 center" @click="search()">
+          <i class="icon s-chaxun" ></i>
         </div>
       </nav>
     </header>

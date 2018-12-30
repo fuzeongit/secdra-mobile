@@ -51,11 +51,11 @@
            :style="{color:draw.focus?`red`:`gray`}"></i></button>
     </template>
     <Model v-model="isShowEdit" v-loading="editLoading">
-      <div class="edit-model">
+      <div class="edit-model" v-swipe:swipedown="()=>{this.isShowEdit=false}">
         <header class="edit-header">
           <nav class="row">
-            <div class="col-3 center">
-              <a class="icon s-fanhui" @click="isShowEdit = false"></a>
+            <div class="col-3 center" @click="isShowEdit = false">
+              <i class="icon s-fanhui"></i>
             </div>
             <div class="col-18 center title">
               编辑
@@ -72,14 +72,34 @@
             <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="5"></textarea>
           </div>
           <div class="input-group">
-            <h5 class="sub-name">性别：</h5>
+            <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
               <Radio :value="true" label="隐藏"></Radio>
               <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
-            <button class="btn block big" @click="save">保存</button>
+            <h5 class="sub-name">标签：</h5>
+            <div class="row">
+              <div class="col-27">
+                <input type="text" title="name" v-model="inputTag" class="input block big">
+              </div>
+              <div class="col-3 center" style="line-height: 10vw;" @click="addTag">
+                <i class="icon s-zengjiaxinjian color"></i>
+              </div>
+            </div>
+          </div>
+          <div style="margin-bottom: 10px">
+            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+                 :value="index"></Tag>
+          </div>
+          <div class="row">
+            <div class="col-15" style="padding-right: 2vw">
+              <button class="btn big block" @click="save">保存</button>
+            </div>
+            <div class="col-15" style="padding-left: 2vw">
+              <button class="btn is-plain big block" @click="reset">重置</button>
+            </div>
           </div>
         </div>
       </div>
@@ -90,10 +110,12 @@
   import config from "../../assets/js/config";
   import {mapActions} from "vuex"
   import Model from "../../components/global/Model"
+  import Tag from "../../components/global/Tag"
 
   export default {
     components: {
-      Model
+      Model,
+      Tag
     },
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "detail";
@@ -152,6 +174,24 @@
         }
         this.draw.user.focus = result.data
       },
+      addTag() {
+        if (this.inputTag === null || this.inputTag === "") {
+          this.inputTag = "";
+          return
+        }
+        if (this.drawForm.tagList.indexOf(this.inputTag) !== -1) {
+          this.inputTag = "";
+          this.$tooltip({
+            message: "不能重复添加"
+          });
+          return
+        }
+        this.drawForm.tagList.push(this.inputTag);
+        this.inputTag = "";
+      },
+      removeTag({value}) {
+        this.drawForm.tagList.removeIndex(value)
+      },
       async save() {
         this.editLoading = true;
         let result = await this.AUpdate(this.drawForm);
@@ -164,6 +204,12 @@
         this.isShowEdit = false;
         this.draw = result.data;
         this.reset();
+      },
+      reset() {
+        let drawForm = Object.assign({}, this.draw);
+        drawForm.tagList = drawForm.tagList.map(item => item.name);
+        drawForm.isPrivate = drawForm.private;
+        this.drawForm = drawForm
       }
     }
   }
