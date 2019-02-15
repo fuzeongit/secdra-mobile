@@ -47,7 +47,7 @@
       </div>
     </div>
     <Model v-model="isShowEdit" v-loading="editLoading">
-      <div class="edit-model">
+      <div class="edit-model" v-swipe:swipedown="()=>{this.isShowEdit=false}">
         <header class="edit-header">
           <nav class="row">
             <div class="col-3 center">
