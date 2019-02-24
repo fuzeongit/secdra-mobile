@@ -1,17 +1,17 @@
 <template>
   <div class="page">
     <div class="content row">
-      <div class="card" v-for="(follower,index) in list" :key="index">
-        <nuxt-link :to="`/user/${follower.id}`" class="cover" v-lazy:background-image="$img.back(follower.background,`specifiedWidth500`)"></nuxt-link>
-        <div class="flex-box user-info-box" v-if="follower.id!==user.id">
-          <nuxt-link :to="`/user/${follower.id}`" class="head-box">
-            <img v-lazy="$img.head(follower.head)" :title="follower.name">
+      <div class="card" v-for="(item,index) in list" :key="index">
+        <nuxt-link :to="`/user/${item.id}`" class="cover" v-lazy:background-image="$img.back(item.background,`specifiedWidth500`)"></nuxt-link>
+        <div class="flex-box user-info-box" v-if="item.id!==user.id">
+          <nuxt-link :to="`/user/${item.id}`" class="head-box">
+            <img v-lazy="$img.head(item.head)" :title="item.name">
           </nuxt-link>
-          <nuxt-link :to="`/user/${follower.id}`" class="nickname">
-            {{follower.name}}
+          <nuxt-link :to="`/user/${item.id}`" class="nickname">
+            {{item.name}}
           </nuxt-link>
-          <div class="follower-btn-box">
-            <button class="btn block" @click="follow(follower)">{{follower.focus?`已关注`:`关注`}}</button>
+          <div class="following-btn-box">
+            <button class="btn block" @click="follow(item)">{{item.focus?`已关注`:`关注`}}</button>
           </div>
         </div>
       </div>
@@ -34,9 +34,9 @@
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "follower";
+      store.state.menu.name = "following";
       let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
+      let {data: result} = await $axios.get(`${config.host}/following/paging`, {
         params: Object.assign({
           id: route.params.userId
         }, pageable)
@@ -78,19 +78,19 @@
       }
     },
     methods: {
-      ...mapActions("user", ["APagingFollower","AFollow"]),
+      ...mapActions("user", ["APagingFollowing","AFollow"]),
       paging(page){
-        this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
+        this.$router.push(`/following/${this.$route.params.userId}/${page}`);
       },
-      async follow(follower) {
+      async follow(following) {
         let result = await this.AFollow({
-          followerId: follower.id
+          followingId: following.id
         });
         if (result.status !== 200) {
           this.$tooltip({message: result.message});
           return
         }
-        follower.focus = result.data
+        following.focus = result.data
       },
     }
   }
@@ -138,7 +138,7 @@
         .left();
         .ellipsis();
       }
-      .follower-btn-box {
+      .following-btn-box {
         width: @follow-btn-size;
         .btn {
           padding: 0;

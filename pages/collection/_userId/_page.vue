@@ -104,7 +104,7 @@
       },
       async follow(id) {
         let result = await this.AFollow({
-          followerId: id
+          followingId: id
         });
         if (result.status !== 200) {
           this.$tooltip({message: result.message});

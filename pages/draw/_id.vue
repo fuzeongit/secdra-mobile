@@ -11,7 +11,7 @@
         <nuxt-link :to="`/user/${draw.user.id}`" class="nickname">
           {{draw.user.name}}
         </nuxt-link>
-        <div class="follower-btn-box">
+        <div class="following-btn-box">
           <button class="btn block" @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</button>
         </div>
       </div>
@@ -166,7 +166,7 @@
       },
       async follow(id) {
         let result = await this.AFollow({
-          followerId: id
+          followingId: id
         });
         if (result.status !== 200) {
           this.$tooltip({message: result.message});
@@ -251,7 +251,7 @@
         .left();
         .ellipsis();
       }
-      .follower-btn-box {
+      .following-btn-box {
         width: @follow-btn-size;
         .btn {
           padding: 0;

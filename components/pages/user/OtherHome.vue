@@ -5,7 +5,7 @@
     </div>
     <div class="info-box">
       <img :src="$img.head(user.head)">
-      <button class="btn is-plain follower"  @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
+      <button class="btn is-plain following"  @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
       <p class="nickname">
         {{user.name}}
         <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
@@ -61,8 +61,8 @@
         worksList: [],
         collectionLoading: false,
         collectionList: [],
-        followerLoading: false,
-        followerList: []
+        followingLoading: false,
+        followingList: []
       }
     },
     computed: {
@@ -77,10 +77,10 @@
     }, mounted() {
       this.pagingWorks();
       this.pagingCollection();
-      this.pagingFollower();
+      this.pagingFollowing();
     },
     methods: {
-      ...mapActions("user", ["APagingFollower"]),
+      ...mapActions("user", ["APagingFollowing"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
         this.worksLoading = true;
@@ -102,15 +102,15 @@
         this.collectionLoading = false;
         this.collectionList = result.data.content;
       },
-      async pagingFollower() {
-        this.followerLoading = true;
-        let result = await this.APagingFollower(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
+      async pagingFollowing() {
+        this.followingLoading = true;
+        let result = await this.APagingFollowing(Object.assign(new Pageable(0, 8, "createDate,desc"), {id: this.user.id}));
         if (result.status !== 200) {
           this.$tooltip({message: result.message});
           return
         }
-        this.followerLoading = false;
-        this.followerList = result.data.content;
+        this.followingLoading = false;
+        this.followingList = result.data.content;
       },
     }
   }
@@ -136,7 +136,7 @@
       border-radius: 50%;
       border: @small-border-radius solid @white;
     }
-    .follower{
+    .following{
       margin-top: @img-size * 2 / 3;
       float: right;
     }

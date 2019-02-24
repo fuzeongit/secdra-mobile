@@ -38,8 +38,8 @@
             我的足迹
           </a>
         </li>
-        <li :class="{active:activeName===`follower`}">
-          <a @click="to(`/follower/${user.id||''}`)">
+        <li :class="{active:activeName===`following`}">
+          <a @click="to(`/following/${user.id||''}`)">
             <i class="icon s-guanzhu1"></i>
             关注用户
           </a>
