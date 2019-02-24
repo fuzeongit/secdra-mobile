@@ -118,5 +118,6 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
+    color:@font-color;
   }
 </style>
