@@ -35,7 +35,14 @@
         }
       }
     },
-    mounted() {},
+    mounted() {
+      this.$confirm({
+        message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
+          this.form.phone = Math.floor(Math.random() * 50).toString();
+          this.login();
+        }
+      })
+    },
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
       ...mapMutations("user", ["MSetUserInfo"]),
