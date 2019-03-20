@@ -20,15 +20,15 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
+      <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
     </transition>
   </div>
 </template>
 <script>
-  import config from "../../../assets/js/config/index";
+  import config from "../../../assets/script/config/index";
   import {mapActions} from "vuex"
-  import {Pageable} from "../../../assets/js/model/base";
+  import {Pageable} from "../../../assets/script/model/base";
 
   export default {
     //在这里不能使用httpUtil
@@ -147,11 +147,5 @@
       }
     }
 
-  }
-  .go-top {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    color:@font-color;
   }
 </style>

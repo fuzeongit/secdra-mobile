@@ -102,11 +102,11 @@
     label {
       i {
         font-size: 25px;
-        color: @border-color
+        color: @font-color-dark-line
       }
     }
     input {
-      color: @font-color
+      color: @font-color-dark;
     }
   }
 </style>

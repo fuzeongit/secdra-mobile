@@ -85,7 +85,7 @@
       text-align: left;
       padding: 10px 0;
       line-height: 25px;
-      color: @gray;
+      color: @font-color-dark;
     }
     .confirm-btn-group {
       margin-top: 10px;

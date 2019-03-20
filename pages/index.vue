@@ -11,8 +11,7 @@
       <div class="col-15 img-box center" v-for="(draw,index) in likeList" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="cover"  v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
-        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
+        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" title="收藏" @click="collection(draw)"
         ></a>
       </div>
     </div>
@@ -27,8 +26,7 @@
       <div class="col-15 img-box center" v-for="(draw,index) in newList" :key="index">
         <nuxt-link :to="`/draw/${draw.id}`" class="cover" v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
-        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}" title="收藏" @click="collection(draw)"
+        <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" title="收藏" @click="collection(draw)"
         ></a>
       </div>
     </div>
@@ -37,14 +35,14 @@
       <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
     </p>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
+      <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
     </transition>
   </div>
 </template>
 <script>
-  import config from "../assets/js/config";
-  import {Pageable} from "../assets/js/model/base";
+  import config from "../assets/script/config";
+  import {Pageable} from "../assets/script/model/base";
   import {mapActions} from "vuex"
   export default {
     //在这里不能使用httpUtil
@@ -132,14 +130,13 @@
       position: absolute;
       right: 5px;
       bottom: 5px;
-      font-size: @big-font-size + 8px;
+      font-size: @big-font-size ;
+      &.s-heart{
+        color:@red;
+      }
+      &.s-hearto{
+        color:@icon-color-dark
+      }
     }
-  }
-
-  .go-top {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    color:@font-color;
   }
 </style>

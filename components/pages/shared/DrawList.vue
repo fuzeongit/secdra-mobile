@@ -31,7 +31,7 @@
 </template>
 
 <script>
-  import {ListConstant} from "../../../assets/js/constant/base";
+  import {ListConstant} from "../../../assets/script/constant/base";
 
   export default {
     componentName: "DrawList",

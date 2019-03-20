@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {Menu} from '../../../assets/js/constant/base'
+  import {Menu} from '../../../assets/script/constant/base'
 
   import Cookie from 'js-cookie'
 

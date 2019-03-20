@@ -6,7 +6,7 @@
 
 * {
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  color: @font-color;
+  color: inherit;
   font-size: @default-font-size;
   box-sizing: border-box;
   margin: 0;
@@ -38,6 +38,11 @@
 html, body {
   background-color: @theme-background-color;
   min-height: 100%;
+  color:@font-color-dark;
+}
+
+.icon{
+  color:@icon-color-dark;
 }
 
 img {
@@ -52,14 +57,13 @@ h4, h5, h6 {
   font-weight: 200;
 }
 
-.color{
-  color:@theme-color;
+.color {
+  color: @theme-color;
 }
 
-.background-color{
+.background-color {
   background-color: @theme-color;
 }
-
 
 //弹性盒子
 .flex-box {
@@ -87,7 +91,7 @@ h4, h5, h6 {
   margin-bottom: 15px;
 }
 
-.btn(@color) {
+.btn(@color,@disabled-color) {
   display: inline-block;
   white-space: nowrap;
   cursor: pointer;
@@ -118,16 +122,24 @@ h4, h5, h6 {
     }
 
     &.is-suspend {
-      background-color: @white;
       padding: 0;
       height: 70px;
       width: 70px;
       border-radius: 50%;
-      border: 1px solid @border-color;
+      border: 1px solid @font-color-dark-line;
       box-shadow: 0 5px 10px rgba(180, 180, 180, 0.55);
-      .icon{
+      .icon {
+        color:@white;
         font-size: @big-font-size + 2px;
         vertical-align: middle;
+      }
+
+      &.is-white{
+        background-color: @white;
+        border-color: @white;
+        .icon {
+          color: @realColor;
+        }
       }
     }
 
@@ -155,46 +167,46 @@ h4, h5, h6 {
 }
 
 .btn {
-  .btn(@theme-color);
+  .btn(@theme-color, darken(@theme-color, -15%));
 }
 
 .btn-red {
-  .btn(@red);
+  .btn(@red, darken(@red, -15%));
 }
 
 .btn-orange {
-  .btn(@orange);
+  .btn(@orange, darken(@orange, -15%));
 }
 
 .btn-yellow {
-  .btn(@yellow);
+  .btn(@yellow, darken(@yellow, -15%));
 }
 
 .btn-green {
-  .btn(@green);
+  .btn(@green, darken(@green, -15%));
 }
 
 .btn-cyan {
-  .btn(@cyan);
+  .btn(@cyan, darken(@cyan, -15%));
 }
 
 .btn-blue {
-  .btn(@blue);
+  .btn(@blue, darken(@blue, -15%));
 }
 
 .btn-color {
-  .btn(@purple);
+  .btn(@purple, darken(@purple, -15%));
 }
 
-.input(@color) {
+.input(@color,@disabled-color) {
   width: 200px;
   display: inline-block;
   margin: 0;
   transition: 0.1s;
   padding: 0 1.5em;
   font-size: @small-font-size;
-  color: @font-color;
-  border: 1px solid @border-color;
+  color: @font-color-dark;
+  border: 1px solid @font-color-dark-line;
   box-shadow: none;
   outline: none;
   user-select: none;
@@ -236,35 +248,35 @@ h4, h5, h6 {
 }
 
 .input {
-  .input(@theme-color)
+  .input(@theme-color, darken(@theme-color, -15%))
 }
 
 .input-red {
-  .input(@red);
+  .input(@red, darken(@red, -15%));
 }
 
 .input-orange {
-  .input(@orange);
+  .input(@orange, darken(@orange, -15%));
 }
 
 .input-yellow {
-  .input(@yellow);
+  .input(@yellow, darken(@yellow, -15%));
 }
 
 .input-green {
-  .input(@green);
+  .input(@green, darken(@green, -15%));
 }
 
 .input-cyan {
-  .input(@cyan);
+  .input(@cyan, darken(@cyan, -15%));
 }
 
 .input-blue {
-  .input(@blue);
+  .input(@blue, darken(@blue, -15%));
 }
 
 .input-purple {
-  .input(@purple);
+  .input(@purple, darken(@purple, -15%));
 }
 
 textarea {
@@ -297,7 +309,7 @@ textarea {
   margin: 0 auto;
 
   .card-header {
-    border-bottom: 1px solid @border-color;
+    border-bottom: 1px solid @font-color-dark-line;
   }
 
   .card-body {
@@ -305,7 +317,7 @@ textarea {
   }
 
   .card-footer {
-    border-top: 1px solid @border-color;
+    border-top: 1px solid @font-color-dark-line;
   }
 }
 
@@ -353,7 +365,7 @@ textarea {
       bottom: -6px;
       left: 50%;
       margin-right: 3px;
-      border-top-color: @border-color;
+      border-top-color: @font-color-dark-line;
       border-bottom-width: 0;
       &:after {
         bottom: 1px;
@@ -368,7 +380,7 @@ textarea {
       top: 50%;
       left: -6px;
       margin-bottom: 3px;
-      border-right-color: @border-color;
+      border-right-color: @font-color-dark-line;
       border-left-width: 0;
       &:after {
         bottom: -6px;
@@ -384,7 +396,7 @@ textarea {
       left: 50%;
       margin-right: 3px;
       border-top-width: 0;
-      border-bottom-color: @border-color;
+      border-bottom-color: @font-color-dark-line;
       &:after {
         top: 1px;
         margin-left: -6px;
@@ -399,7 +411,7 @@ textarea {
       right: -6px;
       margin-bottom: 3px;
       border-right-width: 0;
-      border-left-color: @border-color;
+      border-left-color: @font-color-dark-line;
       &:after {
         right: 1px;
         bottom: -6px;
@@ -414,7 +426,7 @@ textarea {
 .popover {
   position: absolute;
   background: @white;
-  border: 1px solid @border-color;
+  border: 1px solid @font-color-dark-line;
   z-index: @mask-index - 1;
   border-radius: @smallest-border-radius;
   box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
@@ -498,4 +510,10 @@ textarea {
     .col((@number+1), @width)
   }
   .col(1, @grid-column-width);
+}
+
+.go-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
 }

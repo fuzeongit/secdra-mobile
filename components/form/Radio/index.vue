@@ -90,7 +90,7 @@
       width: @default-font-size;
       height: @default-font-size;
       border-radius: 50%;
-      border: 1px solid @box-border-color;
+      border: 1px solid @font-color-dark-line;
       background-color: @white;
       transition: .1s;
       font-size: @small-font-size;
@@ -123,11 +123,11 @@
     &.disabled {
       cursor: not-allowed;
       .radio-inner {
-        border-color: @box-border-color;
-        background-color: @box-disabled-color;
+        border-color: @font-color-dark-line;
+        background-color: @font-color-dark-line;
       }
       .radio-label {
-        color: @box-border-color
+        color: @font-color-dark;
       }
     }
   }

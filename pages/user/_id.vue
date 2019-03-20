@@ -3,14 +3,14 @@
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
+      <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
     </transition>
   </div>
 </template>
 
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
   import SelfHome from "../../components/pages/user/SelfHome";
   import OtherHome from "../../components/pages/user/OtherHome";
   import {mapActions} from "vuex"
@@ -96,11 +96,5 @@
   .page {
     min-height: 100vh;
     margin-top: 0;
-  }
-  .go-top {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    color:@font-color;
   }
 </style>

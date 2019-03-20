@@ -85,7 +85,7 @@
 
 <script>
   import {mapActions} from "vuex"
-  import {Pageable} from "../../../assets/js/model/base";
+  import {Pageable} from "../../../assets/script/model/base";
   import Model from "../../global/Model"
 
   export default {
@@ -220,7 +220,7 @@
     margin-top: 30px;
     .line {
       width: 100%;
-      border-bottom: 1px dashed @border-color;
+      border-bottom: 1px dashed @font-color-dark-line;
       margin-bottom: 30px;
       span {
         vertical-align: middle;

@@ -46,9 +46,8 @@
     <template>
       <button class="btn is-suspend tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
         <i class="icon s-bianji"></i></button>
-      <button class="btn is-suspend tool-btn" v-else @click="collection(draw)">
-        <i class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-           :style="{color:draw.focus?`red`:`gray`}"></i></button>
+      <button class="btn is-suspend is-white tool-btn" v-else @click="collection(draw)">
+        <i class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i></button>
     </template>
     <Model v-model="isShowEdit" v-loading="editLoading">
       <div class="edit-model" v-swipe:swipedown="()=>{this.isShowEdit=false}">
@@ -107,7 +106,7 @@
   </div>
 </template>
 <script>
-  import config from "../../assets/js/config";
+  import config from "../../assets/script/config";
   import {mapActions} from "vuex"
   import Model from "../../components/global/Model"
   import Tag from "../../components/global/Tag"
@@ -269,15 +268,15 @@
       .introduction {
         margin-top: 10px;
         font-size: @small-font-size;
-        color: @gray;
+        color: @font-color-dark-fade;
       }
       .row {
         margin-top: 10px;
         font-size: @small-font-size;
-        color: @gray;
+        color: @font-color-dark-fade;
         i {
           font-size: @small-font-size;
-          color: @gray;
+          color: @icon-color-dark;
         }
         span {
           margin-left: 10px;
@@ -305,6 +304,9 @@
       position: fixed;
       right: 20px;
       bottom: 20px;
+      &.s-hearto{
+        color:@white
+      }
     }
   }
 

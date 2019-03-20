@@ -5,14 +5,14 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend go-top" v-goTop v-show="showGoTop">
+      <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
     </transition>
   </div>
 </template>
 <script>
-  import config from "../../../assets/js/config";
-  import {Pageable} from "../../../assets/js/model/base";
+  import config from "../../../assets/script/config";
+  import {Pageable} from "../../../assets/script/model/base";
   import DrawCardList from "../../../components/pages/shared/DrawCardList";
   import {mapActions} from "vuex"
 
@@ -105,10 +105,4 @@
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
-  .go-top {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    color:@font-color;
-  }
 </style>
