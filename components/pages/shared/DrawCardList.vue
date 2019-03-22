@@ -46,7 +46,7 @@
   @import "../../../assets/style/config.less";
   @import "../../../assets/style/mixin";
 
-  @info-box-height: 130px;
+  @info-box-height: 26vw;
   .card {
     position: relative;
     width: 92vw;
@@ -58,12 +58,12 @@
     .like {
       position: absolute;
       bottom: @info-box-height + @big-font-size;
-      right: 5px;
-      font-size: @big-font-size + 8px;
+      right: 1vw;
+      font-size: @big-font-size;
     }
     .info-box {
-      @img-size: 110px;
-      @padding-size: 20px;
+      @img-size: 22vw;
+      @padding-size: 4vw;
       padding: @padding-size;
       overflow: hidden;
       .head-box {
@@ -77,7 +77,7 @@
       }
       .user-info-box {
         width: calc(100% - @img-size);
-        padding: 0 30px;
+        padding: 0 6vw;
         transition: @default-animate-time;
 
         .nickname {
@@ -85,7 +85,7 @@
         }
         .introduction {
           font-size: @small-font-size;
-          margin-top: 10px;
+          margin-top: 2vw;
           color: @gray;
           .ellipsis()
         }
@@ -96,10 +96,10 @@
         bottom: 0;
         width: calc(100% - @img-size - @padding-size);
         right: 0;
-        padding: 15px;
+        padding: 3vw;
         transition: @default-animate-time;
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(2vw);
       }
     }
   }

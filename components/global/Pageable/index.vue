@@ -68,11 +68,11 @@
 
   .pageable-content {
     user-select: none;
-    margin-bottom: 10px;
+    margin-bottom: 2vw;
     font-weight: 500;
     a, span {
       display: inline-block;
-      padding: 0 10px;
+      padding: 0 2vw;
     }
   }
 </style>

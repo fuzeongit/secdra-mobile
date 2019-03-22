@@ -138,15 +138,15 @@
     }
     .list {
       li {
-        line-height: 50px;
+        line-height: 10vw;
         a {
           font-size: @medium-font-size;
           display: block;
-          padding: 0 60px;
+          padding: 0 12vw;
         }
         .icon {
-          margin-right: 30px;
-          font-size: @medium-font-size;
+          margin-right: 6vw;
+          font-size: @big-font-size;
         }
         &.active {
           background-color: #f8f8f8;

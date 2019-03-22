@@ -133,7 +133,7 @@
     margin: 0 auto;
     position: relative;
     .item {
-      @info-box-height: 80px;
+      @info-box-height: 16vw;
       position: absolute;
       transition: 0.5s;
       border-radius: @smallest-border-radius;
@@ -141,9 +141,9 @@
       box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
       .like {
         position: absolute;
-        bottom: @info-box-height + 5px;
-        right: 5px;
-        font-size: @big-font-size + 8px;
+        bottom: @info-box-height + 1vw;
+        right: 1vw;
+        font-size: @big-font-size;
       }
       .img-box {
         img {
@@ -152,8 +152,8 @@
         }
       }
       .info-box {
-        @img-size: 50px;
-        @padding-size: 15px;
+        @img-size: 10vw;
+        @padding-size: 3vw;
         padding: @padding-size;
         overflow: hidden;
         .head-box {
@@ -168,7 +168,7 @@
         }
         .user-info-box {
           width: calc(100% - @img-size);
-          padding: 0 10px;
+          padding: 0 2vw;
           transition: @default-animate-time;
           .nickname {
             font-size: @small-font-size;
@@ -176,14 +176,14 @@
           }
           .introduction {
             font-size: @smallest-font-size;
-            margin-top: 5px;
+            margin-top: 1vw;
             .ellipsis()
           }
         }
       }
     }
     .last-card {
-      height: 300px;
+      height: 60vw;
       img {
         width: 100%;
       }

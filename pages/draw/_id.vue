@@ -74,7 +74,7 @@
             <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
               <Radio :value="true" label="隐藏"></Radio>
-              <Radio :value="false" label="显示" style="margin-left: 10px"></Radio>
+              <Radio :value="false" label="显示" style="margin-left: 2vw"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
@@ -88,7 +88,7 @@
               </div>
             </div>
           </div>
-          <div style="margin-bottom: 10px">
+          <div style="margin-bottom: 2vw">
             <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
                  :value="index"></Tag>
           </div>
@@ -220,20 +220,20 @@
   @import "../../assets/style/mixin";
 
   .line {
-    width: calc(100% - 20px - 20px);
+    width: calc(100% - 4vw - 4vw);
     height: 1px;
-    border-bottom: 1px dashed #ccc;
-    margin: 0 20px;
+    border-bottom: 1px dashed @font-color-dark-line;
+    margin: 0 4vw;
   }
 
   .page {
     min-height: 100vh;
     margin-top: 0;
     .user-info-box {
-      @info-box-height: 70px;
-      @padding-size: 20px;
+      @info-box-height: 14vw;
+      @padding-size: 4vw;
       @img-size: @info-box-height - @padding-size;
-      @follow-btn-size: 100px;
+      @follow-btn-size: 20vw;
       padding: @padding-size;
       .head-box {
         display: block;
@@ -246,7 +246,7 @@
       }
       .nickname {
         width: calc(100% - @img-size - @follow-btn-size);
-        padding: 0 30px;
+        padding: 0 6vw;
         .left();
         .ellipsis();
       }
@@ -260,18 +260,18 @@
     }
 
     .info-box {
-      @padding-size: 20px;
+      @padding-size: 4vw;
       padding: @padding-size;
       .name {
         .ellipsis()
       }
       .introduction {
-        margin-top: 10px;
+        margin-top: 2vw;
         font-size: @small-font-size;
         color: @font-color-dark-fade;
       }
       .row {
-        margin-top: 10px;
+        margin-top: 2vw;
         font-size: @small-font-size;
         color: @font-color-dark-fade;
         i {
@@ -279,31 +279,31 @@
           color: @icon-color-dark;
         }
         span {
-          margin-left: 10px;
+          margin-left: 2vw;
           vertical-align: baseline;
         }
       }
       .date {
-        margin-top: 10px;
+        margin-top: 2vw;
       }
     }
     .tag-list {
-      @spacing: 10px;
+      @spacing: 2vw;
       margin-bottom: -@spacing;
       .btn {
         margin-right: @spacing;
         margin-bottom: @spacing;
-        line-height: 30px;
+        line-height: 6vw;
         padding: 0 1em;
       }
     }
     .tag-box {
-      padding: 20px;
+      padding: 4vw;
     }
     .tool-btn {
       position: fixed;
-      right: 20px;
-      bottom: 20px;
+      right: 4vw;
+      bottom: 4vw;
       &.s-hearto{
         color:@white
       }
@@ -320,7 +320,7 @@
       left: 0;
       right: 0;
       box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-      border-bottom: 1px solid #e2e2e2;
+      border-bottom: 1px solid @font-color-dark-line;
       background-color: @theme-color;
       z-index: 10;
       user-select: none;
@@ -342,7 +342,7 @@
 
     .form {
       margin-top: @herder-height;
-      padding: 25px;
+      padding: 5vw;
       .sub-name {
         font-size: @small-font-size;
         color: #999;

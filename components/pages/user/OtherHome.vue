@@ -127,14 +127,14 @@
   }
 
   .info-box {
-    @img-size: 150px;
+    @img-size: 30vw;
     margin-top: -(@img-size/2);
-    padding: 0 20px;
+    padding: 0 4vw;
     img {
       height: @img-size;
       width: @img-size;
       border-radius: 50%;
-      border: @small-border-radius solid @white;
+      border: .8vw solid @white;
     }
     .following{
       margin-top: @img-size * 2 / 3;
@@ -142,12 +142,12 @@
     }
     .nickname {
       font-size: @big-font-size;
-      margin-top: 20px;
+      margin-top: 4vw;
       font-weight: 600;
       .center();
       .ellipsis();
       .icon {
-        margin-left: 10px;
+        margin-left: 2vw;
         vertical-align: baseline;
         &.s-xingbie-nv {
           color: #ff74cd;
@@ -159,30 +159,30 @@
     }
     .introduction {
       font-size: @smallest-font-size;
-      line-height: 30px;
-      margin-top: 20px;
+      line-height: 6vw;
+      margin-top: 4vw;
       color: @gray;
-      padding: 0 60px;
+      padding: 0 12vw;
     }
   }
 
   .works-box, .collection-box {
-    margin-top: 30px;
+    margin-top: 6vw;
     .line {
       width: 100%;
       border-bottom: 1px dashed @font-color-dark-line;
-      margin-bottom: 30px;
+      margin-bottom: 6vw;
       span {
         vertical-align: middle;
         background-color: white;
-        margin-bottom: -20px;
+        margin-bottom: -4vw;
         display: inline-block;
-        padding: 0 15px;
+        padding: 0 3vw;
       }
     }
     .row {
       min-height: 50vw;
-      margin: 0 -20px;
+      margin: 0 -4vw;
       width: 100vw;
     }
 

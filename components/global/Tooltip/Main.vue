@@ -71,7 +71,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 15px;
+    padding: 3vw;
     background-color: @black;
     .message {
       .ellipsis();

@@ -34,7 +34,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    font-size: 30px;
+    font-size: 6vw;
     z-index: @mask-index;
     div{
       width: 20vw;

@@ -95,7 +95,7 @@
     left: 0;
     right: 0;
     box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
-    border-bottom: 1px solid #e2e2e2;
+    border-bottom: 1px solid @font-color-dark-line;
     background-color: @theme-color;
     z-index: 10;
     user-select: none;
@@ -110,7 +110,7 @@
         color: @white;
       }
       .search-box {
-        padding: 0 30px;
+        padding: 0 6vw;
         input {
           width: 100%;
         }

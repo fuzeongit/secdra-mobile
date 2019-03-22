@@ -18,7 +18,7 @@ export class Menu {
     this.collection = "收藏";
     this.works = "作品";
     this.footprint = "足迹";
-    this.followimg = "关注";
+    this.following = "关注";
     this.upload = "上传";
   }
 }

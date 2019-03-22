@@ -13,7 +13,7 @@
       <button type="submit" class="btn block big" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
       </button>
     </form>
-    <p class="center" style="position: fixed;bottom: 30px">
+    <p class="center" style="position: fixed;bottom: 6vw">
       <span> © 2018-2019</span>
       <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
     </p>
@@ -85,26 +85,20 @@
 
   .card {
     img{
-       width: 300px
+       width: 60vw;
     }
-    padding:50px 30px;
+    padding:10vw 6vw;
     position: relative;
     background-size: cover;
     background: rgba(255, 255, 255, 0.92) center top;
   }
 
   .sub-logo {
-    margin-bottom: 50px;
+    margin-bottom: 10vw;
     font-size: @small-font-size
   }
 
   .input-group {
-    label {
-      i {
-        font-size: 25px;
-        color: @font-color-dark-line
-      }
-    }
     input {
       color: @font-color-dark;
     }

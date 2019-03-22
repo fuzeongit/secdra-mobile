@@ -100,6 +100,7 @@
       display: inline-block;
       font-size: @default-font-size;
       transition: .1s;
+      vertical-align: middle;
     }
     .radio-original {
       display: none;
@@ -116,7 +117,7 @@
         border: 8px solid @theme-color;
       }
       .radio-label {
-        color: @theme-color
+        color: @theme-color;
       }
     }
 

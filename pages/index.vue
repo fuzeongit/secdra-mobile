@@ -9,7 +9,8 @@
     </p>
     <div class="row">
       <div class="col-15 img-box center" v-for="(draw,index) in likeList" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="cover"  v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
+        <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                   v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" title="收藏" @click="collection(draw)"
         ></a>
@@ -24,13 +25,14 @@
     </p>
     <div class="row">
       <div class="col-15 img-box center" v-for="(draw,index) in newList" :key="index">
-        <nuxt-link :to="`/draw/${draw.id}`" class="cover" v-lazy:background-image = "$img.secdra(draw.url,'specifiedWidth')">
+        <nuxt-link :to="`/draw/${draw.id}`" class="cover"
+                   v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
         </nuxt-link>
         <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}" title="收藏" @click="collection(draw)"
         ></a>
       </div>
     </div>
-    <p class="center" style="line-height: 50px">
+    <p class="center" style="line-height: 6vw">
       <span> © 2018-2019</span>
       <a href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备18144953号-1</a>
     </p>
@@ -44,6 +46,7 @@
   import config from "../assets/script/config";
   import {Pageable} from "../assets/script/model/base";
   import {mapActions} from "vuex"
+
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
@@ -81,7 +84,7 @@
         return this.$store.state.window.scrollTop
       },
     },
-    methods:{
+    methods: {
       ...mapActions("draw", ["ACollection"]),
       async collection(draw) {
         let result = await this.ACollection({
@@ -103,8 +106,8 @@
   @import "../assets/style/mixin";
 
   .title {
-    line-height: 50px;
-    padding: 0 20px;
+    line-height: 10vw;
+    padding: 0 4vw;
     .icon {
       font-size: @medium-font-size;
     }
@@ -128,14 +131,14 @@
     }
     .like {
       position: absolute;
-      right: 5px;
-      bottom: 5px;
-      font-size: @big-font-size ;
-      &.s-heart{
-        color:@red;
+      right: 1vw;
+      bottom: 1vw;
+      font-size: @big-font-size;
+      &.s-heart {
+        color: @red;
       }
-      &.s-hearto{
-        color:@icon-color-dark
+      &.s-hearto {
+        color: @icon-color-dark
       }
     }
   }

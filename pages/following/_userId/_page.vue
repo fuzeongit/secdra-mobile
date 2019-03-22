@@ -100,7 +100,7 @@
   @import "../../../assets/style/color";
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
-  @info-box-height: 130px;
+
   .card {
     @card-width:92vw;
     position: relative;
@@ -108,7 +108,7 @@
     margin: 4vw;
     border-radius: @default-border-radius;
     background-color: @white;
-    box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
+    box-shadow: 0 0 10vw rgba(150, 150, 150, 0.55);
     overflow: hidden;
     .cover{
       width: 100%;
@@ -117,10 +117,10 @@
     }
 
     .user-info-box {
-      @info-box-height: 130px;
-      @padding-size: 20px;
+      @info-box-height: 26vw;
+      @padding-size: 4vw;
       @img-size: @info-box-height - @padding-size;
-      @follow-btn-size:100px;
+      @follow-btn-size:20vw;
       padding: @padding-size;
       .head-box{
         display: block;
@@ -134,7 +134,7 @@
       }
       .nickname {
         width: calc(100% - @img-size - @follow-btn-size);
-        padding: 0 30px;
+        padding: 0 6vw;
         .left();
         .ellipsis();
       }

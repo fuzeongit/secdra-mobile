@@ -72,23 +72,23 @@
   @import "../../../assets/style/config.less";
 
   .card {
-    width: 350px;
+    width: 7vw;
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
-    padding: 15px;
+    padding:3vw;
     h3 {
       text-align: left;
-      line-height: 40px;
+      line-height: 8vw;
     }
     p {
       text-align: left;
-      padding: 10px 0;
-      line-height: 25px;
+      padding: 2vw 0;
+      line-height: 5vw;
       color: @font-color-dark;
     }
     .confirm-btn-group {
-      margin-top: 10px;
+      margin-top: 2vw;
       text-align: right;
     }
   }
