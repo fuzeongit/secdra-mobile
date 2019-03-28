@@ -21,5 +21,6 @@ export class Menu {
     this.follower = "粉丝";
     this.following = "关注";
     this.upload = "上传";
+    this.message = "通知";
   }
 }

@@ -8,7 +8,7 @@ module.exports = {
   ** Headers of the pages
   */
   head: {
-    title: 'Secdra',
+    title: 'Secdra - 想你所想',
     meta: [
       {charset: 'utf-8'},
       {
@@ -19,6 +19,7 @@ module.exports = {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_45g3y7tp55w.css'},
     ]
   },
 

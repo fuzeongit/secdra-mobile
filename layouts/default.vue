@@ -24,5 +24,4 @@
   }
 </script>
 <style type="text/less" lang="less">
-  @import "//at.alicdn.com/t/font_896802_qh8o7c20nuj.css";
 </style>

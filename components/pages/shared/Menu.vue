@@ -56,6 +56,12 @@
             我要上传
           </a>
         </li>
+        <li :class="{active:activeName===`message`}">
+          <a @click="to(`/message`)">
+            <i class="icon s-xinxizhongxin"></i>
+            通知信息
+          </a>
+        </li>
         <li>
           <a @click="logout">
             <i class="icon s-zhuxiao"></i>
