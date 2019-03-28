@@ -1,7 +1,7 @@
 <template>
   <div class="page" id="test" style="height: calc(100vh - (12vw + 1px));">
-    <RefreshContent>
-      <p v-for="item in 100">{{item}}</p>
+    <RefreshContent @load="load" ref="refresh">
+      <p v-for="item in list" style="margin: 20px ">{{item}}</p>
     </RefreshContent>
   </div>
 </template>
@@ -29,9 +29,10 @@
           system: '系统通知',
           settings: '消息设置',
         },
+        list: [1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
       }
     },
-    components:{
+    components: {
       RefreshContent
     },
     computed: {
@@ -41,7 +42,15 @@
     },
     mounted() {
 
+    }, methods: {
+      load() {
 
+        setTimeout(()=>{
+          this.list.push(this.list.max() + 1);
+          this.$refs["refresh"].close()
+        },1000)
+
+      }
     }
   }
 </script>

@@ -60,7 +60,7 @@
   @import "../../../assets/style/config.less";
 
   .card {
-    width: 7vw;
+    width: 70vw;
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
@@ -70,10 +70,11 @@
       line-height: 8vw;
     }
     p {
+      font-size: @small-font-size;
       text-align: left;
       padding: 2vw 0;
       line-height: 5vw;
-      color: @font-color-dark;
+      color: @font-color-dark-fade;
     }
     .alert-btn-group {
       margin-top: 2vw;
