@@ -1,6 +1,9 @@
 <template>
   <div class="page">
-    <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"></DrawList>
+    <RefreshContent @upLoad="paging" @downLoad="refresh" ref="refresh">
+      <DrawList :page="page" :list="list" :pageLoading="pageLoading" @collection="collection"></DrawList>
+    </RefreshContent>
+
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
       <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
         <i class="icon s-zhiding"></i></button>
@@ -12,10 +15,11 @@
   import {Pageable} from "../assets/script/model/base";
   import {mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
-
+  import RefreshContent from "../components/global/RefreshContent"
   export default {
     components:{
-      DrawList
+      DrawList,
+      RefreshContent
     },
     async asyncData({store, req, redirect, route, $axios}) {
       store.state.menu.name = "find";
@@ -62,6 +66,23 @@
     },
     methods: {
       ...mapActions("draw", ["APagingByRecommend", "AListByRecommend", "ACollection"]),
+      async refresh(){
+        this.pageable = new Pageable();
+        this.pageable.size = 16;
+        let result = await this.APagingByRecommend(Object.assign({
+            tag: this.$route.params.tag
+          }, this.pageable)
+        );
+        this.$refs["refresh"].close();
+        let data = result.data;
+        if (result.status !== 200) {
+          this.$tooltip({message: result.message});
+          return
+        }
+        this.page = data;
+        this.list = data.content;
+      },
+
       /**
        * 获取分页数据
        * @returns {Promise<void>}
@@ -114,4 +135,8 @@
   @import "../assets/style/color";
   @import "../assets/style/config";
   @import "../assets/style/mixin";
+
+  .page{
+    height: @page-height;
+  }
 </style>

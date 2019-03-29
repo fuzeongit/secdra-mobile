@@ -1,6 +1,6 @@
 <template>
   <div class="page" id="test" style="height: calc(100vh - (12vw + 1px));">
-    <RefreshContent @load="load" ref="refresh">
+    <RefreshContent @downLoad="load"  @upLoad="load" ref="refresh">
       <p v-for="item in list" style="margin: 20px ">{{item}}</p>
     </RefreshContent>
   </div>
@@ -44,7 +44,6 @@
 
     }, methods: {
       load() {
-
         setTimeout(()=>{
           this.list.push(this.list.max() + 1);
           this.$refs["refresh"].close()

@@ -1,8 +1,9 @@
 <template>
   <div class="content" ref="content" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"
-       :class="{loading:openRefresh}">
-    <div class="refresh flex-box" :style="{transform: `translateY(${translateY}px)`}" :class="{transitioning}"
-         @transitionend="transitionend">
+       :class="{loading:openRefresh}"
+       @scroll="scroll">
+    <div class="refresh flex-box" :style="{transform:refreshTransform,opacity:closing?0:1}" ref="refresh"
+         :class="{transitioning}">
       <i class="icon s-shuaxin" :style="{transform: `rotate(${translateY * 2}deg)`}" v-show="!loading"></i>
       <img src="../../../assets/image/svg/loading2.svg" style="width: 6vw;position: absolute" v-show="loading">
     </div>
@@ -13,13 +14,16 @@
 </template>
 
 <script>
-
   export default {
     componentName: "RefreshContent",
     props: {
-      offset: {
+      downOffset: {
         type: Number,
-        default: 100
+        default: 120
+      },
+      upOffset: {
+        type: Number,
+        default: 200
       }
     },
     data() {
@@ -29,18 +33,33 @@
         translateY: 0,
         transitioning: false,
         loading: false,
-        startScrollTop: null
+        startScrollTop: null,
+        closing: false
+      }
+    },
+    computed: {
+      refreshTransform() {
+        if (this.closing) {
+          return `translateY(${this.translateY}px) scale3d(.3, .3, .3)`
+        }
+        return `translateY(${this.translateY}px) `
       }
     },
     mounted() {
-
     },
     methods: {
-      touchstart(event) {
-        // console.log(this.$refs["content"].scrollTop);
+      scroll(event) {
+        let scrollBottom = event.target.scrollHeight - event.target.scrollTop - event.target.clientHeight;
+        if (scrollBottom > 200) {
+          return
+        }
+        this.$emit("upLoad");
+      },
+      touchstart() {
+
       },
       touchmove(event) {
-        if(this.loading || this.transitioning){
+        if (this.loading || this.transitioning || this.closing) {
           return
         }
         let scrollTop = this.$refs["content"].scrollTop;
@@ -51,39 +70,57 @@
           }
         } else {
           if (!this.loading || !this.transitioning) {
-            this.translateY = event.targetTouches[0].pageY - this.startY;
+            if (event.targetTouches[0].pageY - this.startY > this.downOffset + 50) {
+              this.translateY = this.downOffset + 50;
+            } else {
+              this.translateY = event.targetTouches[0].pageY - this.startY
+            }
           }
         }
         this.startScrollTop = scrollTop;
       },
       touchend() {
         if (this.openRefresh) {
-          if (this.translateY > this.offset) {
+          if (this.translateY >= this.downOffset) {
             this.transitioning = true;
             this.loading = true;
-            this.translateY = this.offset;
-          } else if (0 < this.translateY < this.offset) {
+            this.translateY = this.downOffset;
+          } else if (0 <= this.translateY < this.downOffset) {
             this.transitioning = true;
             this.translateY = 0;
           }
         }
+        this.$refs["refresh"].addEventListener("transitionend", this.loadingTransitionEnd);
         this.startScrollTop = null;
         this.startY = 0;
       },
-      transitionend() {
-        if (this.translateY >= this.offset) {
-          this.$emit("load")
+      loadingTransitionEnd() {
+        this.$refs["refresh"].removeEventListener("transitionend", this.loadingTransitionEnd);
+        if (this.translateY >= this.downOffset) {
+          this.$emit("downLoad")
         } else {
-          this.close()
+          this.openRefresh = false;
+          this.startY = 0;
+          this.translateY = 0;
+          this.transitioning = false;
+          this.loading = false;
+          this.startScrollTop = null;
+          this.closing = false;
         }
       },
       close() {
+        this.$refs["refresh"].addEventListener("transitionend", this.closeTransitionEnd);
+        this.closing = true;
+      },
+      closeTransitionEnd() {
+        this.$refs["refresh"].removeEventListener("transitionend", this.closeTransitionEnd);
+        this.openRefresh = false;
+        this.startY = 0;
         this.translateY = 0;
-        setTimeout(()=>{
-          this.openRefresh = false;
-          this.loading = false;
-          this.transitioning = false;
-        },200)
+        this.transitioning = false;
+        this.loading = false;
+        this.startScrollTop = null;
+        this.closing = false;
       }
     }
   }
@@ -97,7 +134,8 @@
     height: 100%;
     overflow: scroll;
     position: relative;
-
+    contain: layout size style;
+    will-change: scroll-position;
     &.loading {
       touch-action: none;
       overflow: hidden;
@@ -124,5 +162,6 @@
       transition: all @short-animate-time;
     }
   }
+
 
 </style>
