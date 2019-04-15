@@ -44,7 +44,7 @@
       </div>
     </div>
     <template>
-      <button class="btn is-suspend tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
+      <button class="btn is-suspend is-white tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
         <i class="icon s-bianji"></i></button>
       <button class="btn is-suspend is-white tool-btn" v-else @click="collection(draw)">
         <i class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i></button>
