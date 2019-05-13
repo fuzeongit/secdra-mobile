@@ -1,10 +1,31 @@
 <template>
-  <div></div>
+  <div>
+    <p class="list-title"><strong>消息通知开关</strong></p>
+    <div>
+      <div class="row">
+        <div class="col-20">评论我的</div>
+        <div class="col-10 right">
+          <SSwitch v-model="settingsForm.commentStatus"></SSwitch>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-20">回复我的</div>
+        <div class="col-10 right">
+          <SSwitch v-model="settingsForm.replyStatus"></SSwitch>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-20">关注我的</div>
+        <div class="col-10 right">
+          <SSwitch v-model="settingsForm.followStatus"></SSwitch>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
   import {mapActions} from "vuex"
   import config from "../../assets/script/config";
-
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
@@ -20,7 +41,20 @@
         settingsForm
       }
     },
-
+    watch: {
+      settingsForm: {
+        handler(val) {
+          this.saveSetting(val);
+        },
+        deep: true
+      }
+    },
+    methods: {
+      ...mapActions("message", ["ASaveSetting"]),
+      async saveSetting(val) {
+        await this.ASaveSetting(val)
+      }
+    }
   }
 </script>
 
@@ -29,4 +63,21 @@
   @import "../../assets/style/config";
   @import "../../assets/style/mixin";
 
+  .list-title {
+    line-height: 8vw;
+    padding: 0 4vw;
+    * {
+      font-size: @smallest-font-size;
+    }
+  }
+
+  .row {
+    padding: 0 4vw;
+    line-height: 12vw;
+    background-color: @white;
+    border-bottom: 1px solid @font-color-dark-line;
+    &:first-child {
+      border-top: 1px solid @font-color-dark-line;
+    }
+  }
 </style>

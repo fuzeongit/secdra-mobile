@@ -21,6 +21,10 @@
     <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
       <nuxt-child/>
     </transition>
+    <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
+      <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
+        <i class="icon s-up"></i></button>
+    </transition>
   </div>
 </template>
 
@@ -45,12 +49,30 @@
           system: '系统通知',
           settings: '消息设置',
         },
-        popperStatus: false
+        popperStatus: false,
+        showGoTop: false
+      }
+    },
+    watch: {
+      /**
+       * 如果直接用计算属性计算showGoTop的话，
+       * 可能会导致渲染过度，导致页面卡顿
+       */
+      scrollTop(newVal, oldVal) {
+        let threshold = 150;
+        if (newVal > threshold && oldVal <= threshold) {
+          this.showGoTop = true
+        } else if (newVal <= threshold && oldVal > threshold) {
+          this.showGoTop = false
+        }
       }
     },
     computed: {
       type() {
         return this.$store.state.message.type
+      },
+      scrollTop() {
+        return this.$store.state.window.scrollTop
       }
     },
     mounted() {
@@ -69,16 +91,20 @@
   @import "../assets/style/config";
   @import "../assets/style/mixin";
 
+  .page {
+    background-color: @list-background-color;
+  }
+
   .active-name {
     line-height: @herder-height;
     font-size: @default-font-size;
     padding: 0 5vw;
     border-bottom: 1px solid @font-color-dark-line;
-    box-shadow: 0 0 0.8vw @font-color-dark-line;
-    .s-down{
+    background-color: @white;
+    .s-down {
       display: inline-block;
       transition: @short-animate-time all;
-      &.open{
+      &.open {
         transform: rotate(-180deg);
       }
     }

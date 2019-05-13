@@ -11,7 +11,7 @@ import Popper from "../components/global/Popper"
 import Pageable from "../components/global/Pageable"
 import RadioGroup from "../components/form/RadioGroup"
 import Radio from "../components/form/Radio"
-
+import Switch from "../components/form/Switch";
 Vue.prototype.$alert = Alert;
 Vue.prototype.$confirm = Confirm;
 Vue.prototype.$tooltip = Tooltip;
@@ -19,6 +19,7 @@ Vue.component("Popper",Popper);
 Vue.component("Pageable",Pageable);
 Vue.component("RadioGroup",RadioGroup);
 Vue.component("Radio",Radio);
+Vue.component("SSwitch",Switch);
 
 Vue.prototype.$http = Http;
 Vue.prototype.$img = Img;
