@@ -30,8 +30,8 @@
 
 <script>
   import {Menu} from '../../../assets/script/constant/base'
-
   import Cookie from 'js-cookie'
+  import {mapActions} from "vuex"
 
   export default {
     componentName: "Header",
@@ -98,12 +98,14 @@
       }
     },
     mounted() {
+      this.countUnread();
       document.addEventListener('scroll', this.documentScroll);
     },
     beforeDestroy() {
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
+      ...mapActions("message", ["ACount"]),
       documentScroll(event) {
         this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
         this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
@@ -120,6 +122,16 @@
           }
         });
       },
+      async countUnread() {
+        let result = await this.ACount();
+        if (result.status !== 200) {
+          return
+        }
+        this.$store.state.message.commentCount = result.data.COMMENT;
+        this.$store.state.message.replyCount = result.data.REPLY;
+        this.$store.state.message.followCount = result.data.FOLLOW;
+        this.$store.state.message.systemCount = result.data.SYSTEM;
+      }
     }
   }
 </script>

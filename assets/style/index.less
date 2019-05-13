@@ -17,6 +17,7 @@
   list-style: none;
   -webkit-tap-highlight-color: transparent !important;
   -webkit-overflow-scrolling: touch;
+
 }
 
 *::-webkit-scrollbar {
@@ -38,11 +39,11 @@
 html, body {
   background-color: @theme-background-color;
   min-height: 100%;
-  color:@font-color-dark;
+  color: @font-color-dark;
 }
 
-.icon{
-  color:@icon-color-dark;
+.icon {
+  color: @icon-color-dark;
 }
 
 img {
@@ -129,12 +130,12 @@ h4, h5, h6 {
       border: 1px solid @font-color-dark-line;
       box-shadow: 0 5px 10px rgba(180, 180, 180, 0.55);
       .icon {
-        color:@white;
+        color: @white;
         font-size: @big-font-size;
         vertical-align: middle;
       }
 
-      &.is-white{
+      &.is-white {
         background-color: @white;
         border-color: @white;
         .icon {
@@ -341,6 +342,7 @@ textarea {
 
 /*---------------------------------------*/
 .popper {
+  @size: 2.5vw;
   .popper__arrow {
     &:after {
       content: " ";
@@ -348,7 +350,7 @@ textarea {
       display: block;
       width: 0;
       height: 0;
-      border: 6px solid transparent;
+      border: @size solid transparent;
     }
     & {
       filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .03));
@@ -356,20 +358,20 @@ textarea {
       display: block;
       width: 0;
       height: 0;
-      border: 6px solid transparent;
+      border: @size solid transparent;
     }
 
   }
   &[x-placement^=top] {
     .popper__arrow {
-      bottom: -6px;
+      bottom: -@size;
       left: 50%;
-      margin-right: 3px;
+      margin-right: @size / 2;
       border-top-color: @font-color-dark-line;
       border-bottom-width: 0;
       &:after {
         bottom: 1px;
-        margin-left: -6px;
+        margin-left: -@size;
         border-top-color: #fff;
         border-bottom-width: 0;
       }
@@ -378,12 +380,12 @@ textarea {
   &[x-placement^=right] {
     .popper__arrow {
       top: 50%;
-      left: -6px;
-      margin-bottom: 3px;
+      left: -@size;
+      margin-bottom: @size / 2;
       border-right-color: @font-color-dark-line;
       border-left-width: 0;
       &:after {
-        bottom: -6px;
+        bottom: -@size;
         left: 1px;
         border-right-color: #fff;
         border-left-width: 0;
@@ -392,14 +394,14 @@ textarea {
   }
   &[x-placement^=bottom] {
     .popper__arrow {
-      top: -6px;
+      top: -@size;
       left: 50%;
-      margin-right: 3px;
+      margin-right: @size / 2;
       border-top-width: 0;
       border-bottom-color: @font-color-dark-line;
       &:after {
         top: 1px;
-        margin-left: -6px;
+        margin-left: -@size;
         border-top-width: 0;
         border-bottom-color: #fff;
       }
@@ -408,14 +410,14 @@ textarea {
   &[x-placement^=left] {
     .popper__arrow {
       top: 50%;
-      right: -6px;
-      margin-bottom: 3px;
+      right: -@size;
+      margin-bottom: @size / 2;
       border-right-width: 0;
       border-left-color: @font-color-dark-line;
       &:after {
         right: 1px;
-        bottom: -6px;
-        margin-left: -6px;
+        bottom: -@size;
+        margin-left: -@size;
         border-right-width: 0;
         border-left-color: #fff;
       }
@@ -424,23 +426,24 @@ textarea {
 }
 
 .popover {
+  @size: 2.5vw;
   position: absolute;
   background: @white;
   border: 1px solid @font-color-dark-line;
   z-index: @mask-index - 1;
   border-radius: @smallest-border-radius;
-  box-shadow: 0 0 10px rgba(202, 202, 202, 0.55);
+  box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
   &[x-placement^=top] {
-    margin-bottom: 12px;
+    margin-bottom: @size * 2;
   }
   &[x-placement^=right] {
-    margin-left: 12px;
+    margin-left: @size * 2;
   }
   &[x-placement^=bottom] {
-    margin-top: 12px;
+    margin-top: @size * 2;
   }
   &[x-placement^=left] {
-    margin-right: 12px;
+    margin-right: @size * 2;
   }
 }
 

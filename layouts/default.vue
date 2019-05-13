@@ -4,9 +4,9 @@
       <Header></Header>
       <Menu></Menu>
       <Search></Search>
-        <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
-          <nuxt />
-        </transition>
+      <transition name="fade" enter-active-class="fadeIn duration" leave-active-class="fadeOut duration">
+        <nuxt/>
+      </transition>
     </section>
   </div>
 </template>
@@ -14,8 +14,9 @@
   import Header from "../components/pages/shared/Header"
   import Menu from "../components/pages/shared/Menu"
   import Search from "../components/pages/shared/Search"
+
   export default {
-    middleware: 'auth',
+    middleware: ['auth', 'messageRedirect'],
     components: {
       Header,
       Menu,

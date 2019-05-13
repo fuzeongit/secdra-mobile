@@ -19,6 +19,7 @@
     "less-loader": "^4.1.0",
     "moment": "^2.23.0",
     "nuxt": "^2.3.1",
+    "popper.js": "^1.15.0",
     "postcss-px-to-viewport": "0.0.3",
     "qs": "^6.6.0",
     "vue-lazyload": "^1.2.6",

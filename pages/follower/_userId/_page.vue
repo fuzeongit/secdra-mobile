@@ -22,7 +22,7 @@
     <br>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
       <button class="btn is-suspend is-white go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-zhiding"></i></button>
+        <i class="icon s-up"></i></button>
     </transition>
   </div>
 </template>
