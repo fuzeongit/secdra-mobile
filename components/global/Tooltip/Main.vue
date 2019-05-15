@@ -20,8 +20,8 @@
       closed(newVal) {
         if (newVal) {
           this.visible = false;
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
+          this.$el.addEventListener('transitionend', this.destroyElement);
+          this.$el.addEventListener('animationend', this.destroyElement);
         }
       }
     },

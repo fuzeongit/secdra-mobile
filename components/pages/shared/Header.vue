@@ -113,15 +113,6 @@
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
       },
-      logout() {
-        this.$confirm({
-          message: `你确定要退出登录吗？`,
-          okCallback: () => {
-            Cookie.remove("token");
-            this.$router.replace("/login")
-          }
-        });
-      },
       async countUnread() {
         let result = await this.ACount();
         if (result.status !== 200) {
