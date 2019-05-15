@@ -150,7 +150,7 @@
       left: 50%;
       margin-left: -6vw;
       border-radius: 50%;
-      background-color: white;
+      background-color: @white;
       z-index: @mask-index - 1;
       .icon {
         font-weight: 800;

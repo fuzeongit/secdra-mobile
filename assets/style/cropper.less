@@ -8,6 +8,8 @@
  * Date: 2018-10-24T13:07:11.429Z
  */
 
+@import "./color";
+
 .cropper-container {
   direction: ltr;
   font-size: 0;
@@ -141,7 +143,7 @@
 }
 
 .cropper-line {
-  background-color: #39f;
+  background-color: @blue;
 }
 
 .cropper-line.line-e {
@@ -173,7 +175,7 @@
 }
 
 .cropper-point {
-  background-color: #39f;
+  background-color: @blue;
   height: 5px;
   opacity: .75;
   width: 5px;
@@ -257,7 +259,7 @@
 }
 
 .cropper-point.point-se:before {
-  background-color: #39f;
+  background-color: @blue;
   bottom: -50%;
   content: ' ';
   display: block;

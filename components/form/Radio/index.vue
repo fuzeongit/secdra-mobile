@@ -124,11 +124,11 @@
     &.disabled {
       cursor: not-allowed;
       .radio-inner {
-        border-color: @font-color-dark-line;
-        background-color: @font-color-dark-line;
+        border-color: @box-border-color;
+        background-color: @box-disabled-color;
       }
       .radio-label {
-        color: @font-color-dark;
+        color: @box-border-color;
       }
     }
   }

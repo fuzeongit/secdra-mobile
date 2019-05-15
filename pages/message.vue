@@ -153,7 +153,7 @@
         height: 3.2vw;
         line-height: 3.2vw;
         color: #ffffff;
-        background-color: #fb7299;
+        background-color: @theme-color;
         padding: 0 2vw;
         border-radius: 2.5vw;
         margin-left: 3vw;

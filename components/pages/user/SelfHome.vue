@@ -224,7 +224,7 @@
       margin-bottom: 6vw;
       span {
         vertical-align: middle;
-        background-color: white;
+        background-color: @white;
         margin-bottom: -4vw;
         display: inline-block;
         padding: 0 3vw;

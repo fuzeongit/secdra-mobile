@@ -127,7 +127,7 @@
     @width: 70vw;
     height: 100vh;
     width: @width;
-    background-color: white;
+    background-color: @white;
     position: fixed;
     top: 0;
     left: 0;
