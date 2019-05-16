@@ -1,7 +1,7 @@
 <template>
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
-      <img src="../assets/image/svg/logo.svg" >
+      <img src="../assets/image/svg/logo.svg">
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
         <input type="text" class="input block big" title="手机" v-model="form.phone" placeholder="手机号码">
@@ -22,10 +22,11 @@
 <script>
   import Cookies from 'js-cookie'
   import {mapActions, mapMutations} from "vuex"
-
+  //layout切换多次触发问题暂时这样处理
+  let layout = 'login';
   export default {
     name: "login",
-    layout: 'login',
+    layout,
     data() {
       return {
         loginLoading: false,
@@ -36,12 +37,14 @@
       }
     },
     mounted() {
-      this.$confirm({
-        message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
-          this.form.phone = Math.floor(Math.random() * 50).toString();
-          this.login();
-        }
-      })
+      if (this.$root.layoutName === layout) {
+        this.$confirm({
+          message: `暂时不开放注册，是否随机账号登录`, okCallback: _ => {
+            this.form.phone = Math.floor(Math.random() * 50).toString();
+            this.login();
+          }
+        })
+      }
     },
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
@@ -84,10 +87,10 @@
   }
 
   .card {
-    img{
-       width: 60vw;
+    img {
+      width: 60vw;
     }
-    padding:10vw 6vw;
+    padding: 10vw 6vw;
     position: relative;
     background-size: cover;
     background: rgba(255, 255, 255, 0.92) center top;

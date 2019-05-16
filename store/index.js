@@ -17,7 +17,6 @@ Vue.use(vuex);
 export const strict = false;
 export const actions = {
   nuxtServerInit({commit}) {
-    console.log("user/MSetUserInfo");
     commit("user/MSetUserInfo", null)
   },
 };
