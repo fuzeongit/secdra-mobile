@@ -75,8 +75,6 @@
         return this.$store.state.window.scrollTop
       }
     },
-    mounted() {
-    },
     methods: {
       to(key) {
         this.$refs["popover"].doClose();

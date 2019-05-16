@@ -5,19 +5,18 @@ import httpUtil from '../assets/script/util/httpUtil'
  *
  *  @author fjj
  */
-
-const state = {
+export const state = () => ({
   user: null,
   uploadToken: null
-};
+});
 
-const mutations = {
+export const mutations = {
   MSetUserInfo(state, user) {
     state.user = user;
   },
 };
 
-const actions = {
+export const actions = {
   //登录
   async ALogin(context, params) {
     let result = await httpUtil.post("/user/login", params);
@@ -58,13 +57,6 @@ const actions = {
   async APagingFollowing(context, params) {
     return await httpUtil.get("/following/paging", params)
   }
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
 };
 
 

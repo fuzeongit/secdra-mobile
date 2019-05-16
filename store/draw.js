@@ -1,10 +1,10 @@
 import httpUtil from "../assets/script/util/httpUtil";
 
-const state = {};
+export const state = () => ({});
 
-const mutations = {};
+export const mutations = {};
 
-const actions = {
+export const actions = {
   //分页获取数据
   async APaging(context, params) {
     return await httpUtil.get("/draw/paging", params);
@@ -57,11 +57,4 @@ const actions = {
   async AListTagOrderByLikeAmount(context,params){
     return await httpUtil.get("/tag/listTagOrderByLikeAmount",params);
   }
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
 };

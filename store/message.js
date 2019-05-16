@@ -5,18 +5,17 @@ import httpUtil from "../assets/script/util/httpUtil";
  *
  *  @author fjj
  */
-
-const state = {
+export const state = () => ({
   type:"",
   commentCount: 0,
   replyCount: 0,
   followCount: 0,
   systemCount: 0,
-};
+});
 
-const mutations = {};
+export const mutations = {};
 
-const actions = {
+export const actions = {
   //获取未读条数
   async ACount(context, params) {
     return await httpUtil.get("/message/count", params);
@@ -34,11 +33,3 @@ const actions = {
     return await httpUtil.post("/message/saveSettings", params);
   },
 };
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-};
-

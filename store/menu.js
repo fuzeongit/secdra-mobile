@@ -3,26 +3,13 @@
  *
  *  @author fjj
  */
-
-const state = {
+export const state = () => ({
   name:"home",
   isShow:false,
   searchIsShow:false,
   title:""
-};
+});
 
-const mutations = {
+export const mutations = {};
 
-};
-
-const actions = {
-
-};
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-};
-
+export const actions = {};

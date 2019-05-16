@@ -11,21 +11,21 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.0.0",
+    "@nuxtjs/axios": "^5.4.1",
     "cross-env": "^5.2.0",
     "hammerjs": "^2.0.8",
     "js-cookie": "^2.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
-    "moment": "^2.23.0",
-    "nuxt": "^2.3.1",
+    "moment": "^2.24.0",
+    "nuxt": "^2.7.1",
     "popper.js": "^1.15.0",
     "postcss-px-to-viewport": "0.0.3",
-    "qs": "^6.6.0",
+    "qs": "^6.7.0",
     "vue-lazyload": "^1.2.6",
     "vue2-animate": "^2.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.0"
   }
 }
