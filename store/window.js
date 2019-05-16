@@ -7,7 +7,7 @@ export const mutations = {
   MChangesScroll(state, {scrollTop, scrollBottom}) {
     state.scrollTop = scrollTop;
     state.scrollBottom = scrollBottom;
-  },
+  }
 };
 
 export const actions = {};
