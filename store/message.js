@@ -6,14 +6,24 @@ import httpUtil from "../assets/script/util/httpUtil";
  *  @author fjj
  */
 export const state = () => ({
-  type:"",
+  type: "",
   commentCount: 0,
   replyCount: 0,
   followCount: 0,
   systemCount: 0,
 });
 
-export const mutations = {};
+export const mutations = {
+  MChangeType(state, {type, reset}) {
+    state.type = type;
+    if(reset){
+      state[type + 'Count'] = 0;
+    }
+  },
+  MChangeCount(state, {type, count}) {
+    state[type + 'Count'] = count;
+  },
+};
 
 export const actions = {
   //获取未读条数

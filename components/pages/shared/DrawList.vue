@@ -3,7 +3,7 @@
     <div class="card item" :style="{left:`${offset[index].left}vw`,top:`${offset[index].top}vw`}"
          v-for="(draw,index) in list" :key="index">
       <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
-        <img v-lazy="$img.secdra(draw.url,`specifiedWidth`)"  :key="$img.secdra(draw.url,`specifiedWidth`)"
+        <img v-lazy="$img.secdra(draw.url,`specifiedWidth`)" :key="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`vw`,height:getHeight(draw)+`vw`}">
       </nuxt-link>
       <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
@@ -32,6 +32,7 @@
 
 <script>
   import {ListConstant} from "../../../assets/script/constant/base";
+  import {mapState} from 'vuex'
 
   export default {
     componentName: "DrawList",
@@ -63,12 +64,7 @@
       }
     },
     computed: {
-      scrollBottom() {
-        return this.$store.state.window.scrollBottom
-      },
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      },
+      ...mapState('window', ['scrollTop', 'scrollBottom']),
       //计算偏移
       offset() {
         let o = [];

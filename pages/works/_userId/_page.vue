@@ -14,11 +14,11 @@
   import config from "../../../assets/script/config";
   import {Pageable} from "../../../assets/script/model/base";
   import DrawCardList from "../../../components/pages/shared/DrawCardList";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "works";
+      store.commit('menu/MChangeName', "works");
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.page = route.params.page * 1 || 0;
@@ -37,15 +37,15 @@
         list: result.data.content,
       }
     },
-    components:{
+    components: {
       DrawCardList
     },
-    data(){
+    data() {
       return {
         showGoTop: false
       }
     },
-    watch:{
+    watch: {
       /**
        * 如果直接用计算属性计算showGoTop的话，
        * 可能会导致渲染过度，导致页面卡顿
@@ -60,11 +60,9 @@
       }
     },
     computed: {
+      ...mapState('window', ['scrollTop']),
       isSelf() {
         return this.$store.state.user.user.id === this.$route.params.userId
-      },
-      scrollTop() {
-        return this.$store.state.window.scrollTop
       }
     },
     methods: {

@@ -9,11 +9,11 @@
       </template>
       <template v-else>
         <div class="col-3 center">
-          <i class="icon s-menu" @click="menuIsShow=true"></i>
+          <i class="icon s-menu" @click="MChangeShow(true)"></i>
         </div>
       </template>
       <div class="col-18 center title">
-        {{menuList[activeName]||$store.state.menu.title}}
+        {{menuList[activeName]||title}}
       </div>
       <nuxt-link class="col-3 center" to="/">
         <i class="icon s-home" :class="{active:activeName===`home`}"></i>
@@ -21,8 +21,8 @@
       <nuxt-link class="col-3 center" to="/find">
         <i class="icon s-faxian" :class="{active:activeName===`find`}"></i>
       </nuxt-link>
-      <div class="col-3 center" @click="searchIsShow = true">
-        <i class="icon s-chaxun" ></i>
+      <div class="col-3 center" @click="MChangeSearchShow(true)">
+        <i class="icon s-chaxun"></i>
       </div>
     </nav>
   </header>
@@ -30,8 +30,7 @@
 
 <script>
   import {Menu} from '../../../assets/script/constant/base'
-  import Cookie from 'js-cookie'
-  import {mapActions} from "vuex"
+  import {mapState, mapActions, mapMutations} from "vuex"
 
   export default {
     componentName: "Header",
@@ -50,14 +49,17 @@
     },
     watch: {
       $route() {
-        this.scrollTop = 0;
+        // this.MChangesScroll({scrollTop: 0, scrollBottom: 0});
         window.scrollTo(0, 0)
       },
     },
     computed: {
+      ...mapState('menu', {activeName: 'name', title: 'title'}),
+      ...mapState('user', ['user']),
+      ...mapState('window', ['scrollTop']),
       canBack() {
         let canBackList = ["detail"];
-        return canBackList.indexOf(this.$store.state.menu.name) !== -1;
+        return canBackList.indexOf(this.activeName) !== -1;
       },
       isShow() {
         let isShow = this.scrollTop < this.offset;
@@ -65,36 +67,6 @@
           this.hid = true
         }
         return isShow
-      },
-      menuIsShow: {
-        get() {
-          return this.$store.state.menu.isShow
-        },
-        set(val) {
-          this.$store.state.menu.isShow = val
-        }
-      },
-      searchIsShow: {
-        get() {
-          return this.$store.state.menu.searchIsShow
-        },
-        set(val) {
-          this.$store.state.menu.searchIsShow = val
-        }
-      },
-      user() {
-        return this.$store.state.user.user || {}
-      },
-      activeName() {
-        return this.$store.state.menu.name
-      },
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
       }
     },
     mounted() {
@@ -105,10 +77,14 @@
       document.removeEventListener('scroll', this.documentScroll);
     },
     methods: {
+      ...mapMutations("window", ["MChangesScroll"]),
+      ...mapMutations("message", ["MChangeCount"]),
+      ...mapMutations("menu", ["MChangeShow","MChangeSearchShow"]),
       ...mapActions("message", ["ACount"]),
       documentScroll(event) {
-        this.scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-        this.$store.state.window.scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
+        let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+        let scrollBottom = document.body.scrollHeight - this.scrollTop - event.target.documentElement.clientHeight;
+        this.MChangesScroll({scrollTop, scrollBottom})
       },
       search() {
         this.$router.push(`/draw/search/${this.tag}`)
@@ -118,10 +94,10 @@
         if (result.status !== 200) {
           return
         }
-        this.$store.state.message.commentCount = result.data.COMMENT;
-        this.$store.state.message.replyCount = result.data.REPLY;
-        this.$store.state.message.followCount = result.data.FOLLOW;
-        this.$store.state.message.systemCount = result.data.SYSTEM;
+        this.MChangeCount({type: 'comment', count: result.data.COMMENT});
+        this.MChangeCount({type: 'reply', count: result.data.REPLY});
+        this.MChangeCount({type: 'follow', count: result.data.FOLLOW});
+        this.MChangeCount({type: 'system', count: result.data.SYSTEM});
       }
     }
   }

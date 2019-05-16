@@ -29,14 +29,14 @@
 
 <script>
   import config from "../../../assets/script/config/index";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import {Pageable} from "../../../assets/script/model/base";
 
   export default {
     //在这里不能使用httpUtil
     //并且嵌套层数超过不知道多少会报错-->坑死我了
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "follower";
+      store.commit('menu/MChangeName', "follower");
       let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
       let {data: result} = await $axios.get(`${config.host}/follower/paging`, {
         params: Object.assign({
@@ -52,7 +52,7 @@
         list: result.data.content
       }
     },
-    watch:{
+    watch: {
       /**
        * 如果直接用计算属性计算showGoTop的话，
        * 可能会导致渲染过度，导致页面卡顿
@@ -66,13 +66,9 @@
         }
       }
     },
-    computed:{
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      },
-      user() {
-        return this.$store.state.user.user
-      },
+    computed: {
+      ...mapState('window', ['scrollTop']),
+      ...mapState('user', ['user'])
     },
     data() {
       return {
@@ -80,8 +76,8 @@
       }
     },
     methods: {
-      ...mapActions("user", ["APagingFollowing","AFollow"]),
-      paging(page){
+      ...mapActions("user", ["APagingFollowing", "AFollow"]),
+      paging(page) {
         this.$router.push(`/follower/${this.$route.params.userId}/${page}`);
       },
       async follow(follower) {
@@ -105,7 +101,7 @@
   @import "../../../assets/style/mixin";
 
   .card {
-    @card-width:92vw;
+    @card-width: 92vw;
     position: relative;
     width: @card-width;
     margin: 4vw;
@@ -113,7 +109,7 @@
     background-color: @white;
     box-shadow: 0 0 10vw rgba(150, 150, 150, 0.55);
     overflow: hidden;
-    .cover{
+    .cover {
       width: 100%;
       height: @card-width / 2;
       display: block;
@@ -123,16 +119,16 @@
       @info-box-height: 26vw;
       @padding-size: 4vw;
       @img-size: @info-box-height - @padding-size;
-      @follow-btn-size:20vw;
+      @follow-btn-size: 20vw;
       padding: @padding-size;
-      .head-box{
+      .head-box {
         display: block;
         position: relative;
         margin-top: -(@img-size / 2);
         img {
           border-radius: 50%;
           width: @img-size;
-          height:@img-size ;
+          height: @img-size;
         }
       }
       .nickname {

@@ -10,15 +10,15 @@
 <script>
   import {Pageable} from "../assets/script/model/base";
   import config from "../assets/script/config";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
 
   export default {
-    components:{
+    components: {
       DrawList
     },
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "new";
+      store.commit('menu/MChangeName', "new");
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "createDate,desc";
@@ -57,9 +57,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState('window', ['scrollTop'])
     },
     methods: {
       ...mapActions("draw", ["APaging", "ACollection"]),

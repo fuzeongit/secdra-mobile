@@ -107,7 +107,7 @@
 </template>
 <script>
   import config from "../../assets/script/config";
-  import {mapActions} from "vuex"
+  import {mapState,mapActions} from "vuex"
   import Model from "../../components/global/Model"
   import Tag from "../../components/global/Tag"
 
@@ -117,7 +117,7 @@
       Tag
     },
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "detail";
+      store.commit('menu/MChangeName', "detail");
       let id = route.params.id;
       let res = await $axios.get(`${config.host}/draw/get`, {
         params: {id}
@@ -126,7 +126,7 @@
       if (result.status !== 200) {
         throw new Error(result.message)
       }
-      store.state.menu.title = result.data.name;
+      store.commit('menu/MChangeTitle', result.data.name);
       let drawForm = Object.assign({}, result.data);
       drawForm.tagList = drawForm.tagList.map(item => item.name);
       drawForm.isPrivate = drawForm.private;
@@ -143,11 +143,9 @@
       }
     },
     computed: {
+      ...mapState("user",["user"]),
       proportion() {
         return this.draw.height / this.draw.width
-      },
-      user() {
-        return this.$store.state.user.user
       }
     },
     methods: {

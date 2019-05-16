@@ -45,12 +45,12 @@
 <script>
   import config from "../assets/script/config";
   import {Pageable} from "../assets/script/model/base";
-  import {mapActions} from "vuex"
+  import {mapState,mapActions} from "vuex"
 
   export default {
     //在这里不能使用httpUtil
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "home";
+      store.commit('menu/MChangeName',"home");
       let taskList = [];
       taskList.push($axios.get(`${config.host}/draw/pagingByRecommend`, {params: new Pageable(0, 10)}));
       taskList.push($axios.get(`${config.host}/draw/paging`, {params: new Pageable(0, 10, "createDate,desc")}));
@@ -80,9 +80,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      },
+      ...mapState('window',['scrollTop'])
     },
     methods: {
       ...mapActions("draw", ["ACollection"]),

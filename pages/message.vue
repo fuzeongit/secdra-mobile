@@ -29,6 +29,8 @@
 </template>
 
 <script>
+  import {mapState} from "vuex"
+
   class Menu {
     constructor(type, name) {
       this.type = type;
@@ -38,7 +40,7 @@
 
   export default {
     asyncData({store}) {
-      store.state.menu.name = "message";
+      store.commit('menu/MChangeName', "message");
     },
     data() {
       return {
@@ -68,12 +70,8 @@
       }
     },
     computed: {
-      type() {
-        return this.$store.state.message.type
-      },
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState("message",["type"]),
+      ...mapState('window', ['scrollTop'])
     },
     methods: {
       to(key) {

@@ -14,6 +14,9 @@ export const mutations = {
   MSetUserInfo(state, user) {
     state.user = user;
   },
+  MSetUploadToken(state, uploadToken) {
+    state.uploadToken = uploadToken;
+  },
 };
 
 export const actions = {

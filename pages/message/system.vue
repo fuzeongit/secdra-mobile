@@ -24,8 +24,7 @@
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       let type = "system";
-      store.state.message.type = type;
-      store.state.message[type+"Count"] = 0;
+      store.commit('message/MChangeType', {type, reset: true});
       let {data: result} = await $axios.get(`${config.host}/message/list`, {
         params: {
           messageType: type.toUpperCase()
@@ -47,13 +46,12 @@
   @import "../../assets/style/config";
   @import "../../assets/style/mixin";
 
-
   .list {
     .item {
       padding: 4vw 6vw;
       text-align: left;
       border-bottom: 1px solid @font-color-dark-line;
-      color:@font-color-dark;
+      color: @font-color-dark;
       background-color: @white;
       .desc {
         line-height: 6.5vw;

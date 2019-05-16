@@ -1,70 +1,66 @@
 <template>
-  <Model v-model="isShow">
+  <Model v-model="searchIsShow">
     <header>
       <nav class="row">
         <div class="col-3 center" @click="close">
-          <i class="icon s-fanhui" ></i>
+          <i class="icon s-fanhui"></i>
         </div>
         <div class="col-24 center search-box">
           <input type="text" title="search" class="input" v-model="tag"
                  placeholder="输入标签搜索" ref="search">
         </div>
         <div class="col-3 center" @click="search()">
-          <i class="icon s-chaxun" ></i>
+          <i class="icon s-chaxun"></i>
         </div>
       </nav>
     </header>
     <div class="page" v-swipe:swipedown="close">
-      <button v-for="item in tagList" class="btn" style="margin: 2vw 2vw 0 2vw;" @click="search(item.name)">{{item.name}}</button>
+      <button v-for="item in tagList" class="btn" style="margin: 2vw 2vw 0 2vw;" @click="search(item.name)">
+        {{item.name}}
+      </button>
     </div>
   </Model>
 </template>
 
 <script>
-  import {mapActions} from "vuex"
+  import {mapState, mapMutations, mapActions} from "vuex"
   import Model from "../../global/Model"
 
   export default {
     componentName: "Search",
-    components:{
+    components: {
       Model
     },
     data() {
       return {
         tag: "",
-        tagList:[]
+        tagList: []
       }
     },
     watch: {
-      "$store.state.menu.searchIsShow": function (val) {
+      "searchIsShow": function (val) {
         if (val) {
           this.$refs["search"].focus()
         }
       }
     },
     computed: {
-      isShow: {
-        get() {
-          return this.$store.state.menu.searchIsShow
-        },
-        set(val) {
-          this.$store.state.menu.searchIsShow = val
-        }
-      }
+      ...mapState('menu', ['searchIsShow'])
     },
     mounted() {
       this.listTagOrderByLikeAmount()
     },
     methods: {
+      ...mapMutations("menu", ["MChangeSearchShow"]),
       ...mapActions("draw", ["AListTagOrderByLikeAmount"]),
       close($event) {
-        this.isShow = false;
+        this.MChangeSearchShow(false)
       },
       search(tag) {
         this.close();
-        if(tag){
+        if (tag) {
           this.$router.push(`/draw/search/${tag}`)
-        }else{
+        } else {
           this.$router.push(`/draw/search/${this.tag}`)
         }
 

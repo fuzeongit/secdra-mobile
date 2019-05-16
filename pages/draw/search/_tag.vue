@@ -11,8 +11,7 @@
 <script>
   import config from "../../../assets/script/config";
   import {Pageable} from "../../../assets/script/model/base";
-  import {ListConstant} from "../../../assets/script/constant/base";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import DrawList from "../../../components/pages/shared/DrawList"
 
   export default {
@@ -20,8 +19,8 @@
       DrawList
     },
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "tag";
-      store.state.menu.title = route.params.tag || "发现";
+      store.commit('menu/MChangeName', "tag");
+      store.commit('menu/MChangeTitle', route.params.tag || "发现");
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "likeAmount,desc";
@@ -60,9 +59,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState('window', ['scrollTop'])
     },
     methods: {
       ...mapActions("draw", ["APaging", "ACollection"]),

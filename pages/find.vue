@@ -10,15 +10,15 @@
 <script>
   import config from "../assets/script/config/index";
   import {Pageable} from "../assets/script/model/base";
-  import {mapActions} from "vuex"
+  import {mapState, mapActions} from "vuex"
   import DrawList from "../components/pages/shared/DrawList"
 
   export default {
-    components:{
+    components: {
       DrawList
     },
     async asyncData({store, req, redirect, route, $axios}) {
-      store.state.menu.name = "find";
+      store.commit('menu/MChangeName', "find");
       let pageable = new Pageable();
       pageable.size = 16;
       let {data: result} = await $axios.get(`${config.host}/draw/pagingByRecommend`, {
@@ -56,9 +56,7 @@
       }
     },
     computed: {
-      scrollTop() {
-        return this.$store.state.window.scrollTop
-      }
+      ...mapState('window', ['scrollTop'])
     },
     methods: {
       ...mapActions("draw", ["APagingByRecommend", "AListByRecommend", "ACollection"]),

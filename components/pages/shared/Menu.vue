@@ -75,29 +75,22 @@
 
 <script>
   import Cookie from 'js-cookie'
+  import {mapState, mapMutations} from "vuex"
 
   export default {
     componentName: "Menu",
 
     computed: {
-      user() {
-        return this.$store.state.user.user || {}
-      },
-      isShow: {
-        get() {
-          return this.$store.state.menu.isShow
-        },
-        set(val) {
-          this.$store.state.menu.isShow = val
-        }
-      },
-      activeName() {
-        return this.$store.state.menu.name
-      },
+      ...mapState('menu', {
+        isShow: 'isShow',
+        activeName: 'name'
+      }),
+      ...mapState('user', ['user'])
     },
     methods: {
+      ...mapMutations("menu", ["MChangeShow"]),
       close() {
-        this.isShow = false
+        this.MChangeShow(false)
       },
       to(path) {
         if (this.$route.path === path) return;
