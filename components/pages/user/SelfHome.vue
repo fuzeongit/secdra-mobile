@@ -74,7 +74,7 @@
               <Radio value="FEMALE" label="女孩" style="margin-left: 2vw"></Radio>
             </RadioGroup>
           </div>
-          <div class="input-group" >
+          <div class="input-group">
             <button class="btn block big" @click="update">保存</button>
           </div>
         </div>
@@ -84,12 +84,12 @@
 </template>
 
 <script>
-  import {mapActions} from "vuex"
+  import {mapState, mapMutations, mapActions} from "vuex"
   import {Pageable} from "../../../assets/script/model/base";
   import Model from "../../global/Model"
 
   export default {
-    components:{
+    components: {
       Model
     },
     data() {
@@ -104,28 +104,14 @@
       }
     },
     computed: {
-      user: {
-        get() {
-          return this.$store.state.user.user || {}
-        },
-        set(val) {
-          this.$store.state.user.user = val
-        }
-      },
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
-      }
+      ...mapState('user', ['user'])
     },
     mounted() {
       this.pagingWorks();
       this.pagingCollection();
     },
     methods: {
+      ...mapMutations("user", ["MSetUserInfo"]),
       ...mapActions("user", ["AUpdate"]),
       ...mapActions("draw", ["APagingCollection", "APagingByUserId"]),
       async pagingWorks() {
@@ -158,7 +144,7 @@
         }
         this.isShowEdit = false;
         this.$tooltip({message: `修改成功`});
-        this.user = result.data;
+        this.MSetUserInfo(result.data);
         this.userForm = Object.assign({}, this.user);
       }
     }
@@ -186,7 +172,7 @@
       border-radius: 50%;
       border: .8vw solid @white;
     }
-    .edit{
+    .edit {
       margin-top: @img-size * 2 / 3;
       float: right;
     }
@@ -258,7 +244,7 @@
   }
 
   .edit-model {
-    .edit-header{
+    .edit-header {
       width: 100%;
       height: @herder-height;
       font-size: @big-font-size;
@@ -281,16 +267,16 @@
           font-size: @big-font-size;
           color: @white;
         }
-        .title{
+        .title {
           color: @white;
         }
       }
     }
 
-    .form{
+    .form {
       margin-top: @herder-height;
       padding: 5vw;
-      .sub-name{
+      .sub-name {
         font-size: @small-font-size;
         color: #999;
       }

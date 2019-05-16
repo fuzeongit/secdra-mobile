@@ -68,7 +68,7 @@
     computed: {
       ...mapState('window', ['scrollTop']),
       isSelf() {
-        return this.$store.state.user.user.id === this.$route.params.userId
+        return this.$store.state.user.user.id === this.$route.params.id
       }
     },
     methods: {

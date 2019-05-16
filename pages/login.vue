@@ -48,7 +48,6 @@
     },
     methods: {
       ...mapActions("user", ["ALogin", "ARegister", "AGetInfo"]),
-      ...mapMutations("user", ["MSetUserInfo"]),
       async login() {
         let phone = this.form.phone;
         let password = this.form.password || "123456";

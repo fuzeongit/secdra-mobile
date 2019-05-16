@@ -5,7 +5,7 @@
     </div>
     <div class="info-box">
       <img :src="$img.head(user.head)">
-      <button class="btn is-plain following"  @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
+      <button class="btn is-plain following" @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
       <p class="nickname">
         {{user.name}}
         <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
@@ -65,16 +65,7 @@
         followingList: []
       }
     },
-    computed: {
-      scrollTop: {
-        get() {
-          return this.$store.state.window.scrollTop || 0
-        },
-        set(val) {
-          this.$store.state.window.scrollTop = val || 0
-        }
-      }
-    }, mounted() {
+    mounted() {
       this.pagingWorks();
       this.pagingCollection();
       this.pagingFollowing();
@@ -136,7 +127,7 @@
       border-radius: 50%;
       border: .8vw solid @white;
     }
-    .following{
+    .following {
       margin-top: @img-size * 2 / 3;
       float: right;
     }

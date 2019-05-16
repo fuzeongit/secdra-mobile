@@ -49,7 +49,6 @@
     },
     watch: {
       $route() {
-        // this.MChangesScroll({scrollTop: 0, scrollBottom: 0});
         window.scrollTo(0, 0)
       },
     },
