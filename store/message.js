@@ -22,7 +22,7 @@ export const mutations = {
   },
   MChangeCount(state, {type, count}) {
     state[type + 'Count'] = count;
-  },
+  }
 };
 
 export const actions = {
