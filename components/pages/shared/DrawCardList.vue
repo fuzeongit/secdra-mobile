@@ -53,7 +53,6 @@
     margin: 4vw;
     border-radius: @default-border-radius;
     background-color: @white;
-    box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
     overflow: hidden;
     .like {
       position: absolute;

@@ -105,7 +105,6 @@
     margin: 4vw;
     border-radius: @default-border-radius;
     background-color: @white;
-    box-shadow: 0 0 10vw rgba(150, 150, 150, 0.55);
     overflow: hidden;
     .cover {
       width: 100%;

@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom: 5vw">
+  <div class="self-home">
     <div class="user-bk cover"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
     </div>
@@ -156,6 +156,11 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
+  .self-home{
+    background-color: @page-background-color;
+    padding-bottom: 5vw
+  }
+
   .user-bk {
     width: 100vw;
     height: 50vw;
@@ -165,7 +170,6 @@
     @img-size: 30vw;
     margin-top: -(@img-size/2);
     padding: 0 4vw;
-
     img {
       height: @img-size;
       width: @img-size;
@@ -210,7 +214,7 @@
       margin-bottom: 6vw;
       span {
         vertical-align: middle;
-        background-color: @white;
+        background-color: @page-background-color;
         margin-bottom: -4vw;
         display: inline-block;
         padding: 0 3vw;
@@ -240,10 +244,13 @@
       height: 98%;
       margin: 1%;
       display: block;
+      .card-box-shadow()
     }
   }
 
   .edit-model {
+    min-height: 100%;
+    background-color: @page-background-color;
     .edit-header {
       width: 100%;
       height: @herder-height;
@@ -252,7 +259,7 @@
       top: 0;
       left: 0;
       right: 0;
-      box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+      box-shadow: @herder-box-shadow;
       border-bottom: 1px solid @font-color-dark-line;
       background-color: @theme-color;
       z-index: 10;

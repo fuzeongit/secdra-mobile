@@ -90,7 +90,7 @@
     top: 0;
     left: 0;
     right: 0;
-    box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+    box-shadow: @herder-box-shadow;
     border-bottom: 1px solid @font-color-dark-line;
     background-color: @theme-color;
     z-index: 10;
@@ -111,6 +111,13 @@
           width: 100%;
         }
       }
+    }
+  }
+
+  .page{
+
+    .btn{
+      font-size: @smallest-font-size;
     }
   }
 </style>

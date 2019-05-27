@@ -87,10 +87,6 @@
   @import "../assets/style/config";
   @import "../assets/style/mixin";
 
-  .page {
-    background-color: @list-background-color;
-  }
-
   .active-name {
     line-height: @herder-height;
     font-size: @default-font-size;

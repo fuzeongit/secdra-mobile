@@ -1,7 +1,7 @@
 <template>
   <div class="page">
-    <div style="background-color: #efefef;width: 100vw" :style="{height:`${100 * proportion}vw`} ">
-      <img :src="$img.secdra(draw.url,`specifiedWidth500`)" style="width: 100%">
+    <div class="img-box" :style="{height:`${100 * proportion}vw`} ">
+      <img :src="$img.secdra(draw.url,`specifiedWidth500`)">
     </div>
     <template v-if="draw.user.id!==user.id">
       <div class="flex-box user-info-box">
@@ -227,6 +227,14 @@
   .page {
     min-height: 100vh;
     margin-top: 0;
+    background-color: @page-background-color;
+    .img-box{
+      background-color: @theme-background-color;
+      width: 100vw;
+      img{
+        width: 100%;
+      }
+    }
     .user-info-box {
       @info-box-height: 14vw;
       @padding-size: 4vw;
@@ -256,7 +264,6 @@
         }
       }
     }
-
     .info-box {
       @padding-size: 4vw;
       padding: @padding-size;
@@ -309,6 +316,8 @@
   }
 
   .edit-model {
+    min-height: 100%;
+    background-color: @page-background-color;
     .edit-header {
       width: 100%;
       height: @herder-height;
@@ -317,7 +326,7 @@
       top: 0;
       left: 0;
       right: 0;
-      box-shadow: 0 0 4px rgba(202, 202, 202, 0.55);
+      box-shadow: @herder-box-shadow;
       border-bottom: 1px solid @font-color-dark-line;
       background-color: @theme-color;
       z-index: 10;

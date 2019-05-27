@@ -134,7 +134,6 @@
       transition: 0.5s;
       border-radius: @smallest-border-radius;
       background-color: @white;
-      box-shadow: 0 0 50px rgba(150, 150, 150, 0.55);
       .like {
         position: absolute;
         bottom: @info-box-height + 1vw;

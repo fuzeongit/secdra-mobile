@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom: 5vw">
+  <div class="other-home">
     <div class="user-bk cover"
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
     </div>
@@ -112,6 +112,11 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
+  .other-home{
+    background-color: @page-background-color;
+    padding-bottom: 5vw
+  }
+
   .user-bk {
     width: 100vw;
     height: 50vw;
@@ -165,7 +170,7 @@
       margin-bottom: 6vw;
       span {
         vertical-align: middle;
-        background-color: @white;
+        background-color: @page-background-color;
         margin-bottom: -4vw;
         display: inline-block;
         padding: 0 3vw;
@@ -195,6 +200,7 @@
       height: 98%;
       margin: 1%;
       display: block;
+      .card-box-shadow()
     }
   }
 

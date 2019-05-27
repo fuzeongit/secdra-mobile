@@ -154,7 +154,7 @@
           font-size: @big-font-size;
         }
         &.active {
-          background-color: #f8f8f8;
+          background-color: @theme-background-color;
           a {
             color: @theme-color;
           }

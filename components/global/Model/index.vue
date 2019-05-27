@@ -59,7 +59,7 @@
   .model {
     height: 100vh;
     width: 100vw;
-    background-color: @white;
+    background-color: @theme-background-color;
     position: fixed;
     top: 0;
     left: 0;
