@@ -4,8 +4,10 @@
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
     </div>
     <div class="info-box">
-      <img :src="$img.head(user.head)">
-      <button class="btn is-plain edit" @click="isShowEdit=true">编辑</button>
+      <img :src="$img.head(user.head)" class="head">
+      <Btn color="primary" @click="isShowEdit=true" class="edit">
+        编辑
+      </Btn>
       <p class="nickname">
         {{user.name}}
         <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
@@ -19,14 +21,13 @@
             <span>我的作品</span>
           </h3>
           <div class="row">
-            <div class="col-15 img-box center" v-for="(draw,index) in worksList" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
-              </nuxt-link>
-            </div>
+            <nuxt-link class="col-15 img-box center" :to="`/draw/${draw.id}`" v-for="(draw,index) in worksList"
+                       :key="index" v-ripple>
+              <img v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')" class="cover">
+            </nuxt-link>
           </div>
           <p class="move" v-if="worksList.length===8">
-            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/works/${user.id||''}`">查看更多>></Btn>
           </p>
         </div>
         <div class="collection-box" v-loading="collectionLoading">
@@ -34,14 +35,13 @@
             <span>我的收藏</span>
           </h3>
           <div class="row">
-            <div class="col-15 img-box center" v-for="(draw,index) in collectionList" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
-              </nuxt-link>
-            </div>
+            <nuxt-link class="col-15 img-box center" :to="`/draw/${draw.id}`" v-for="(draw,index) in collectionList"
+                       :key="index" v-ripple>
+              <img v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')" class="cover">
+            </nuxt-link>
           </div>
           <p class="move" v-if="collectionList.length===8">
-            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/collection/${user.id||''}`">查看更多>></Btn>
           </p>
         </div>
       </div>
@@ -51,7 +51,7 @@
         <header class="edit-header">
           <nav class="row">
             <div class="col-3 center">
-              <a class="icon s-fanhui" @click="isShowEdit = false"></a>
+              <Btn small icon flat @click="isShowEdit = false"><i class="icon s-fanhui"></i></Btn>
             </div>
             <div class="col-18 center title">
               编辑
@@ -61,21 +61,21 @@
         <div class="form">
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="userForm.name" class="input block big">
+            <input type="text" v-model="userForm.name" class="input block primary-color">
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="userForm.introduction" class="input block" title="introduction" rows="5"></textarea>
+            <textarea v-model="userForm.introduction" class="input block primary-color" rows="5"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">性别：</h5>
             <RadioGroup v-model="userForm.gender">
-              <Radio value="MALE" label="男孩"></Radio>
-              <Radio value="FEMALE" label="女孩" style="margin-left: 2vw"></Radio>
+              <Radio value="MALE" label="男孩" color="primary"></Radio>
+              <Radio value="FEMALE" label="女孩" color="primary" style="margin-left: 2vw"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
-            <button class="btn block big" @click="update">保存</button>
+            <Btn block color="primary" @click="update">保存</Btn>
           </div>
         </div>
       </div>
@@ -156,7 +156,7 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
-  .self-home{
+  .self-home {
     background-color: @page-background-color;
     padding-bottom: 5vw
   }
@@ -170,7 +170,7 @@
     @img-size: 30vw;
     margin-top: -(@img-size/2);
     padding: 0 4vw;
-    img {
+    .head {
       height: @img-size;
       width: @img-size;
       border-radius: 50%;
@@ -227,6 +227,7 @@
     }
 
     .move {
+      margin: 2vw 0;
       text-align: right;
       a {
         color: @theme-color;
@@ -281,8 +282,7 @@
     }
 
     .form {
-      margin-top: @herder-height;
-      padding: 5vw;
+      padding: (5vw + @herder-height) 5vw 5vw 5vw;
       .sub-name {
         font-size: @small-font-size;
         color: #999;

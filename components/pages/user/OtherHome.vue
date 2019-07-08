@@ -4,8 +4,10 @@
          :style="{backgroundImage: `url(${$img.back(user.background)})`}">
     </div>
     <div class="info-box">
-      <img :src="$img.head(user.head)">
-      <button class="btn is-plain following" @click="$emit('follow')">{{user.focus?"已关注":"关注"}}</button>
+      <img :src="$img.head(user.head)" class="head">
+      <Btn color="primary" @click="$emit('follow')" class="following">
+        {{user.focus?"已关注":"关注"}}
+      </Btn>
       <p class="nickname">
         {{user.name}}
         <i class="icon" :class="{'s-xingbie-nv':user.gender==='FEMALE','s-xingbie-nan':user.gender==='MALE'}"></i>
@@ -19,14 +21,12 @@
             <span>{{user.gender==='FEMALE'?"她":"他"}}的作品</span>
           </h3>
           <div class="row">
-            <div class="col-15 img-box center" v-for="(draw,index) in worksList" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
-              </nuxt-link>
-            </div>
+            <nuxt-link class="col-15 img-box center" :to="`/draw/${draw.id}`" v-for="(draw,index) in worksList" :key="index" v-ripple>
+              <img  v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
+            </nuxt-link>
           </div>
           <p class="move" v-if="worksList.length===8">
-            <nuxt-link :to="`/works/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/works/${user.id||''}`">查看更多>></Btn>
           </p>
         </div>
         <div class="collection-box" v-loading="collectionLoading">
@@ -34,14 +34,12 @@
             <span>{{user.gender==='FEMALE'?"她":"他"}}的收藏</span>
           </h3>
           <div class="row">
-            <div class="col-15 img-box center" v-for="(draw,index) in collectionList" :key="index">
-              <nuxt-link :to="`/draw/${draw.id}`" class="cover"
-                         v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')">
-              </nuxt-link>
-            </div>
+            <nuxt-link class="col-15 img-box center" :to="`/draw/${draw.id}`" v-for="(draw,index) in collectionList" :key="index" v-ripple>
+              <img  v-lazy:background-image="$img.secdra(draw.url,'specifiedWidth')"  class="cover">
+            </nuxt-link>
           </div>
           <p class="move" v-if="collectionList.length===8">
-            <nuxt-link :to="`/collection/${user.id||''}`">查看更多>></nuxt-link>
+            <Btn round flat small color="primary" :to="`/collection/${user.id||''}`">查看更多>></Btn>
           </p>
         </div>
       </div>
@@ -126,13 +124,14 @@
     @img-size: 30vw;
     margin-top: -(@img-size/2);
     padding: 0 4vw;
-    img {
+    .head {
       height: @img-size;
       width: @img-size;
       border-radius: 50%;
       border: .8vw solid white;
     }
     .following {
+      min-width: 7em;
       margin-top: @img-size * 2 / 3;
       float: right;
     }
@@ -183,6 +182,7 @@
     }
 
     .move {
+      margin: 2vw 0;
       text-align: right;
       a {
         color: @theme-color;

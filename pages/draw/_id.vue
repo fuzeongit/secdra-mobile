@@ -5,14 +5,16 @@
     </div>
     <template v-if="draw.user.id!==user.id">
       <div class="flex-box user-info-box">
-        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
           <img :src="$img.head(draw.user.head)" :title="draw.user.name">
         </nuxt-link>
-        <nuxt-link :to="`/user/${draw.user.id}`" class="nickname">
+        <nuxt-link :to="`/user/${draw.user.id}`" class="nickname primary-hover">
           {{draw.user.name}}
         </nuxt-link>
         <div class="following-btn-box">
-          <button class="btn block" @click="follow(draw.user.id)">{{draw.user.focus?`已关注`:`关注`}}</button>
+          <Btn block color="primary" @click="follow(draw.user.id)">
+            {{draw.user.focus?`已关注`:`关注`}}
+          </Btn>
         </div>
       </div>
       <div class="line"></div>
@@ -22,11 +24,15 @@
       <p class="introduction">{{draw.introduction}}</p>
       <div class="row">
         <div class="col-15">
-          <i class="icon s-eye"></i>
+          <Btn flat icon small title="浏览">
+            <i class="icon s-eye"></i>
+          </Btn>
           <span>{{draw.viewAmount}}</span>
         </div>
         <div class="col-15">
-          <i class="icon s-heart"></i>
+          <Btn flat icon small :color="draw.focus?`primary`:`default`" @click="collection(draw)" title="收藏">
+            <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+          </Btn>
           <span>{{draw.likeAmount}}</span>
         </div>
       </div>
@@ -37,17 +43,18 @@
     <div class="line"></div>
     <div class="tag-box">
       <div class="tag-list">
-        <nuxt-link class="btn is-plain" :to="`/draw/search/${tag.name}`" slot="reference" v-for="tag in draw.tagList"
-                   :key="tag.id">
+        <Btn outline small color="primary" :to="`/draw/search/${tag.name}`" v-for="tag in draw.tagList">
           {{tag.name}}
-        </nuxt-link>
+        </Btn>
       </div>
     </div>
     <template>
-      <button class="btn is-suspend  tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
-        <i class="icon s-bianji"></i></button>
-      <button class="btn is-suspend  tool-btn" v-else @click="collection(draw)">
-        <i class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i></button>
+      <Btn icon big shadow color="white" class="tool-btn" v-if="draw.user.id===user.id" @click="isShowEdit = true">
+        <i class="icon s-bianji"></i>
+      </Btn>
+      <Btn icon big shadow color="white" class="tool-btn" v-else @click="collection(draw)">
+        <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus,'primary-text':draw.focus}"></i>
+      </Btn>
     </template>
     <Model v-model="isShowEdit" v-loading="editLoading">
       <div class="edit-model" v-swipe:swipedown="()=>{this.isShowEdit=false}">
@@ -64,40 +71,42 @@
         <div class="form">
           <div class="input-group">
             <h5 class="sub-name">名称：</h5>
-            <input type="text" title="name" v-model="drawForm.name" class="input block big">
+            <input type="text" v-model="drawForm.name" class="input block  primary-color">
           </div>
           <div class="input-group">
             <h5 class="sub-name">简介：</h5>
-            <textarea v-model="drawForm.introduction" class="input block" title="introduction" rows="5"></textarea>
+            <textarea v-model="drawForm.introduction" class="input block  primary-color" rows="5"></textarea>
           </div>
           <div class="input-group">
             <h5 class="sub-name">私密：</h5>
             <RadioGroup v-model="drawForm.isPrivate">
-              <Radio :value="true" label="隐藏"></Radio>
-              <Radio :value="false" label="显示" style="margin-left: 2vw"></Radio>
+              <Radio :value="true" label="隐藏" color="primary"></Radio>
+              <Radio :value="false" label="显示" style="margin-left: 2vw" color="primary"></Radio>
             </RadioGroup>
           </div>
           <div class="input-group">
             <h5 class="sub-name">标签：</h5>
             <div class="row">
-              <div class="col-27">
-                <input type="text" title="name" v-model="inputTag" class="input block big">
+              <div class="col-25">
+                <input type="text" title="name" v-model="inputTag" class="input block primary-color">
               </div>
-              <div class="col-3 center" style="line-height: 10vw;" @click="addTag">
-                <i class="icon s-zengjiaxinjian color"></i>
+              <div class="col-5 center" style="line-height: 10vw;" >
+                <Btn small icon flat color="primary" @click="addTag">
+                  <i class="icon s-zengjiaxinjian color"></i>
+                </Btn>
               </div>
             </div>
           </div>
           <div style="margin-bottom: 2vw">
-            <Tag v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
+            <Tag small color="primary" v-for="(tagName,index) in drawForm.tagList" @close="removeTag" :content="tagName" :key="tagName"
                  :value="index"></Tag>
           </div>
           <div class="row">
             <div class="col-15" style="padding-right: 2vw">
-              <button class="btn big block" @click="save">保存</button>
+              <Btn block color="primary" @click="save">保存</Btn>
             </div>
             <div class="col-15" style="padding-left: 2vw">
-              <button class="btn is-plain big block" @click="reset">重置</button>
+              <Btn block outline color="primary" @click="reset">重置</Btn>
             </div>
           </div>
         </div>
@@ -243,6 +252,7 @@
       .head-box {
         display: block;
         position: relative;
+        border-radius: 50%;
         img {
           border-radius: 50%;
           width: @img-size;
@@ -278,10 +288,6 @@
         margin-top: 2vw;
         font-size: @small-font-size;
         color: @font-color-dark-fade;
-        i {
-          font-size: @small-font-size;
-          color: @icon-color-dark;
-        }
         span {
           margin-left: 2vw;
           vertical-align: baseline;
@@ -297,8 +303,6 @@
       .btn {
         margin-right: @spacing;
         margin-bottom: @spacing;
-        line-height: 6vw;
-        padding: 0 1em;
       }
     }
     .tag-box {
@@ -347,8 +351,7 @@
     }
 
     .form {
-      margin-top: @herder-height;
-      padding: 5vw;
+      padding: (5vw + @herder-height) 5vw 5vw 5vw;
       .sub-name {
         font-size: @small-font-size;
         color: #999;

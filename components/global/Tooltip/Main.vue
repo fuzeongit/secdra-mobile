@@ -6,7 +6,10 @@
           {{message}}
         </p>
         <div>
-          <a class="icon s-close" @click="close"></a>
+          <Btn small icon flat @click="close">
+            <i class="icon s-close">
+            </i>
+          </Btn>
         </div>
       </div>
     </div>
@@ -80,7 +83,7 @@
       font-size: @default-font-size;
       color: #eee;
     }
-    .icon{
+    .icon {
       color: #eee;
     }
   }

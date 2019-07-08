@@ -1,15 +1,17 @@
 <template>
   <div class="pageable-content center" v-show="!((isFirst&&isLast)||(totalPage===0))">
-    <a v-show="!isFirst" @click="go(currPage)">
+    <Btn round flat small color="primary" v-show="!isFirst" @click="go(currPage)">
       上一页
-    </a>
+    </Btn>
     <template v-for="(i,index) in showPageBtn">
-      <a v-if="i" :key="index" @click="go(i)" :style="{color:i-1===currPage?`#AAA`:`#000`}">{{i}}</a>
+      <Btn round :flat="i-1!==currPage" small color="primary" v-if="i" :key="index" @click="go(i)" class="page-btn">
+        {{i}}
+      </Btn>
       <span v-else :key="index">···</span>
     </template>
-    <a v-show="!isLast" @click="go(currPage+2)">
+    <Btn round flat small color="primary" v-show="!isLast" @click="go(currPage+2)">
       下一页
-    </a>
+    </Btn>
   </div>
 </template>
 

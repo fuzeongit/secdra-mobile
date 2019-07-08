@@ -2,17 +2,18 @@
   <div class="page">
     <div class="content row">
       <div class="card" v-for="(item,index) in list" :key="index">
-        <nuxt-link :to="`/user/${item.id}`" class="cover"
-                   v-lazy:background-image="$img.back(item.background,`specifiedWidth500`)"></nuxt-link>
+        <nuxt-link :to="`/user/${item.id}`" style="display: block;" v-ripple>
+          <img v-lazy="$img.back(item.background,`specifiedWidth500`)" class="cover">
+        </nuxt-link>
         <div class="flex-box user-info-box" v-if="item.id!==user.id">
-          <nuxt-link :to="`/user/${item.id}`" class="head-box">
+          <nuxt-link :to="`/user/${item.id}`" class="head-box"  v-ripple>
             <img v-lazy="$img.head(item.head)" :title="item.name">
           </nuxt-link>
-          <nuxt-link :to="`/user/${item.id}`" class="nickname">
+          <nuxt-link :to="`/user/${item.id}`" class="nickname primary-hover">
             {{item.name}}
           </nuxt-link>
           <div class="follower-btn-box">
-            <button class="btn block" @click="follow(item)">{{item.focus?`已关注`:`关注`}}</button>
+            <Btn block color="primary" @click="follow(item)">{{item.focus?`已关注`:`关注`}}</Btn>
           </div>
         </div>
       </div>
@@ -123,6 +124,7 @@
       .head-box {
         display: block;
         position: relative;
+        border-radius: 50%;
         margin-top: -(@img-size / 2);
         img {
           border-radius: 50%;

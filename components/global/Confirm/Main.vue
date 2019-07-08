@@ -10,12 +10,12 @@
             {{message}}
           </p>
           <div class="confirm-btn-group">
-            <button class="btn is-plain" @click.stop="no">
+            <Btn flat color="primary" @click.stop="no">
               {{noDesc}}
-            </button>
-            <button class="btn" @click.stop="ok">
+            </Btn>
+            <Btn flat color="primary" @click.stop="ok">
               {{okDesc}}
-            </button>
+            </Btn>
           </div>
         </div>
       </transition>

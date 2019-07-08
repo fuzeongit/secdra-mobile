@@ -41,7 +41,7 @@
           </nuxt-link>
         </div>
         <div class="tool">
-          <nuxt-link :to="`/draw/${draw.id}`" v-ripple class="head-image" slot="reference"
+          <nuxt-link :to="`/draw/${draw.id}`" v-ripple class="head-image"
                      :title="draw.user.name">
             <img v-lazy="$img.head(draw.user.head,'small50')">
           </nuxt-link>

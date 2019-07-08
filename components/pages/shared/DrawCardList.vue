@@ -1,16 +1,17 @@
 <template>
   <div class="content row">
     <div class="card " v-for="(draw,index) in list" :key="index">
-      <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box">
+      <nuxt-link :to="`/draw/${draw.id}`" class="img-box flex-box" v-ripple>
         <img v-lazy="$img.secdra(draw.url,`specifiedWidth500`)"
              style="width: 100%">
       </nuxt-link>
-      <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-         :style="{color:draw.focus?`red`:`gray`}" title="收藏" v-if="!isSelf"
-         @click.stop="$emit(`collection`,draw,index)"></a>
+      <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="$emit(`collection`,draw,index)" title="收藏"
+           class="like">
+        <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+      </Btn>
       <div class="flex-box info-box" v-if="draw.user.id&&!isSelf">
-        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
-          <img :src="$img.head(draw.user.head)" :title="draw.user.name">
+        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
+          <img v-lazy="$img.head(draw.user.head)" :title="draw.user.name">
         </nuxt-link>
         <div class="user-info-box">
           <p class="nickname">
@@ -68,7 +69,7 @@
       .head-box {
         display: block;
         position: relative;
-        transition: @default-animate-time;
+        border-radius: 50%;
         img {
           border-radius: 50%;
           width: @img-size;

@@ -8,9 +8,7 @@
             {{message}}
           </p>
           <div class="alert-btn-group">
-            <button class="btn" @click.stop="close">
-              {{btnDesc}}
-            </button>
+            <Btn flat color="primary" @click.stop="close"> {{btnDesc}}</Btn>
           </div>
         </div>
       </transition>
@@ -64,7 +62,7 @@
     margin: 0 auto;
     vertical-align: middle;
     display: inline-block;
-    padding:3vw;
+    padding: 3vw;
     h3 {
       text-align: left;
       line-height: 8vw;

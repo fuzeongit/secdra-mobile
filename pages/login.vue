@@ -4,14 +4,13 @@
       <img src="../assets/image/svg/logo.svg">
       <p class="sub-logo">想你所想</p>
       <div class="row input-group">
-        <input type="text" class="input block big" title="手机" v-model="form.phone" placeholder="手机号码">
+        <input type="text" class="input block primary-color" title="手机" v-model="form.phone" placeholder="手机号码">
       </div>
       <div class="row input-group">
-        <input type="password" class="input block big" title="密码" v-model="form.password" placeholder="密码">
+        <input type="password" class="input block  primary-color" title="密码" v-model="form.password" placeholder="密码">
       </div>
       <br>
-      <button type="submit" class="btn block big" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}
-      </button>
+      <Btn block color="primary" type="submit" :disabled="loginLoading">{{!loginLoading?`登录`:`登录中...`}}</Btn>
     </form>
     <p class="center" style="position: fixed;bottom: 6vw">
       <span> © 2018-2019</span>
