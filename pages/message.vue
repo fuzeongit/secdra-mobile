@@ -22,8 +22,9 @@
       <nuxt-child/>
     </transition>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend  go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-up"></i></button>
+      <Btn icon big shadow v-goTop v-show="showGoTop" class="go-top">
+        <i class="icon s-up"></i>
+      </Btn>
     </transition>
   </div>
 </template>
@@ -92,7 +93,7 @@
     font-size: @default-font-size;
     padding: 0 5vw;
     border-bottom: 1px solid @font-color-dark-line;
-    background-color: @white;
+    background-color: white;
     .s-down {
       display: inline-block;
       transition: @short-animate-time all;

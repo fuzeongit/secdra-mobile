@@ -112,7 +112,7 @@
   @import "../../../assets/style/config";
   @import "../../../assets/style/mixin";
 
-  .other-home{
+  .other-home {
     background-color: @page-background-color;
     padding-bottom: 5vw
   }
@@ -130,7 +130,7 @@
       height: @img-size;
       width: @img-size;
       border-radius: 50%;
-      border: .8vw solid @white;
+      border: .8vw solid white;
     }
     .following {
       margin-top: @img-size * 2 / 3;
@@ -140,7 +140,7 @@
       font-size: @big-font-size;
       margin-top: 4vw;
       font-weight: 600;
-      .center();
+      text-align: center;
       .ellipsis();
       .icon {
         margin-left: 2vw;
@@ -183,7 +183,7 @@
     }
 
     .move {
-      .right();
+      text-align: right;
       a {
         color: @theme-color;
         font-size: @small-font-size;

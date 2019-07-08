@@ -3,17 +3,17 @@
     <SelfHome v-if="isSelf"></SelfHome>
     <OtherHome v-else :user="user" @follow="follow"></OtherHome>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend  go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-up"></i></button>
+      <Btn icon big shadow v-goTop v-show="showGoTop" class="go-top">
+        <i class="icon s-up"></i>
+      </Btn>
     </transition>
   </div>
 </template>
 
 <script>
-  import config from "../../assets/script/config";
   import SelfHome from "../../components/pages/user/SelfHome";
   import OtherHome from "../../components/pages/user/OtherHome";
-  import {mapState, mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
 
   export default {
     components: {
@@ -26,9 +26,9 @@
       store.commit('menu/MChangeName', "detail");
       let selfUser = store.state.user.user;
       let taskList = [];
-      taskList.push($axios.get(`${config.host}/user/getInfo`, {params: {id: route.params.id}}));
+      taskList.push($axios.get(`/user/getInfo`, {params: {id: route.params.id}}));
       if (selfUser.id === route.params.id) {
-        taskList.push($axios.get(`${config.host}/qiniu/getUploadToken`));
+        taskList.push($axios.get(`/qiniu/getUploadToken`));
       }
 
       let resultList = (await Promise.all(taskList)).map(item => item.data);

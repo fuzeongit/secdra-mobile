@@ -75,7 +75,7 @@
     background-color: @black;
     .message {
       .ellipsis();
-      .left();
+      text-align: left;
       width: 100%;
       font-size: @default-font-size;
       color: #eee;

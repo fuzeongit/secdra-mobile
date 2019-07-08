@@ -33,11 +33,11 @@
     margin-bottom: 2vw;
     padding: 0 .5em;
     font-size: @small-font-size;
+    text-align: center;
     .icon {
       color: @theme-color;
       font-size: @default-font-size;
       vertical-align: middle;
     }
-    .center();
   }
 </style>

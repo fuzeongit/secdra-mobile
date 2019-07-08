@@ -25,13 +25,12 @@
 </template>
 
 <script>
-  import config from "../../assets/script/config";
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       let type = "follow";
       store.commit('message/MChangeType', {type, reset: true});
-      let {data: result} = await $axios.get(`${config.host}/message/list`, {
+      let {data: result} = await $axios.get(`/message/list`, {
         params: {
           messageType: type.toUpperCase()
         }
@@ -58,7 +57,7 @@
       text-align: left;
       border-bottom: 1px solid @font-color-dark-line;
       color:@font-color-dark;
-      background-color: @white;
+      background-color: white;
       .head {
         img {
           border-radius: 50%;

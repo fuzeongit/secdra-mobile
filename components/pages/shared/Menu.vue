@@ -9,61 +9,61 @@
            :style="{backgroundImage: `url(${$img.back(user.background,`backCard`)})`}">
       </div>
       <div class="center" style="margin-top: -10vw;margin-bottom: 5vw">
-        <a @click="to(`/user/${user.id}`)" class="head-box">
+        <a @click="to(`/user/${user.id}`)" class="head-box" v-ripple>
           <img :src="$img.head(user.head)">
         </a>
       </div>
       <ul class="list">
         <li :class="{active:activeName===`new`}">
-          <a @click="to(`/new`)">
+          <a @click="to(`/new`)" v-ripple>
             <i class="icon s-new"></i>
             最新发现
           </a>
         </li>
         <li :class="{active:activeName===`collection`}">
-          <a @click="to(`/collection/${user.id||''}`)">
+          <a @click="to(`/collection/${user.id||''}`)" v-ripple>
             <i class="icon s-hearto"></i>
             我的收藏
           </a>
         </li>
         <li :class="{active:activeName===`works`}">
-          <a @click="to(`/works/${user.id||''}`)">
+          <a @click="to(`/works/${user.id||''}`)" v-ripple>
             <i class="icon s-zhuanyeyukecheng"></i>
             我的作品
           </a>
         </li>
         <li :class="{active:activeName===`footprint`}">
-          <a @click="to(`/footprint`)">
+          <a @click="to(`/footprint`)" v-ripple>
             <i class="icon s-zuji"></i>
             我的足迹
           </a>
         </li>
         <li :class="{active:activeName===`follower`}">
-          <a @click="to(`/follower/${user.id||''}`)">
+          <a @click="to(`/follower/${user.id||''}`)" v-ripple>
             <i class="icon s-guanzhu1"></i>
             我的粉丝
           </a>
         </li>
         <li :class="{active:activeName===`following`}">
-          <a @click="to(`/following/${user.id||''}`)">
+          <a @click="to(`/following/${user.id||''}`)" v-ripple>
             <i class="icon s-guanzhu1"></i>
             关注用户
           </a>
         </li>
         <li :class="{active:activeName===`upload`}">
-          <a @click="to(`/upload`)">
+          <a @click="to(`/upload`)" v-ripple>
             <i class="icon s-upload"></i>
             我要上传
           </a>
         </li>
         <li :class="{active:activeName===`message`}">
-          <a @click="to(`/message`)">
+          <a @click="to(`/message`)" v-ripple>
             <i class="icon s-xinxizhongxin"></i>
             通知信息
           </a>
         </li>
         <li>
-          <a @click="logout">
+          <a @click="logout" v-ripple>
             <i class="icon s-zhuxiao"></i>
             退出登录
           </a>
@@ -120,7 +120,7 @@
     @width: 70vw;
     height: 100vh;
     width: @width;
-    background-color: @white;
+    background-color: white;
     position: fixed;
     top: 0;
     left: 0;
@@ -134,8 +134,9 @@
       height: @width / 2;
     }
     .head-box {
-      display: block;
+      display: inline-block;
       position: relative;
+      border-radius: 50%;
       img {
         border-radius: 50%;
         width: @width / 3;

@@ -2,16 +2,16 @@
   <div class="page">
     <DrawList :page="page" :list="list" :pageLoading="pageLoading" @paging="paging" @collection="collection"></DrawList>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend  go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-up"></i></button>
+      <Btn icon big shadow v-goTop v-show="showGoTop" class="go-top">
+        <i class="icon s-up"></i>
+      </Btn>
     </transition>
   </div>
 </template>
 
 <script>
-  import config from "../../../assets/script/config";
   import {Pageable} from "../../../assets/script/model/base";
-  import {mapState, mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
   import DrawList from "../../../components/pages/shared/DrawList"
 
   export default {
@@ -24,7 +24,7 @@
       let pageable = new Pageable();
       pageable.size = 16;
       pageable.sort = "likeAmount,desc";
-      let {data: result} = await $axios.get(`${config.host}/draw/paging`, {
+      let {data: result} = await $axios.get(`/draw/paging`, {
         params: Object.assign({
           tag: route.params.tag
         }, pageable)

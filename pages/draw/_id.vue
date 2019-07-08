@@ -106,8 +106,7 @@
   </div>
 </template>
 <script>
-  import config from "../../assets/script/config";
-  import {mapState,mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
   import Model from "../../components/global/Model"
   import Tag from "../../components/global/Tag"
 
@@ -119,7 +118,7 @@
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "detail");
       let id = route.params.id;
-      let res = await $axios.get(`${config.host}/draw/get`, {
+      let res = await $axios.get(`/draw/get`, {
         params: {id}
       });
       let result = res.data;
@@ -143,7 +142,7 @@
       }
     },
     computed: {
-      ...mapState("user",["user"]),
+      ...mapState("user", ["user"]),
       proportion() {
         return this.draw.height / this.draw.width
       }
@@ -228,10 +227,10 @@
     min-height: 100vh;
     margin-top: 0;
     background-color: @page-background-color;
-    .img-box{
+    .img-box {
       background-color: @theme-background-color;
       width: 100vw;
-      img{
+      img {
         width: 100%;
       }
     }
@@ -253,14 +252,14 @@
       .nickname {
         width: calc(100% - @img-size - @follow-btn-size);
         padding: 0 6vw;
-        .left();
+        text-align: left;
         .ellipsis();
       }
       .following-btn-box {
         width: @follow-btn-size;
         .btn {
           padding: 0;
-          .center();
+          text-align: center;
         }
       }
     }
@@ -309,8 +308,8 @@
       position: fixed;
       right: 4vw;
       bottom: 4vw;
-      &.s-hearto{
-        color:@white
+      &.s-hearto {
+        color: white
       }
     }
   }
@@ -339,10 +338,10 @@
         line-height: @herder-nav-height;
         .icon {
           font-size: @big-font-size;
-          color: @white;
+          color: white;
         }
         .title {
-          color: @white;
+          color: white;
         }
       }
     }

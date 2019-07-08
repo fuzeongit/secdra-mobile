@@ -52,7 +52,7 @@
     width: 92vw;
     margin: 4vw;
     border-radius: @default-border-radius;
-    background-color: @white;
+    background-color: white;
     overflow: hidden;
     .like {
       position: absolute;

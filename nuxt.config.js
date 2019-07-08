@@ -1,12 +1,21 @@
+const env = (function () {
+  return {
+    baseUrl: process.env.NODE_ENV === "development" ? "http://localhost:3001/api" : "http://www.secdra.com/api",
+    qiniuImg: process.env.NODE_ENV === "development" ? "http://secdraimg.secdra.com" : "http://secdraimg.secdra.com",
+    qiniuHead: process.env.NODE_ENV === "development" ? "http://secdrahead.secdra.com" : "http://secdrahead.secdra.com",
+    qiniuBack: process.env.NODE_ENV === "development" ? "http://secdraback.secdra.com" : "http://secdraback.secdra.com",
+    qiniuUploadAddress: process.env.NODE_ENV === "development" ? "http://upload-z2.qiniup.com" : "http://upload-z2.qiniup.com",
+    qiniuSeparator: process.env.NODE_ENV === "development" ? "-" : "-",
+  }
+})();
+
 module.exports = {
   mode: 'universal',
   server: {
     port: 3001, // default: 3000
     host: 'localhost', // default: localhost
   },
-  /*
-  ** Headers of the pages
-  */
+  env,
   head: {
     title: 'Secdra - 想你所想',
     meta: [
@@ -21,40 +30,18 @@ module.exports = {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
-      {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_p65o52if5w.css'},
+      {rel: 'stylesheet', type: 'text/css', href: '//at.alicdn.com/t/font_896802_f3v4vbehy3e.css'},
     ]
   },
-
-  /*
-  ** Customize the progress-bar color
-  */
-  // loading: {
-  //   name: 'nuxt',
-  //   color: '#0b99ff',
-  //   background: '#fff'
-  // },
   loading: '~/components/Loading.vue',
-  /*
-  ** Global CSS
-  */
   css: [
     {src: '../assets/style/index.less', lang: 'less'},
   ],
-
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '~/plugins/mixin',
     '~/plugins/extend',
   ],
-
-
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/proxy',
     '@nuxtjs/axios'
   ],
@@ -69,16 +56,9 @@ module.exports = {
       }
     ]
   ],
-  /*
-  ** Axios module configuration
-  */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: env.baseUrl
   },
-
-  /*
-  ** Build configuration
-  */
   build: {
     vendor: ['axios'],
     postcss: {
@@ -94,20 +74,10 @@ module.exports = {
         },
       },
     },
-
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
-
     },
     optimization: {},
-
-    // optimizeCSS: {}//压缩css
-
-    /**
-     * 打包独立css文件
-     */
+    //打包独立css文件
     extractCSS: true,
   }
 };

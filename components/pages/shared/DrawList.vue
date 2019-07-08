@@ -2,15 +2,16 @@
   <div class="list-content" :style="{height:`${listContentOffset.height}vw`}">
     <div class="card item" :style="{left:`${offset[index].left}vw`,top:`${offset[index].top}vw`}"
          v-for="(draw,index) in list" :key="index">
-      <nuxt-link :to="`/draw/${draw.id}`" class="img-box">
+      <nuxt-link :to="`/draw/${draw.id}`" class="img-box" v-ripple>
         <img v-lazy="$img.secdra(draw.url,`specifiedWidth`)" :key="$img.secdra(draw.url,`specifiedWidth`)"
              :style="{width:listConstant.colWidth+`vw`,height:getHeight(draw)+`vw`}">
       </nuxt-link>
-      <a class="icon like" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"
-         :style="{color:draw.focus?`red`:`gray`}" title="收藏"
-         @click.stop="$emit(`collection`,draw,index)"></a>
+      <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="$emit(`collection`,draw,index)" title="收藏"
+           class="like">
+        <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+      </Btn>
       <div class="flex-box info-box" :style="{width:listConstant.colWidth+`vw`,height:listConstant.infoHeight+`vw`}">
-        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box">
+        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
           <img v-lazy="$img.head(draw.user.head)" :key="$img.head(draw.user.head)" :title="draw.user.name">
         </nuxt-link>
         <div class="user-info-box">
@@ -133,7 +134,7 @@
       position: absolute;
       transition: 0.5s;
       border-radius: @smallest-border-radius;
-      background-color: @white;
+      background-color: white;
       .like {
         position: absolute;
         bottom: @info-box-height + 1vw;
@@ -141,6 +142,7 @@
         font-size: @big-font-size;
       }
       .img-box {
+        display: block;
         img {
           transition: 0.5s;
           width: 100%
@@ -154,7 +156,7 @@
         .head-box {
           display: block;
           position: relative;
-          transition: @default-animate-time;
+          border-radius: 50%;
           img {
             border-radius: 50%;
             width: @img-size;

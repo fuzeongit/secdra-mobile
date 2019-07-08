@@ -91,7 +91,7 @@
       height: @default-font-size;
       border-radius: 50%;
       border: 1px solid @font-color-dark-line;
-      background-color: @white;
+      background-color: white;
       transition: .1s;
       font-size: @small-font-size;
       vertical-align: middle;

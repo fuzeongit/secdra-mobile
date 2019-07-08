@@ -4,12 +4,11 @@
  * @author fjj
  */
 import Cookies from 'js-cookie'
-import config from "../config"
 import {Result} from "../model/base"
 import axios from "axios"
 import qs from "qs"
 // import * as NProgress from "nprogress";
-
+axios.defaults.baseURL = process.env.baseUrl;
 export default {
   /**
    * get 请求
@@ -18,10 +17,9 @@ export default {
    * @returns {Promise<>}
    */
   async get(url, params) {
-    // NProgress.start();
     let result = null;
     try {
-      let response = await axios.get(config.host + url, {
+      let response = await axios.get(url, {
         params: params
       });
       this._handleToken(response);
@@ -42,10 +40,9 @@ export default {
    * @returns {Promise<>}
    */
   async post(url, body, params) {
-    // NProgress.start();
     let result = null;
     try {
-      let response = await axios.post(config.host + url, qs.stringify(body, {
+      let response = await axios.post(url, qs.stringify(body, {
         arrayFormat: 'repeat'
       }), {
         params: params

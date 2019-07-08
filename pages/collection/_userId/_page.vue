@@ -5,22 +5,22 @@
     <Pageable :totalPage="page.totalPages" :currPage="pageable.page" @go="paging"></Pageable>
     <br>
     <transition name="zoom" enter-active-class="zoomIn duration" leave-active-class="zoomOut duration">
-      <button class="btn is-suspend  go-top" v-goTop v-show="showGoTop">
-        <i class="icon s-up"></i></button>
+      <Btn icon big shadow v-goTop v-show="showGoTop" class="go-top">
+        <i class="icon s-up"></i>
+      </Btn>
     </transition>
   </div>
 </template>
 <script>
-  import config from "../../../assets/script/config";
   import {Pageable} from "../../../assets/script/model/base";
   import DrawCardList from "../../../components/pages/shared/DrawCardList";
-  import {mapState, mapActions} from "vuex"
+  import {mapActions, mapState} from "vuex"
 
   export default {
     async asyncData({store, req, redirect, route, $axios}) {
       store.commit('menu/MChangeName', "collection");
       let pageable = new Pageable(route.params.page * 1 || 0, 16, "createDate,desc");
-      let {data: result} = await $axios.get(`${config.host}/collection/paging`, {
+      let {data: result} = await $axios.get(`/collection/paging`, {
         params: Object.assign({
           id: route.params.userId
         }, pageable)

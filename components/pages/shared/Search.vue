@@ -103,7 +103,7 @@
       line-height: @herder-nav-height;
       .icon {
         font-size: @big-font-size;
-        color: @white;
+        color: white;
       }
       .search-box {
         padding: 0 6vw;

@@ -3,26 +3,36 @@
           :class="{fadeInDown:isShow&&hid,fadeOutUp:!isShow,transparent:activeName===`detail`}">
     <nav class="row">
       <template v-if="canBack">
-        <div class="col-3 center" @click="$router.back()">
-          <i class="icon s-left"></i>
+        <div class="col-3 center">
+          <Btn small icon flat @click="$router.back()">
+            <i class="icon s-left"></i>
+          </Btn>
         </div>
       </template>
       <template v-else>
         <div class="col-3 center">
-          <i class="icon s-menu" @click="MChangeShow(true)"></i>
+          <Btn small icon flat @click="MChangeShow(true)">
+            <i class="icon s-menu"></i>
+          </Btn>
         </div>
       </template>
       <div class="col-18 center title">
         {{menuList[activeName]||title}}
       </div>
-      <nuxt-link class="col-3 center" to="/">
-        <i class="icon s-home" :class="{active:activeName===`home`}"></i>
-      </nuxt-link>
-      <nuxt-link class="col-3 center" to="/find">
-        <i class="icon s-faxian" :class="{active:activeName===`find`}"></i>
-      </nuxt-link>
-      <div class="col-3 center" @click="MChangeSearchShow(true)">
-        <i class="icon s-chaxun"></i>
+      <div class="col-3 center">
+        <Btn small icon flat to="/">
+          <i class="icon s-home" :class="{active:activeName===`home`}"></i>
+        </Btn>
+      </div>
+      <div class="col-3 center">
+        <Btn small icon flat to="/find">
+          <i class="icon s-faxian" :class="{active:activeName===`find`}"></i>
+        </Btn>
+      </div>
+      <div class="col-3 center" >
+        <Btn small icon flat @click="MChangeSearchShow(true)">
+          <i class="icon s-chaxun"></i>
+        </Btn>
       </div>
     </nav>
   </header>
@@ -78,7 +88,7 @@
     methods: {
       ...mapMutations("window", ["MChangesScroll"]),
       ...mapMutations("message", ["MChangeCount"]),
-      ...mapMutations("menu", ["MChangeShow","MChangeSearchShow"]),
+      ...mapMutations("menu", ["MChangeShow", "MChangeSearchShow"]),
       ...mapActions("message", ["ACount"]),
       documentScroll(event) {
         let scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -125,6 +135,9 @@
       border-bottom: none;
       box-shadow: none;
       text-shadow: 1px 1px 3px @font-color-dark;
+      button,a{
+        text-shadow: 1px 1px 3px @font-color-dark;
+      }
     }
     nav {
       width: 100%;
@@ -134,12 +147,12 @@
       line-height: @herder-nav-height;
       .icon {
         font-size: @big-font-size;
-        color: @white;
+        color: white;
       }
       .title {
         .ellipsis();
         font-size: @big-font-size;
-        color: @white;
+        color: white;
       }
       .active {
         color: rgba(255, 255, 255, .6)

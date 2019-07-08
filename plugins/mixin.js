@@ -9,6 +9,7 @@ import {Confirm} from "../components/global/Confirm"
 import {Tooltip} from "../components/global/Tooltip"
 import Popper from "../components/global/Popper"
 import Pageable from "../components/global/Pageable"
+import Btn from "../components/form/Btn"
 import RadioGroup from "../components/form/RadioGroup"
 import Radio from "../components/form/Radio"
 import Switch from "../components/form/Switch";
@@ -18,6 +19,7 @@ Vue.prototype.$confirm = Confirm;
 Vue.prototype.$tooltip = Tooltip;
 Vue.component("Popper", Popper);
 Vue.component("Pageable", Pageable);
+Vue.component("Btn", Btn);
 Vue.component("RadioGroup", RadioGroup);
 Vue.component("Radio", Radio);
 Vue.component("SSwitch", Switch);
@@ -33,6 +35,7 @@ for (let name in filters) {
 Vue.directive("goTop", directive.goTop);
 Vue.directive("popover", directive.popover);
 Vue.directive("loading", directive.loading);
+Vue.directive("ripple", directive.ripple);
 Vue.directive("swipe", directive.swipe);
 
 //取消 Vue 所有的日志与警告。
