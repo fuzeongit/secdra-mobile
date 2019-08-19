@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div v-popover:popover class="active-name row">
+    <div v-popover:popover class="active-name row" v-ripple>
       <div class="col-20">{{menuList[type]}}</div>
       <div class="col-10 right">
         <i class="icon s-down" :class="{open:popperStatus}"></i>
@@ -94,6 +94,9 @@
     padding: 0 5vw;
     border-bottom: 1px solid @font-color-dark-line;
     background-color: white;
+    .right{
+      text-align: right;
+    }
     .s-down {
       display: inline-block;
       transition: @short-animate-time all;
