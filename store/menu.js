@@ -4,25 +4,25 @@
  *  @author fjj
  */
 export const state = () => ({
-  name:"home",
-  isShow:false,
-  searchIsShow:false,
-  title:""
-});
+  name: "home",
+  show: false,
+  searchShow: false,
+  title: ""
+})
 
 export const mutations = {
   MChangeName(state, name) {
-    state.name = name;
+    state.name = name
   },
-  MChangeShow(state, isShow) {
-    state.isShow = isShow;
+  MChangeShow(state, show) {
+    state.show = show
   },
-  MChangeSearchShow(state, searchIsShow) {
-    state.searchIsShow = searchIsShow;
+  MChangeSearchShow(state, searchShow) {
+    state.searchShow = searchShow
   },
   MChangeTitle(state, title) {
-    state.title = title;
-  },
-};
+    state.title = title
+  }
+}
 
-export const actions = {};
+export const actions = {}

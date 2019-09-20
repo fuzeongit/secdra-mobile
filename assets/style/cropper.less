@@ -7,7 +7,6 @@
  *
  * Date: 2018-10-24T13:07:11.429Z
  */
-
 @import "./color";
 
 .cropper-container {
@@ -52,33 +51,33 @@
 }
 
 .cropper-drag-box {
-  background-color: #fff;
+  background-color: white;
   opacity: 0;
 }
 
 .cropper-modal {
-  background-color: #000;
+  background-color: black;
   opacity: .5;
 }
 
 .cropper-view-box {
   display: block;
   height: 100%;
-  outline: #39f solid 1px;
+  outline: @blue solid .2vw;
   overflow: hidden;
   width: 100%;
 }
 
 .cropper-dashed {
-  border: 0 dashed #eee;
+  border: 0 dashed @font-color-dark-line;
   display: block;
   opacity: .5;
   position: absolute;
 }
 
 .cropper-dashed.dashed-h {
-  border-bottom-width: 1px;
-  border-top-width: 1px;
+  border-bottom-width: .2vw;
+  border-top-width: .2vw;
   height: calc(100% / 3);
   left: 0;
   top: calc(100% / 3);
@@ -106,7 +105,7 @@
 
 .cropper-center:before,
 .cropper-center:after {
-  background-color: #eee;
+  background-color: @theme-background-color;
   content: ' ';
   display: block;
   position: absolute;
@@ -137,7 +136,7 @@
 }
 
 .cropper-face {
-  background-color: #fff;
+  background-color: white;
   left: 0;
   top: 0;
 }

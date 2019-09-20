@@ -1,70 +1,79 @@
 <template>
-  <transition name="fade" enter-active-class="fadeInUp short-duration" leave-active-class="fadeOutDown short-duration">
-    <div class="model" v-show="visible">
+  <transition
+    name="fade"
+    enter-active-class="fadeInUp short-duration"
+    leave-active-class="fadeOutDown short-duration"
+    @after-leave="destroyElement"
+  >
+    <div v-show="visible" class="model">
       <slot></slot>
     </div>
   </transition>
 </template>
 
 <script>
-  export default {
-    componentName: "Model",
-    props: {
-      isShow: {
-        type: Boolean,
-        default: false
-      }
+import dialogMixin from "../../../assets/script/mixin/dialogMixin"
+import { addClass, removeClass } from "../../../assets/script/util/domUtil"
+
+export default {
+  componentName: "Dialog",
+  mixins: [dialogMixin],
+  model: {
+    prop: "isShow",
+    event: "change"
+  },
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false
     },
-    model: {
-      prop: 'isShow',
-      event: 'change'
+    enterActiveClass: {
+      type: String,
+      default: "fadeInUp"
     },
-    watch: {
-      isShow(newVal) {
-        this.visible = newVal
-      },
-      closed(newVal) {
-        if (newVal) {
-          this.visible = false;
-          this.$emit("change", false);
-          this.$el.firstElementChild.addEventListener('transitionend', this.destroyElement);
-          this.$el.firstElementChild.addEventListener('animationend', this.destroyElement);
-        }
-      }
+    leaveActiveClass: {
+      type: String,
+      default: "fadeOutDown"
     },
-    data() {
-      return {
-        visible: false,
-        closed: false,
-      }
-    },
-    methods: {
-      destroyElement() {
-        this.$el.firstElementChild.removeEventListener('transitionend', this.destroyElement);
-        this.$el.firstElementChild.removeEventListener('animationend', this.destroyElement);
-        this.closed = false;
-      },
-      close() {
-        this.closed = true;
+    padding: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {
+      visible: false
+    }
+  },
+  watch: {
+    isShow(newVal) {
+      this.visible = newVal
+      if (newVal) {
+        addClass(document.body, "not-scroll")
       }
     }
+  },
+  methods: {
+    destroyElement() {
+      removeClass(document.body, "not-scroll")
+      this.$emit("change", false)
+    }
   }
+}
 </script>
 
-
 <style scoped lang="less" type="text/less">
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
+@import "../../../assets/style/color.less";
+@import "../../../assets/style/config.less";
 
-  .model {
-    height: 100vh;
-    width: 100vw;
-    background-color: @theme-background-color;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: @mask-index+1;
-    overflow: auto;
-  }
+.model {
+  height: 100vh;
+  width: 100vw;
+  background-color: @theme-background-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: @mask-index+1;
+  overflow: auto;
+}
 </style>
-

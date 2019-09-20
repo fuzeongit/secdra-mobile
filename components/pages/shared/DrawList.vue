@@ -1,189 +1,236 @@
 <template>
-  <div class="list-content" :style="{height:`${listContentOffset.height}vw`}">
-    <div class="card item" :style="{left:`${offset[index].left}vw`,top:`${offset[index].top}vw`}"
-         v-for="(draw,index) in list" :key="index">
-      <nuxt-link :to="`/draw/${draw.id}`" class="img-box" v-ripple>
-        <img v-lazy="$img.secdra(draw.url,`specifiedWidth`)" :key="$img.secdra(draw.url,`specifiedWidth`)"
-             :style="{width:listConstant.colWidth+`vw`,height:getHeight(draw)+`vw`}">
+  <div
+    class="list-content"
+    :style="{ height: `${listContentOffset.height}vw` }"
+  >
+    <div
+      v-for="(draw, index) in list"
+      :key="index"
+      class="item card"
+      :style="{
+        left: `${offset[index].left}vw`,
+        top: `${offset[index].top}vw`
+      }"
+    >
+      <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box">
+        <img
+          v-lazy="$img.secdra(draw.url, `specifiedWidth`)"
+          :style="{
+            width: listConstant.colWidth + `vw`,
+            height: getHeight(draw) + `vw`
+          }"
+        />
       </nuxt-link>
-      <Btn flat icon :color="draw.focus?`primary`:`default`" @click.stop="$emit(`collection`,draw,index)" title="收藏"
-           class="like">
-        <i class="icon" :class="{'s-heart':draw.focus,'s-hearto':!draw.focus}"></i>
+      <Btn
+        flat
+        icon
+        :color="
+          draw.focus === $enum.CollectState.CONCERNED.key
+            ? `primary`
+            : `default`
+        "
+        class="like"
+        @click.stop="$emit(`collection`, draw, index)"
+      >
+        <i
+          class="icon"
+          :class="{
+            'ali-icon-likefill':
+              draw.focus === $enum.CollectState.CONCERNED.key,
+            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+          }"
+        ></i>
       </Btn>
-      <div class="flex-box info-box" :style="{width:listConstant.colWidth+`vw`,height:listConstant.infoHeight+`vw`}">
-        <nuxt-link :to="`/user/${draw.user.id}`" class="head-box" v-ripple>
-          <img v-lazy="$img.head(draw.user.head)" :key="$img.head(draw.user.head)" :title="draw.user.name">
+
+      <div
+        class="flex-text info-box"
+        :style="{
+          width: listConstant.colWidth + `vw`,
+          height: listConstant.infoHeight + `vw`
+        }"
+      >
+        <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
+          <img v-lazy="$img.head(draw.user.head, 'small50')" />
         </nuxt-link>
-        <div class="user-info-box">
-          <p class="nickname">
-            {{draw.user.name}}
-          </p>
-          <p class="introduction" :title="draw.user.introduction">
-            {{draw.user.introduction}}
-          </p>
-        </div>
+        <p class="nickname">
+          {{ draw.user.name }}
+        </p>
       </div>
     </div>
-    <div class="item last-card" v-if="page.last"
-         :style="{left:`${listContentOffset.lastCardLeft}vw`,top:`${listContentOffset.lastCardTop}vw`,width:listConstant.colWidth+`vw`}">
-      <img src="../../../assets/image/error/404.jpg">
+    <div
+      v-if="page.last"
+      class="item last-card"
+      :style="{
+        left: `${listContentOffset.lastCardLeft}vw`,
+        top: `${listContentOffset.lastCardTop}vw`,
+        width: listConstant.colWidth + `vw`
+      }"
+    >
+      <img v-lazy="require('../../../assets/image/error/404.jpg')" />
     </div>
   </div>
 </template>
 
 <script>
-  import {ListConstant} from "../../../assets/script/constant/base";
-  import {mapState} from 'vuex'
+import { ListConstant } from "../../../assets/script/constant"
+import windowMixin from "../../../assets/script/mixin/windowMixin"
 
-  export default {
-    componentName: "DrawList",
-    props: {
-      page: Object,
-      list: {
-        type: Array,
-        default: [],
-      },
-      pageLoading: {
-        type: Boolean,
-        default: false
-      }
+export default {
+  componentName: "DrawList",
+  mixins: [windowMixin],
+  props: {
+    page: {
+      type: Object,
+      default: null
     },
-    data() {
-      return {
-        listConstant: new ListConstant(),
-      }
+    list: {
+      type: Array,
+      default: () => []
     },
-    watch: {
-      scrollBottom: function (newVal) {
-        if (this.pageLoading) {
-          return
-        }
-        if (newVal > 200) {
-          return
-        }
-        this.$emit("paging");
+    pageLoading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      listConstant: new ListConstant()
+    }
+  },
+  computed: {
+    // 计算偏移
+    offset() {
+      const o = []
+      const colNumberHeight = this.initColNumberHeight(this.listConstant)
+      // eslint-disable-next-line no-unused-vars
+      for (const draw of this.list) {
+        const minTopIndex = colNumberHeight.minIndex()
+        const left =
+          (1 + minTopIndex) * this.listConstant.widthOffset +
+          this.listConstant.colWidth * minTopIndex
+        const top = colNumberHeight[minTopIndex]
+        colNumberHeight[minTopIndex] +=
+          (draw.height / draw.width) * this.listConstant.colWidth +
+          this.listConstant.heightOffset +
+          this.listConstant.infoHeight
+        o.push({ left, top })
       }
+      return o
     },
-    computed: {
-      ...mapState('window', ['scrollTop', 'scrollBottom']),
-      //计算偏移
-      offset() {
-        let o = [];
-        let colNumberHeight = this.initColNumberHeight(this.listConstant);
-        for (let draw of this.list) {
-          let minTopIndex = colNumberHeight.minIndex();
-          let left = (1 + minTopIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minTopIndex;
-          let top = colNumberHeight[minTopIndex];
-          colNumberHeight[minTopIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
-          o.push({left, top});
-        }
-        return o
-      },
-      //计算盒子属性
-      listContentOffset() {
-        let colNumberHeight = this.initColNumberHeight(this.listConstant);
-        let minIndex = 0;
-        for (let draw of this.list) {
-          colNumberHeight[minIndex] += (draw.height / draw.width) * (this.listConstant.colWidth) + this.listConstant.heightOffset + this.listConstant.infoHeight;
-          minIndex = colNumberHeight.minIndex()
-        }
-        let offset = {
-          height: colNumberHeight.max()
-        };
-        if (this.page.last) {
-          let lastCardHeight = 61;
-          offset.lastCardLeft = (1 + minIndex) * this.listConstant.widthOffset + this.listConstant.colWidth * minIndex;
-          offset.lastCardTop = colNumberHeight.min();
-          let h = colNumberHeight.min() + lastCardHeight + this.listConstant.heightOffset;
-          if (h > offset.height) {
-            offset.height = h
-          }
-          return offset
-        } else {
-          return offset
-        }
+    // 计算盒子属性
+    listContentOffset() {
+      const colNumberHeight = this.initColNumberHeight(this.listConstant)
+      let minIndex = 0
+      // eslint-disable-next-line no-unused-vars
+      for (const draw of this.list) {
+        colNumberHeight[minIndex] +=
+          (draw.height / draw.width) * this.listConstant.colWidth +
+          this.listConstant.heightOffset +
+          this.listConstant.infoHeight
+        minIndex = colNumberHeight.minIndex()
       }
-    },
-    methods: {
-      //初始化高度数组
-      initColNumberHeight(listConstant) {
-        let t = [];
-        for (let i = 0; i < listConstant.colNumber; i++) {
-          t[i] = listConstant.heightOffset
+      const offset = {
+        height: colNumberHeight.max()
+      }
+      if (this.page.last) {
+        const lastCardHeight = 300
+        offset.lastCardLeft =
+          (1 + minIndex) * this.listConstant.widthOffset +
+          this.listConstant.colWidth * minIndex
+        offset.lastCardTop = colNumberHeight.min()
+        const h =
+          colNumberHeight.min() +
+          lastCardHeight +
+          this.listConstant.heightOffset
+        if (h > offset.height) {
+          offset.height = h
         }
-        return t
-      },
-      getHeight(draw) {
-        return (draw.height / draw.width) * (this.listConstant.colWidth)
-      },
+        return offset
+      } else {
+        return offset
+      }
+    }
+  },
+  watch: {
+    scrollBottom(newVal) {
+      if (this.pageLoading) {
+        return
+      }
+      if (newVal > 200) {
+        return
+      }
+      this.$emit("paging")
+    }
+  },
+  methods: {
+    // 初始化高度数组
+    initColNumberHeight(listConstant) {
+      const t = []
+      for (let i = 0; i < listConstant.colNumber; i++) {
+        t[i] = listConstant.heightOffset
+      }
+      return t
+    },
+    getHeight(draw) {
+      return (draw.height / draw.width) * this.listConstant.colWidth
     }
   }
+}
 </script>
 
-
 <style type="text/less" lang="less" scoped>
-  @import "../../../assets/style/color.less";
-  @import "../../../assets/style/config.less";
-  @import "../../../assets/style/mixin";
+@import "../../../assets/style/color";
+@import "../../../assets/style/config";
+@import "../../../assets/style/mixin";
 
-  .list-content {
-    margin: 0 auto;
-    position: relative;
-    .item {
-      @info-box-height: 16vw;
+.list-content {
+  margin: 0 auto;
+  position: relative;
+  height: calc(100vh - @herder-height);
+  .item {
+    @info-box-height: 16vw;
+    position: absolute;
+    transition: @short-animate-time;
+
+    .like {
       position: absolute;
-      transition: 0.5s;
-      border-radius: @smallest-border-radius;
-      background-color: white;
-      .like {
-        position: absolute;
-        bottom: @info-box-height + 1vw;
-        right: 1vw;
-        font-size: @big-font-size;
-      }
-      .img-box {
-        display: block;
-        img {
-          transition: 0.5s;
-          width: 100%
-        }
-      }
-      .info-box {
-        @img-size: 10vw;
-        @padding-size: 3vw;
-        padding: @padding-size;
-        overflow: hidden;
-        .head-box {
-          display: block;
-          position: relative;
-          border-radius: 50%;
-          img {
-            border-radius: 50%;
-            width: @img-size;
-            height: @img-size;
-          }
-        }
-        .user-info-box {
-          width: calc(100% - @img-size);
-          padding: 0 2vw;
-          transition: @default-animate-time;
-          .nickname {
-            font-size: @small-font-size;
-            .ellipsis();
-          }
-          .introduction {
-            font-size: @smallest-font-size;
-            margin-top: 1vw;
-            .ellipsis()
-          }
-        }
-      }
+      bottom: @info-box-height + 1vw;
+      right: 1vw;
     }
-    .last-card {
-      height: 60vw;
+    .img-box {
+      display: block;
       img {
+        transition: 0.5s;
         width: 100%;
       }
     }
+    .info-box {
+      @img-size: 10vw;
+      @padding-size: 3vw;
+      padding: @padding-size;
+      overflow: hidden;
+      .head-box {
+        display: block;
+        position: relative;
+        transition: @default-animate-time;
+        border-radius: 50%;
+        img {
+          border-radius: 50%;
+          width: @img-size;
+        }
+      }
+      .nickname {
+        .ellipsis();
+        flex: 1;
+        margin-left: 2vw;
+      }
+    }
   }
+  .last-card {
+    height: 60vw;
+    img {
+      width: 100%;
+    }
+  }
+}
 </style>

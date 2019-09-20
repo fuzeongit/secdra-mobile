@@ -1,17 +1,5 @@
-import goTop from "./goTop";
-import popover from "./popover";
-import showWait from "./showWait";
-import loading from "./loading";
-import ripple from "./ripple";
-import swipe from "./hammer/swipe";
+import popover from "./popover"
+import loading from "./loading"
+import ripple from "./ripple"
 
-
-
-export default {
-  showWait,
-  loading,
-  goTop,
-  popover,
-  ripple,
-  swipe
-}
+export default { popover, loading, ripple }

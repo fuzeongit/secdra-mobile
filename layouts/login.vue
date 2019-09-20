@@ -1,15 +1,12 @@
 <template>
   <div>
-    <nuxt/>
+    <nuxt />
   </div>
 </template>
 <script>
-  export default {
-    middleware: 'auth',
-    mounted(){
-      console.log(123);
-    }
-  }
+export default {
+  middleware: "auth",
+  mounted() {}
+}
 </script>
-<style type="text/less" lang="less">
-</style>
+<style type="text/less" lang="less"></style>

@@ -3,14 +3,14 @@
 @import "../mixin";
 
 .input-group {
-  line-height: @input-line-height + @input-border-size + @input-border-size;
+  line-height: @input-line-height;
   font-size: @small-font-size;
   margin-bottom: 3vw;
   &.big {
-    line-height: @big-input-line-height + @input-border-size + @input-border-size;
+    line-height: @big-input-line-height;
   }
   &.small {
-    line-height: @small-input-line-height + @input-border-size + @input-border-size;
+    line-height: @small-input-line-height;
   }
 }
 
@@ -26,11 +26,12 @@
   user-select: none;
   border-radius: @smallest-border-radius;
   font-size: @small-font-size;
-  line-height: @input-line-height;
+  height: @input-line-height;
   border: 0 solid;
   margin: 0;
   padding: 0 1.5em;
   text-decoration: none;
+  vertical-align: top;
   .color(@color,@font-color) {
     background-color: @color;
     border-color: @color;
@@ -62,26 +63,25 @@
     position: absolute;
     left: 0;
     top: 0;
-    height: 100%;
     opacity: 0.12;
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     width: 100%;
+    height: 100%;
   }
   &:hover:before {
     background-color: currentColor;
   }
-
   &.block {
     display: block;
     width: 100%;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     padding: 0 2em;
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     padding: 0 1em;
   }
@@ -116,48 +116,19 @@
       width: @small-input-line-height;
       height: @small-input-line-height;
     }
-    &.outline {
-      height: @input-line-height - @input-border-size - @input-border-size;
-      width: @input-line-height - @input-border-size - @input-border-size;
-      border-width: @input-border-size;
-      &.big {
-        height: @big-input-line-height - @input-border-size - @input-border-size;
-        width: @big-input-line-height - @input-border-size - @input-border-size;
-      }
-      &.small {
-        height: @small-input-line-height - @input-border-size - @input-border-size;
-        width: @small-input-line-height - @input-border-size - @input-border-size;
-      }
-    }
   }
   &.outline {
-    line-height: @input-line-height - @input-border-size - @input-border-size;
     border-width: @input-border-size;
-    &.big {
-      line-height: @big-input-line-height - @input-border-size - @input-border-size;
-    }
-    &.small {
-      line-height: @small-input-line-height - @input-border-size - @input-border-size;
-    }
     &.disabled {
-      line-height: @input-line-height;
       border-width: 0;
-      &.big {
-        line-height: @big-input-line-height;
-      }
-      &.small {
-        line-height: @small-input-line-height;
-      }
     }
   }
-  &.shadow{
+  &.shadow {
     .card-box-shadow()
   }
-
-  &:hover{
+  &:hover {
     text-decoration: none;
   }
-
   &.default-color {
     .color(@light, @font-color-dark);
     &.flat {
@@ -167,14 +138,12 @@
   &.primary-color {
     .color(@theme-color, white)
   }
-
   &.white-color {
-    .color(white, @font-color-dark);
+    .color(white, @theme-color);
     &.flat {
-      color: @font-color-dark
+      color: @theme-color
     }
   }
-
 
   .content {
     align-items: center;
@@ -187,7 +156,8 @@
     position: relative;
     transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
     white-space: nowrap;
-    width: inherit;
+    width: 100%;
+    height: 100%;
     .ellipsis();
     [type=file] {
       display: none;
@@ -196,77 +166,115 @@
 }
 
 .input {
-  width: 40vw;
+  width: 65vw;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
   white-space: nowrap;
   outline: none;
   transition: .1s;
   font-weight: 500;
-  padding: 0 1.5em;
   user-select: none;
   border-radius: @smallest-border-radius;
-  font-size: @small-font-size;
-  line-height: @input-line-height - @input-border-size - @input-border-size;
   border: @input-border-size solid @font-color-dark-line;
+  font-size: @small-font-size;
   margin: 0;
+  height: @input-line-height;
+  background-color: white;
+  vertical-align: top;
+  overflow: hidden;
+  .input-inner {
+    flex:1;
+    height: 100%;
+    display: flex;
+    padding: 0;
+  }
+  .placeholder{
+    padding:0 .4em;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+  }
+  &.disabled {
+    border-width: 0;
+    color: @font-color-dark-disabled;
+    background-color: @font-color-dark-line;
+    cursor: not-allowed;
+  }
   .color(@color,@font-color) {
-    background-color: white;
     border-color: @font-color-dark-line;
     color: @font-color;
-    &:focus {
-      border-color: @color
-    }
-    &.disabled {
-      background-color: @font-color-dark-line;
-      color: @font-color-dark-disabled;
-      line-height: @input-line-height;
-      border-width: 0;
-      &.big {
-        line-height: @big-input-line-height;
-      }
-      &.small {
-        line-height: @small-input-line-height;
-      }
-      cursor: not-allowed;
+    &.input-focus{
+      border-color:@color
     }
   }
   &.block {
-    display: block;
+    display: flex;
     width: 100%;
   }
   &.big {
-    line-height: @big-input-line-height - @input-border-size - @input-border-size;
+    height: @big-input-line-height;
     font-size: @default-font-size;
-    padding: 0 2em;
+    .placeholder{
+      padding: 0 .5em;
+    }
   }
   &.small {
-    line-height: @small-input-line-height - @input-border-size - @input-border-size;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
-    padding: 0 1em;
+    .placeholder{
+      padding: 0 .3em;
+    }
   }
+  &.textarea {
+    white-space: inherit !important;
+    height: auto;
+    .input-inner {
+      line-height: @input-line-height;
+      resize : none;
+    }
+    &.big {
+      line-height: @big-input-line-height;
+    }
+    &.small {
+      line-height: @small-input-line-height;
+    }
+  }
+  &.shadow {
+    border-width: 0;
+    .card-box-shadow()
+  }
+  &.not-line {
+    border-width: 0;
+  }
+
   &.default-color {
     .color(@font-color-dark-line, @font-color-dark);
   }
   &.primary-color {
     .color(@theme-color, @font-color-dark)
   }
-
 }
 
-textarea {
-  resize: vertical;
-  white-space: inherit !important;
-}
 
 .checkbox {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: top;
   cursor: pointer;
   user-select: none;
-  line-height: @input-line-height;
+  height: @input-line-height;
   .color(@font-color) {
     color: @font-color;
+    .switch-box.active {
+      &:before {
+        background-color: @font-color;
+      }
+      .checkbox-inner {
+        .icon {
+          background-color: @font-color;
+        }
+      }
+    }
     &.disabled {
       cursor: not-allowed;
       color: @font-color-dark-disabled;
@@ -278,6 +286,7 @@ textarea {
   &.primary-color {
     .color(@theme-color)
   }
+
   .checkbox-inner {
     display: inline-block;
     width: @input-line-height;
@@ -298,26 +307,110 @@ textarea {
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
       white-space: nowrap;
       width: inherit;
+      height: inherit;
       .ellipsis()
     }
   }
+
+  .switch-box(@height) {
+    @width: @height * 1.5;
+    width: @width;
+    &:before {
+      height: @width / 4;
+      width: @width / 2;
+      border-radius: @height;
+    }
+    .checkbox-inner {
+      .icon {
+        width: @height / 2;
+        height: @height / 2;
+        .card-box-shadow()
+      }
+    }
+    &.active {
+      .checkbox-inner {
+        transform: translateX(@width - @height);
+      }
+    }
+  }
+  .switch-box {
+    position: relative;
+    height: inherit;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    .switch-box(@input-line-height);
+    &:before {
+      content: " ";
+      background-color: @font-color-dark-fade;
+      opacity: .7;
+    }
+    .checkbox-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: auto;
+      transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+      .icon {
+        border-radius: 50%;
+        background-color: white;
+        .card-box-shadow()
+      }
+    }
+  }
+  &.disabled {
+    .switch-box {
+      &:after {
+        content: " ";
+        background-color: @font-color-light-disabled;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+
   .checkbox-label {
-    vertical-align: .4vw;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: inherit;
+    height: inherit;
+    padding-right: @input-line-height / 3;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     .checkbox-inner {
       width: @big-input-line-height;
       height: @big-input-line-height;
+      .icon {
+        font-size: @big-font-size;
+      }
+    }
+    .checkbox-label {
+      padding-right: @big-input-line-height / 3;
+    }
+    .switch-box {
+      .switch-box(@big-input-line-height);
     }
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     .checkbox-inner {
       width: @small-input-line-height;
       height: @small-input-line-height;
+      .icon {
+        font-size: @default-font-size;
+      }
+    }
+    .checkbox-label {
+      padding-right: @small-input-line-height / 3;
+    }
+    .switch-box {
+      .switch-box(@small-input-line-height);
     }
   }
   .checkbox-original {
@@ -327,10 +420,10 @@ textarea {
 
 .radio {
   display: inline-block;
-  vertical-align: baseline;
+  vertical-align: top;
   cursor: pointer;
   user-select: none;
-  line-height: @input-line-height;
+  height: @input-line-height;
   .color(@font-color) {
     color: @font-color;
     &.disabled {
@@ -354,39 +447,156 @@ textarea {
     }
     .content {
       align-items: center;
-      border-radius: inherit;
-      color: inherit;
       display: flex;
       flex: 1 0 auto;
       justify-content: center;
+      border-radius: inherit;
+      color: inherit;
       margin: 0 auto;
       position: relative;
       transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
       white-space: nowrap;
       width: inherit;
+      height: inherit;
       .ellipsis()
     }
   }
   .radio-label {
-    vertical-align: .4vw;
+    height: inherit;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: inherit;
+    padding-right: @input-line-height / 3;
   }
   &.big {
-    line-height: @big-input-line-height;
+    height: @big-input-line-height;
     font-size: @default-font-size;
     .radio-inner {
       width: @big-input-line-height;
       height: @big-input-line-height;
+      .icon {
+        font-size: @big-font-size;
+      }
+    }
+    .radio-label {
+      padding-right: @big-input-line-height / 3;
     }
   }
   &.small {
-    line-height: @small-input-line-height;
+    height: @small-input-line-height;
     font-size: @smallest-font-size;
     .radio-inner {
       width: @small-input-line-height;
       height: @small-input-line-height;
+      .icon {
+        font-size: @default-font-size;
+      }
+    }
+    .radio-label {
+      padding-right: @small-input-line-height / 3;
     }
   }
   .radio-original {
     display: none;
   }
 }
+
+
+.tag {
+  @padding: 0.6em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: baseline;
+  border-radius: @smallest-border-radius;
+  height: @tag-line-height;
+  padding: 0 @padding;
+  font-size: @small-font-size;
+  vertical-align: top;
+  text-align: center;
+  .close {
+    margin-left: @padding / 2;
+    height: @tag-close-size;
+    width: @tag-close-size;
+    line-height: @tag-close-size;
+    transition: all @short-animate-time;
+    .icon {
+      font-size: @smallest-font-size;
+    }
+  }
+  >.content {
+    transition: all @short-animate-time;
+    min-width: 3em;
+  }
+
+  .color(@color,@font-color) {
+    background-color: @color;
+    color: @font-color;
+    i {
+      color: @font-color;
+    }
+  }
+
+  &.big {
+    @padding: 0.6em;
+    height: @big-tag-line-height;
+    font-size: @default-font-size;
+    padding: 0 @padding;
+    >.content{
+      min-width: 3.5em;
+    }
+    >.close {
+      margin-left: @padding / 2;
+      height: @big-tag-close-size;
+      width: @big-tag-close-size;
+      line-height: @big-tag-close-size;
+      .icon {
+        font-size: @small-font-size;
+      }
+    }
+  }
+  &.small {
+    @padding: 0.8em;
+    height: @small-tag-line-height;
+    font-size: @smallest-font-size;
+    padding: 0 @padding;
+    >.content{
+      min-width: 2.5em;
+    }
+    >.close {
+      margin-left: @padding / 2;
+      height: @small-tag-close-size;
+      width: @small-tag-close-size;
+      line-height: @small-tag-close-size;
+      .icon {
+        font-size: @smallest-font-size;
+      }
+    }
+  }
+  &.round {
+    border-radius: @tag-line-height;
+    &.big {
+      border-radius: @big-tag-line-height;
+    }
+    &.small {
+      border-radius: @small-tag-line-height;
+    }
+  }
+  &.shadow {
+    .card-box-shadow()
+  }
+  &.clickable{
+    cursor:pointer;
+    user-select: none;
+  }
+
+  &.default-color {
+    .color(@font-color-dark-line, @font-color-dark-fade);
+  }
+  &.primary-color {
+    .color(fade(@theme-color, 56), @font-color-light);
+  }
+}
+
+
+
+
