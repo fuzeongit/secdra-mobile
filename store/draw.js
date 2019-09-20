@@ -39,6 +39,10 @@ export const actions = {
   AUnCollection(context, params) {
     return httpUtil.post("/collection/unFocus", params)
   },
+  // 获取分页足迹
+  APagingFootprint(context, params) {
+    return httpUtil.get("/footprint/paging", params)
+  },
   // 按标签获取第一张图片
   AGetFirstByTag(context, params) {
     return httpUtil.get("/draw/getFirstByTag", params)

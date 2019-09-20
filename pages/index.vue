@@ -225,7 +225,7 @@ export default {
       justify-content: flex-end;
       align-items: center;
       span {
-        margin-left: .5vw;
+        margin-left: 0.5vw;
         margin-right: 1vw;
       }
     }

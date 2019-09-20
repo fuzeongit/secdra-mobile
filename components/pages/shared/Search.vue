@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex"
+import { mapActions, mapMutations } from "vuex"
 import Model from "../../global/Model"
 import storageUtil from "../../../assets/script/util/storageUtil"
 
@@ -79,7 +79,14 @@ export default {
     }
   },
   computed: {
-    ...mapState("menu", ["searchShow"]),
+    searchShow: {
+      get() {
+        return this.$store.state.menu.searchShow
+      },
+      set(val) {
+        this.MChangeSearchShow(val)
+      }
+    },
     searchHistoryReverse() {
       return this.searchHistory.reverse()
     }
