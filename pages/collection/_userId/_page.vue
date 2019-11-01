@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapActions } from "vuex"
 import { Pageable } from "../../../assets/script/model"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
 import DrawCardList from "../../../components/pages/shared/DrawCardList"
@@ -24,31 +24,58 @@ export default {
     }
   },
   computed: {
-    ...mapState("user", ["user"]),
     self() {
-      return this.$store.state.user.user.id === this.$route.params.userId
+      return (
+        !this.$route.params.userId ||
+        this.$store.state.user.user.id === this.$route.params.userId
+      )
     }
   },
-  async asyncData({ store, route, $axios }) {
-    store.commit("menu/MChangeName", "collection")
+  async asyncData({ store, redirect, route, $axios }) {
+    const myself = store.state.user.user
+    const taskList = []
     const pageable = new Pageable(
       route.params.page * 1 || 0,
       16,
       "createDate,desc"
     )
-    const { data: result } = await $axios.get(`/collection/paging`, {
-      params: Object.assign(
-        {
-          targetId: route.params.userId || store.state.user.user.id
-        },
-        pageable
-      )
-    })
-    return {
-      pageable,
-      page: result.data,
-      list: result.data.content
+    taskList.push(
+      $axios.get(`/user/get`, {
+        params: { id: route.params.userId || myself.id }
+      })
+    )
+    taskList.push(
+      $axios.get(`/collection/paging`, {
+        params: Object.assign(
+          {
+            targetId: route.params.userId || store.state.user.user.id
+          },
+          pageable
+        )
+      })
+    )
+    const resultList = (await Promise.all(taskList)).map((item) => item.data)
+    if (resultList[0].status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
     }
+    const user = resultList[0].data
+    const page = resultList[1].data
+    if (myself.id === user.id) {
+      store.commit("menu/MChangeName", "collection")
+    } else {
+      store.commit("menu/MChangeName", "")
+    }
+    return {
+      user,
+      pageable,
+      page,
+      list: page.content
+    }
+  },
+  head() {
+    const title = this.self ? "我收藏的插画" : this.user.name + "收藏的插画"
+    return { title: title + " - Secdra" }
   },
   methods: {
     ...mapActions("draw", ["APagingCollection", "ACollection"]),

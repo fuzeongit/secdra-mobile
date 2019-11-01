@@ -2,7 +2,7 @@
   <div>
     <section>
       <Header></Header>
-      <Menu></Menu>
+      <Menu v-if="signedIn"></Menu>
       <Search></Search>
       <transition
         name="fade"
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions } from "vuex"
+import { mapMutations, mapActions, mapState } from "vuex"
 import Header from "../components/pages/shared/Header"
 import Menu from "../components/pages/shared/Menu"
 import Search from "../components/pages/shared/Search"
@@ -23,15 +23,21 @@ import stompMixin from "../assets/script/mixin/stompMixin"
 import { StompSubscribe } from "../assets/script/model"
 
 export default {
-  middleware: ["auth", "messageRedirect"],
+  middleware: ["messageRedirect"],
   components: {
     Header,
     Menu,
     Search
   },
   mixins: [stompMixin],
+  computed: {
+    ...mapState("user", ["user"]),
+    signedIn() {
+      return this.user && this.user.id
+    }
+  },
   async mounted() {
-    this.countUnread()
+    this.signedIn && this.countUnread()
     await this.AStompConnect()
   },
   methods: {

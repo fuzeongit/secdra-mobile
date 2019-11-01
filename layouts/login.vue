@@ -5,8 +5,7 @@
 </template>
 <script>
 export default {
-  middleware: "auth",
-  mounted() {}
+  middleware: ["loginRedirect"]
 }
 </script>
 <style type="text/less" lang="less"></style>

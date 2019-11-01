@@ -1,7 +1,9 @@
 <template>
   <section class="container bk cover">
     <form class="card" @submit.prevent="login">
-      <img src="../assets/image/svg/logo.svg" />
+      <nuxt-link to="/" replace>
+        <img src="../assets/image/svg/logo.svg" />
+      </nuxt-link>
       <p class="sub-logo">想你所想</p>
       <div class="input-group">
         <Field
@@ -36,23 +38,28 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapActions, mapMutations } from "vuex"
 
 const layout = "login"
 export default {
   name: "Login",
   layout,
+  head() {
+    return { title: "登录 - Secdra" }
+  },
   data() {
     return {
       loginLoading: false,
       form: {
         phone: "",
         password: ""
-      }
+      },
+      r: this.$route.query.r || "/"
     }
   },
   mounted() {
     if (this.$root.layoutName === layout) {
+      this.MSetUserInfo({})
       this.$confirm({
         message: `暂时不开放注册，是否随机账号登录`,
         okCallback: (_) => {
@@ -63,6 +70,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations("user", ["MSetUserInfo"]),
     ...mapActions("user", ["ASignIn", "ASignUp", "AGet"]),
     async login() {
       const phone = this.form.phone
@@ -70,11 +78,10 @@ export default {
       this.loginLoading = true
       const result = await this.ASignIn({ phone, password })
       if (result.status === 200) {
-        // Cookies.set("user", JSON.stringify(result.data), { expires: 30 })
-        this.$router.replace("/")
+        this.$router.replace(this.r)
       } else {
         this.loginLoading = false
-        this.$notify({ message: result.message })
+        this.$tooltip({ message: result.message })
       }
     }
   }

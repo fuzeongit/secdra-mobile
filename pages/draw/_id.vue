@@ -140,6 +140,9 @@ export default {
   },
   computed: {
     ...mapState("user", ["user"]),
+    signedIn() {
+      return this.user && this.user.id
+    },
     proportion() {
       return this.draw.height / this.draw.width
     }
@@ -167,12 +170,22 @@ export default {
       commentForm
     }
   },
-
+  head() {
+    let title = "想你所想 - Secdra"
+    if (this.status === 200) {
+      title = this.draw.name + " - Secdra"
+    } else if (this.status === 403) {
+      title = "无权查看该图片"
+    } else if (this.status === 404) {
+      title = "图片不存在"
+    }
+    return { title }
+  },
   mounted() {
     // 写入足迹
-    if (this.status === 200) {
+    this.status === 200 &&
+      this.signedIn &&
       this.ASaveFootprint({ drawId: this.draw.id })
-    }
   },
   methods: {
     ...mapActions("draw", ["ACollection", "AUpdate"]),

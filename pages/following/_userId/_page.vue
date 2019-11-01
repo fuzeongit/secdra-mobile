@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapActions } from "vuex"
 import { Pageable } from "../../../assets/script/model"
 import UserList from "../../../components/pages/shared/UserList"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
@@ -24,30 +24,60 @@ export default {
     }
   },
   computed: {
-    ...mapState("user", ["user"])
+    self() {
+      return (
+        !this.$route.params.userId ||
+        this.$store.state.user.user.id === this.$route.params.userId
+      )
+    }
   },
   // 在这里不能使用httpUtil
   // 并且嵌套层数超过不知道多少会报错-->坑死我了
-  async asyncData({ store, req, redirect, route, $axios }) {
-    store.commit("menu/MChangeName", "following")
+  async asyncData({ store, redirect, route, $axios }) {
+    const myself = store.state.user.user
+    const taskList = []
     const pageable = new Pageable(
       route.params.page * 1 || 0,
-      10,
+      16,
       "createDate,desc"
     )
-    const { data: result } = await $axios.get(`/following/paging`, {
-      params: Object.assign(
-        {
-          id: route.params.userId
-        },
-        pageable
-      )
-    })
-    return {
-      pageable,
-      page: result.data,
-      list: result.data.content
+    taskList.push(
+      $axios.get(`/user/get`, {
+        params: { id: route.params.userId || myself.id }
+      })
+    )
+    taskList.push(
+      $axios.get(`/following/paging`, {
+        params: Object.assign(
+          {
+            id: route.params.userId
+          },
+          pageable
+        )
+      })
+    )
+    const resultList = (await Promise.all(taskList)).map((item) => item.data)
+    if (resultList[0].status === 401) {
+      redirect(`/login?r=${route.fullPath}`)
+      return
     }
+    const user = resultList[0].data
+    const page = resultList[1].data
+    if (myself.id === user.id) {
+      store.commit("menu/MChangeName", "following")
+    } else {
+      store.commit("menu/MChangeName", "")
+    }
+    return {
+      user,
+      pageable,
+      page,
+      list: page.content
+    }
+  },
+  head() {
+    const title = this.self ? "我关注的用户" : this.user.name + "关注的用户"
+    return { title: title + " - Secdra" }
   },
   methods: {
     ...mapActions("user", ["APagingFollowing", "AFollow"]),

@@ -47,6 +47,9 @@ export default {
       pageable
     }
   },
+  head() {
+    return { title: "寻找最新的插画 - Secdra" }
+  },
   methods: {
     ...mapActions("draw", [
       "APagingByRecommend",

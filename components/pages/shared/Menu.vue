@@ -27,13 +27,13 @@
           </a>
         </li>
         <li :class="{ active: activeName === `collection` }">
-          <a v-ripple @click="to(`/collection/${user.id || ''}`)">
+          <a v-ripple @click="to(`/collection`)">
             <i class="icon ali-icon-like"></i>
             我的收藏
           </a>
         </li>
         <li :class="{ active: activeName === `works` }">
-          <a v-ripple @click="to(`/works/${user.id || ''}`)">
+          <a v-ripple @click="to(`/works`)">
             <i class="icon ali-icon-pic"></i>
             我的作品
           </a>
@@ -45,13 +45,13 @@
           </a>
         </li>
         <li :class="{ active: activeName === `follower` }">
-          <a v-ripple @click="to(`/follower/${user.id || ''}`)">
+          <a v-ripple @click="to(`/follower`)">
             <i class="icon ali-icon-friendfavor"></i>
             我的粉丝
           </a>
         </li>
         <li :class="{ active: activeName === `following` }">
-          <a v-ripple @click="to(`/following/${user.id || ''}`)">
+          <a v-ripple @click="to(`/following`)">
             <i class="icon ali-icon-friendadd"></i>
             关注用户
           </a>
@@ -109,7 +109,7 @@ export default {
         message: `你确定要退出登录吗？`,
         okCallback: () => {
           Cookie.remove("token")
-          this.$router.replace("/login")
+          this.$router.replace(`/login?r=${this.$route.fullPath}`)
         }
       })
     }

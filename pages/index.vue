@@ -3,7 +3,7 @@
     <p class="title">
       <i class="icon s-faxian"></i>
       发现
-      <Btn round flat small color="primary" to="/find"> 更多>></Btn>
+      <Btn round flat small color="primary" to="/find">更多>></Btn>
     </p>
     <div class="image-grid-row">
       <div v-for="(draw, index) in likeList" :key="index" class="item">
@@ -19,7 +19,7 @@
           <nuxt-link
             slot="reference"
             v-ripple
-            :to="`/draw/${draw.id}`"
+            :to="`/user/${draw.user.id}`"
             class="head-image"
             :title="draw.user.name"
           >
@@ -75,7 +75,7 @@
         <div class="tool flex-text">
           <nuxt-link
             v-ripple
-            :to="`/draw/${draw.id}`"
+            :to="`/user/${draw.user.id}`"
             class="head-image"
             :title="draw.user.name"
           >

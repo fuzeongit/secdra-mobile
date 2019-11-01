@@ -7,7 +7,7 @@ import httpUtil from "../assets/script/util/httpUtil"
  */
 
 export const state = () => ({
-  user: null,
+  user: {},
   uploadToken: null
 })
 
@@ -33,7 +33,7 @@ export const actions = {
   async ASignIn(context, params) {
     const result = await httpUtil.post("/account/signIn", params)
     if (result.status === 200) {
-      context.commit("MSetUserInfo", result.data)
+      context.commit("MSetUserInfo", (await actions.AGet()).data)
     }
     return result
   },

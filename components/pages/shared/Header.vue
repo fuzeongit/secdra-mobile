@@ -12,7 +12,7 @@
         <Btn v-if="canBack" icon flat @click="$router.back()">
           <i class="icon ali-icon-back"></i>
         </Btn>
-        <Btn v-else icon flat @click="MChangeShow(true)">
+        <Btn v-else icon flat @click="changeMenu">
           <i class="icon ali-icon-menu"></i>
         </Btn>
       </template>
@@ -66,6 +66,9 @@ export default {
     canBack() {
       const canBackList = ["detail"]
       return canBackList.includes(this.activeName)
+    },
+    signedIn() {
+      return this.user && this.user.id
     }
   },
   watch: {
@@ -85,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    this.countUnread()
+    this.signedIn && this.countUnread()
   },
   methods: {
     ...mapMutations("window", ["MChangesScroll"]),
@@ -104,6 +107,12 @@ export default {
       this.MChangeCount({ type: "reply", count: result.data.REPLY })
       this.MChangeCount({ type: "follow", count: result.data.FOLLOW })
       this.MChangeCount({ type: "system", count: result.data.SYSTEM })
+    },
+    changeMenu() {
+      if (!this.signedIn) {
+        return this.$router.replace(`/login?r=${this.$route.fullPath}`)
+      }
+      this.MChangeShow(true)
     }
   }
 }
