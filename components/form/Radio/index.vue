@@ -1,31 +1,31 @@
 <template>
-  <label class="radio" :class="classObject">
+  <label :class="classObject" class="radio">
     <slot>
       <div
         v-ripple="!disabled && { class: `${color}-text` }"
-        class="radio-inner"
         :class="{ 'dark-fade-text': !model }"
+        class="radio-inner"
       >
         <div class="content">
           <i
-            class="icon"
             :class="{ 'ali-icon-radio': !model, 'ali-icon-radio-fill': model }"
+            class="icon"
           ></i>
         </div>
       </div>
     </slot>
     <span
       v-if="label !== null"
-      class="radio-label"
       :class="{ 'dark-text': !model }"
+      class="radio-label"
       >{{ label }}</span
     >
     <input
       v-model="model"
-      type="radio"
-      class="radio-original"
       :disabled="disabled"
       :value="true"
+      type="radio"
+      class="radio-original"
     />
   </label>
 </template>
@@ -93,7 +93,7 @@ export default {
           return this.input === this.value
         }
       },
-      set(val) {
+      set() {
         if (this.isGroup) {
           this.radioGroup.change(this.value)
         } else {

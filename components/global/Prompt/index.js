@@ -1,5 +1,5 @@
-import Vue from "vue"
 import PromptComponent from "./Main"
+import Vue from "vue"
 
 const PromptConstructor = Vue.extend(PromptComponent)
 

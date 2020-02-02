@@ -5,11 +5,11 @@
   >
     <Btn
       v-show="!isFirst"
+      @click="go(currPage)"
       round
       flat
       small
       color="primary"
-      @click="go(currPage)"
     >
       上一页
     </Btn>
@@ -17,12 +17,12 @@
       <Btn
         v-if="i"
         :key="index"
-        round
         :flat="i - 1 !== currPage"
+        @click="go(i)"
+        round
         small
         color="primary"
         class="page-btn"
-        @click="go(i)"
       >
         {{ i }}
       </Btn>
@@ -30,11 +30,11 @@
     </template>
     <Btn
       v-show="!isLast"
+      @click="go(currPage + 2)"
       round
       flat
       small
       color="primary"
-      @click="go(currPage + 2)"
     >
       下一页
     </Btn>

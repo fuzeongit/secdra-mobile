@@ -1,23 +1,23 @@
 <template>
   <div class="page">
-    <DrawCardList
+    <PictureCardList
       :list="list"
       :page-loading="pageLoading"
       @paging="paging"
       @collection="collection"
-    ></DrawCardList>
+    ></PictureCardList>
     <CornerButtons></CornerButtons>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex"
 import { Pageable } from "../../../assets/script/model"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
-import DrawCardList from "../../../components/pages/shared/DrawCardList"
+import PictureCardList from "../../../components/pages/shared/PictureCardList"
+import { mapActions } from "vuex"
 
 export default {
-  components: { CornerButtons, DrawCardList },
+  components: { CornerButtons, PictureCardList },
   data() {
     return {
       pageLoading: false
@@ -78,7 +78,7 @@ export default {
     return { title: title + " - Secdra" }
   },
   methods: {
-    ...mapActions("draw", ["APagingCollection", "ACollection"]),
+    ...mapActions("picture", ["APagingCollection", "ACollection"]),
     async paging() {
       if (this.pageLoading || this.page.last) {
         return
@@ -103,15 +103,15 @@ export default {
       this.page = data
       this.list.push(...data.content)
     },
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$tooltip({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     }
   }
 }

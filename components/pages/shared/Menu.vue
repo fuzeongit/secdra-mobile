@@ -5,17 +5,17 @@
       enter-active-class="fadeIn mask-duration"
       leave-active-class="fadeOut mask-duration"
     >
-      <div v-show="show" class="mask" @click.stop="close"></div>
+      <div v-show="show" @click.stop="close" class="mask"></div>
     </transition>
-    <div class="menu" :class="{ active: show }">
+    <div :class="{ active: show }" class="menu">
       <div
-        class="cover"
         :style="{
           backgroundImage: `url(${$img.back(user.background, `backCard`)})`
         }"
+        class="cover"
       ></div>
       <div class="center" style="margin-top: -10vw;margin-bottom: 5vw">
-        <a v-ripple class="head-box" @click="to(`/user/${user.id}`)">
+        <a v-ripple @click="to(`/user/${user.id}`)" class="head-box">
           <img :src="$img.head(user.head)" />
         </a>
       </div>

@@ -1,9 +1,9 @@
 <template>
   <transition
-    name="fade"
     :enter-active-class="enterActiveClass"
     :leave-active-class="leaveActiveClass"
     @after-leave="destroyElement"
+    name="fade"
   >
     <div v-show="visible" class="calendar short-duration">
       <div v-for="item in weekDescList" :key="item" class="week-item">
@@ -12,7 +12,6 @@
       <div
         v-for="(item, index) in calendarDataList"
         :key="index"
-        class="calendar-item"
         :style="
           !index
             ? {
@@ -21,12 +20,13 @@
               }
             : {}
         "
+        class="calendar-item"
       >
         <Btn
-          class="date"
           :flat="!item.active"
           :color="item.active ? `primary` : `default`"
           @click="changeDate(item.day)"
+          class="date"
         >
           {{ item.day }}
         </Btn>

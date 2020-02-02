@@ -1,5 +1,5 @@
-import { mapState } from "vuex"
 import stompUtil from "../util/stompUtil"
+import { mapState } from "vuex"
 
 export default {
   data() {

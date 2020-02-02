@@ -1,5 +1,5 @@
-import Vue from "vue"
 import AlertComponent from "./Main"
+import Vue from "vue"
 
 const AlertConstructor = Vue.extend(AlertComponent)
 

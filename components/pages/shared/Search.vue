@@ -2,10 +2,10 @@
   <Model v-model="searchShow">
     <header>
       <nav class="flex-text">
-        <Btn icon flat @click="close">
+        <Btn @click="close" icon flat>
           <i class="icon ali-icon-back"></i>
         </Btn>
-        <form class="search-box" @submit.prevent="search">
+        <form @submit.prevent="search()" class="search-box">
           <Field
             ref="search"
             v-model="tag"
@@ -16,7 +16,7 @@
             not-line
             type="search"
           >
-            <Btn slot="right" flat icon type="submit" @click.stop="() => {}">
+            <Btn slot="right" @click.stop="() => {}" flat icon type="submit">
               <i class="icon ali-icon-search"></i>
             </Btn>
           </Field>
@@ -29,15 +29,12 @@
         <Tag
           v-for="(item, index) in searchHistoryReverse"
           :key="index"
-          clickable
-          round
           :closable="false"
           :content="item"
+          @click="search(item)"
+          clickable
+          round
           class="tag"
-          @click="
-            close()
-            $router.push(`/draw/search/${encodeURIComponent(item)}`)
-          "
         ></Tag>
       </div>
 
@@ -46,15 +43,12 @@
         <Tag
           v-for="(item, index) in tagList"
           :key="index"
-          clickable
-          round
           :closable="false"
           :content="item"
+          @click="search(item)"
+          clickable
+          round
           class="tag"
-          @click="
-            close()
-            $router.push(`/draw/search/${encodeURIComponent(item)}`)
-          "
         ></Tag>
       </div>
     </div>
@@ -62,9 +56,9 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex"
 import Model from "../../global/Model"
 import storageUtil from "../../../assets/script/util/storageUtil"
+import { mapActions, mapMutations } from "vuex"
 
 export default {
   componentName: "Search",
@@ -107,21 +101,21 @@ export default {
   },
   methods: {
     ...mapMutations("menu", ["MChangeSearchShow"]),
-    ...mapActions("draw", ["AListTagTop30"]),
-    close($event) {
+    ...mapActions("picture", ["AListTagTop30"]),
+    close() {
       this.MChangeSearchShow(false)
     },
-    search(tag) {
+    search(tag = this.tag) {
       this.close()
-      if (this.tag) {
+      if (tag) {
         const searchHistorySet = new Set(this.searchHistory)
-        searchHistorySet.delete(this.tag)
-        searchHistorySet.add(this.tag)
+        searchHistorySet.delete(tag)
+        searchHistorySet.add(tag)
         this.searchHistory = storageUtil.localSet("searchHistory", [
           ...searchHistorySet
         ])
       }
-      this.$router.push(`/draw/search/${encodeURIComponent(this.tag)}`)
+      this.$router.push(`/picture/search/${encodeURIComponent(tag)}`)
     },
     async listTagTop30() {
       const result = await this.AListTagTop30()
@@ -158,6 +152,7 @@ header {
     height: @herder-height;
     line-height: @herder-height;
     padding: 0 @padding;
+    background-color: white;
     .search-box {
       flex: 1;
       height: 100%;

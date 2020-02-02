@@ -1,70 +1,70 @@
 <template>
   <div
-    class="list-content"
     :style="{ height: `${listContentOffset.height}vw` }"
+    class="list-content"
   >
     <div
-      v-for="(draw, index) in list"
+      v-for="(picture, index) in list"
       :key="index"
-      class="item card"
       :style="{
         left: `${offset[index].left}vw`,
         top: `${offset[index].top}vw`
       }"
+      class="item card"
     >
-      <nuxt-link v-ripple :to="`/draw/${draw.id}`" class="img-box">
+      <nuxt-link v-ripple :to="`/picture/${picture.id}`" class="img-box">
         <img
-          v-lazy="$img.secdra(draw.url, `specifiedWidth`)"
+          v-lazy="$img.secdra(picture.url, `specifiedWidth`)"
           :style="{
             width: listConstant.colWidth + `vw`,
-            height: getHeight(draw) + `vw`
+            height: getHeight(picture) + `vw`
           }"
         />
       </nuxt-link>
       <Btn
-        flat
-        icon
         :color="
-          draw.focus === $enum.CollectState.CONCERNED.key
+          picture.focus === $enum.CollectState.CONCERNED.key
             ? `primary`
             : `default`
         "
+        @click.stop="$emit(`collection`, picture, index)"
+        flat
+        icon
         class="like"
-        @click.stop="$emit(`collection`, draw, index)"
       >
         <i
-          class="icon"
           :class="{
             'ali-icon-likefill':
-              draw.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key,
+            'ali-icon-like': picture.focus !== $enum.CollectState.CONCERNED.key
           }"
+          class="icon"
         ></i>
       </Btn>
 
       <div
-        class="flex-text info-box"
         :style="{
           width: listConstant.colWidth + `vw`,
           height: listConstant.infoHeight + `vw`
         }"
+        class="flex-text info-box"
       >
-        <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
-          <img v-lazy="$img.head(draw.user.head, 'small50')" />
+        <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
+          <img v-lazy="$img.head(picture.user.head, 'small50')" />
         </nuxt-link>
         <p class="nickname">
-          {{ draw.user.name }}
+          {{ picture.user.name }}
         </p>
       </div>
     </div>
     <div
       v-if="page.last"
-      class="item last-card"
       :style="{
         left: `${listContentOffset.lastCardLeft}vw`,
         top: `${listContentOffset.lastCardTop}vw`,
         width: listConstant.colWidth + `vw`
       }"
+      class="item last-card"
     >
       <img v-lazy="require('../../../assets/image/error/404.jpg')" />
     </div>
@@ -76,7 +76,7 @@ import { ListConstant } from "../../../assets/script/constant"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
-  componentName: "DrawList",
+  componentName: "PictureList",
   mixins: [windowMixin],
   props: {
     page: {
@@ -103,14 +103,14 @@ export default {
       const o = []
       const colNumberHeight = this.initColNumberHeight(this.listConstant)
       // eslint-disable-next-line no-unused-vars
-      for (const draw of this.list) {
+      for (const picture of this.list) {
         const minTopIndex = colNumberHeight.minIndex()
         const left =
           (1 + minTopIndex) * this.listConstant.widthOffset +
           this.listConstant.colWidth * minTopIndex
         const top = colNumberHeight[minTopIndex]
         colNumberHeight[minTopIndex] +=
-          (draw.height / draw.width) * this.listConstant.colWidth +
+          (picture.height / picture.width) * this.listConstant.colWidth +
           this.listConstant.heightOffset +
           this.listConstant.infoHeight
         o.push({ left, top })
@@ -122,9 +122,9 @@ export default {
       const colNumberHeight = this.initColNumberHeight(this.listConstant)
       let minIndex = 0
       // eslint-disable-next-line no-unused-vars
-      for (const draw of this.list) {
+      for (const picture of this.list) {
         colNumberHeight[minIndex] +=
-          (draw.height / draw.width) * this.listConstant.colWidth +
+          (picture.height / picture.width) * this.listConstant.colWidth +
           this.listConstant.heightOffset +
           this.listConstant.infoHeight
         minIndex = colNumberHeight.minIndex()
@@ -171,8 +171,8 @@ export default {
       }
       return t
     },
-    getHeight(draw) {
-      return (draw.height / draw.width) * this.listConstant.colWidth
+    getHeight(picture) {
+      return (picture.height / picture.width) * this.listConstant.colWidth
     }
   }
 }

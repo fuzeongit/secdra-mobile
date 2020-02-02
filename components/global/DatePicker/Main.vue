@@ -1,13 +1,13 @@
 <template>
   <div class="date-picker">
     <div class="tool-box">
-      <Btn icon flat @click="addCalendar(-1)"
+      <Btn @click="addCalendar(-1)" icon flat
         ><i class="icon ali-icon-back"></i
       ></Btn>
       <div class="tool-item">
         <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
           <div v-show="step === `year`" class="short-duration">
-            <button class="btn flat tool default-color" @click="step = `year`">
+            <button @click="step = `year`" class="btn flat tool default-color">
               {{ Math.floor(this.calendar.getFullYear() / 10) * 10 }}年 -
               {{ Math.floor(this.calendar.getFullYear() / 10) * 10 + 9 }}年
             </button>
@@ -15,60 +15,60 @@
         </transition>
         <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
           <div v-show="step === `month`" class="short-duration">
-            <button class="btn flat tool default-color" @click="step = `year`">
+            <button @click="step = `year`" class="btn flat tool default-color">
               {{ this.calendar.getFullYear() }}年
             </button>
           </div>
         </transition>
         <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
           <div v-show="step === `day`" class="short-duration">
-            <button class="btn flat tool default-color" @click="step = `year`">
+            <button @click="step = `year`" class="btn flat tool default-color">
               {{ this.calendar.getFullYear() }}年
             </button>
-            <button class="btn flat tool default-color" @click="step = `month`">
+            <button @click="step = `month`" class="btn flat tool default-color">
               {{ this.calendar.getMonth() + 1 }}月
             </button>
           </div>
         </transition>
       </div>
-      <Btn icon flat @click="addCalendar(1)"
+      <Btn @click="addCalendar(1)" icon flat
         ><i class="icon ali-icon-right"></i
       ></Btn>
     </div>
     <div class="content-box">
       <transition
-        enter-active-class="fadeIn"
-        leave-active-class="fadeOut"
         @after-leave="destroyComponent(`year`)"
         @before-enter="mountComponent(`year`)"
+        enter-active-class="fadeIn"
+        leave-active-class="fadeOut"
       >
         <div
-          v-show="step === `year`"
           ref="year-box"
+          v-show="step === `year`"
           class="year-box short-duration"
         ></div>
       </transition>
       <transition
-        enter-active-class="fadeIn"
-        leave-active-class="fadeOut"
         @after-leave="destroyComponent(`month`)"
         @before-enter="mountComponent(`month`)"
+        enter-active-class="fadeIn"
+        leave-active-class="fadeOut"
       >
         <div
-          v-show="step === `month`"
           ref="month-box"
+          v-show="step === `month`"
           class="month-box short-duration"
         ></div>
       </transition>
       <transition
-        enter-active-class="fadeIn"
-        leave-active-class="fadeOut"
         @after-leave="destroyComponent(`day`)"
         @before-enter="mountComponent(`day`)"
+        enter-active-class="fadeIn"
+        leave-active-class="fadeOut"
       >
         <div
-          v-show="step === `day`"
           ref="calendar-box"
+          v-show="step === `day`"
           class="calendar-box short-duration"
         ></div>
       </transition>

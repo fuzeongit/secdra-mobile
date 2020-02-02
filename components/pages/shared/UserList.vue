@@ -15,10 +15,10 @@
           {{ item.name }}
         </nuxt-link>
         <Btn
+          @click="$emit(`follow`, item, index)"
           class="follower-btn"
           block
           color="primary"
-          @click="$emit(`follow`, item, index)"
           >{{
             item.focus === $enum.FollowState.CONCERNED.key ? `已关注` : `关注`
           }}</Btn

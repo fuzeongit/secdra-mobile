@@ -54,7 +54,7 @@ export default {
     canvas.width = _width
     canvas.height = _height
     context.imageSmoothingEnabled = true
-    context.drawImage(sourceCanvas, 0, 0, _width, _height)
+    context.pictureImage(sourceCanvas, 0, 0, _width, _height)
     context.globalCompositeOperation = "destination-in"
     context.beginPath()
     context.fill()

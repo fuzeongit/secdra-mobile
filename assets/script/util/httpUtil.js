@@ -3,10 +3,10 @@
  *
  * @author fjj
  */
+import { Result } from "../model"
 import Cookies from "js-cookie"
 import axios from "axios"
 import qs from "qs"
-import { Result } from "../model"
 axios.defaults.baseURL = process.env.baseUrl
 export default {
   /**

@@ -10,7 +10,7 @@
           {{ message }}
         </p>
         <div>
-          <Btn small icon flat @click="close">
+          <Btn @click="close" small icon flat>
             <i class="icon s-close"> </i>
           </Btn>
         </div>

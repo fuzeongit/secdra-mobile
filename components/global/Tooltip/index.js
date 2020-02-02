@@ -1,5 +1,5 @@
-import Vue from "vue"
 import TooltipComponent from "./Main"
+import Vue from "vue"
 
 const TooltipConstructor = Vue.extend(TooltipComponent)
 

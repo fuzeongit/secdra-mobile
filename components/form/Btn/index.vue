@@ -3,10 +3,10 @@
     v-if="to"
     v-ripple
     :to="to"
-    class="btn"
     :class="classObject"
     :target="target"
     @click="_click"
+    class="btn"
   >
     <span class="content">
       <slot></slot>
@@ -15,23 +15,23 @@
   <label
     v-else-if="!to && type === `file`"
     v-ripple
-    class="btn"
     :class="classObject"
     @click="_click"
+    class="btn"
   >
     <span class="content">
-      <input type="file" @change="_change" />
+      <input @change="_change" type="file" />
       <slot></slot>
     </span>
   </label>
   <button
     v-else
     v-ripple
-    class="btn"
     :class="classObject"
     :disabled="disabled"
     :type="type"
     @click="_click"
+    class="btn"
   >
     <span class="content">
       <slot></slot>

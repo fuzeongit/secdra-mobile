@@ -1,27 +1,30 @@
 <template>
   <div class="page">
-    <div class="img-box" :style="{ height: `${100 * proportion}vw` }">
-      <img :src="$img.secdra(draw.url, `specifiedWidth500`)" />
+    <div :style="{ height: `${100 * proportion}vw` }" class="img-box">
+      <img :src="$img.secdra(picture.url, `specifiedWidth500`)" />
     </div>
-    <template v-if="draw.user.id !== user.id">
+    <template v-if="picture.user.id !== user.id">
       <div class="flex-text user-info-box">
-        <nuxt-link v-ripple :to="`/user/${draw.user.id}`" class="head-box">
+        <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
           <img
-            :src="$img.head(draw.user.head, 'small50')"
-            :title="draw.user.name"
+            :src="$img.head(picture.user.head, 'small50')"
+            :title="picture.user.name"
           />
         </nuxt-link>
-        <nuxt-link :to="`/user/${draw.user.id}`" class="nickname primary-hover">
-          {{ draw.user.name }}
+        <nuxt-link
+          :to="`/user/${picture.user.id}`"
+          class="nickname primary-hover"
+        >
+          {{ picture.user.name }}
         </nuxt-link>
         <Btn
+          @click="follow(picture.user.id)"
           block
           color="primary"
           class="following-btn"
-          @click="follow(draw.user.id)"
         >
           {{
-            draw.user.focus === $enum.FollowState.CONCERNED.key
+            picture.user.focus === $enum.FollowState.CONCERNED.key
               ? `已关注`
               : `关注`
           }}
@@ -31,82 +34,83 @@
     </template>
     <div class="info-box">
       <h3 class="name">
-        <strong>{{ draw.name }}</strong>
+        <strong>{{ picture.name }}</strong>
       </h3>
-      <p class="introduction">{{ draw.introduction }}</p>
+      <p class="introduction">{{ picture.introduction }}</p>
       <div class="flex-text tool-row">
         <div class="flex-text">
           <Btn flat icon small title="浏览">
             <i class="icon ali-icon-attention"></i>
           </Btn>
-          <span>{{ draw.viewAmount }}</span>
+          <span>{{ picture.viewAmount }}</span>
         </div>
         <div class="flex-text">
           <Btn
-            flat
-            icon
-            small
             :color="
-              draw.focus === $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key
                 ? `primary`
                 : `default`
             "
+            @click="collection(picture)"
+            flat
+            icon
+            small
             title="收藏"
-            @click="collection(draw)"
           >
             <i
-              class="icon"
               :class="{
                 'ali-icon-likefill':
-                  draw.focus === $enum.CollectState.CONCERNED.key,
-                'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+                  picture.focus === $enum.CollectState.CONCERNED.key,
+                'ali-icon-like':
+                  picture.focus !== $enum.CollectState.CONCERNED.key
               }"
+              class="icon"
             ></i>
           </Btn>
-          <span>{{ draw.likeAmount }}</span>
+          <span>{{ picture.likeAmount }}</span>
         </div>
       </div>
-      <div class="date">创建于：{{ draw.createDate | date }}</div>
+      <div class="date">创建于：{{ picture.createDate | date }}</div>
     </div>
     <div class="line"></div>
     <div class="tag-list">
       <Tag
-        v-for="(item, index) in draw.tagList"
+        v-for="(item, index) in picture.tagList"
         :key="index"
-        class="tag"
         :content="item"
+        @click="$router.push(`/picture/search/${encodeURIComponent(item)}`)"
+        class="tag"
         color="primary"
         clickable
-        @click="$router.push(`/draw/search/${encodeURIComponent(item)}`)"
       ></Tag>
     </div>
     <CornerButtons>
       <Btn
-        v-if="draw.user.id === user.id"
+        v-if="picture.user.id === user.id"
+        @click="editShow = true"
         icon
         big
         shadow
         color="white"
-        @click="editShow = true"
       >
         <i class="icon ali-icon-edit"></i>
       </Btn>
-      <Btn v-else icon big shadow color="white" @click="collection(draw)">
+      <Btn v-else @click="collection(picture)" icon big shadow color="white">
         <i
-          class="icon"
           :class="{
             'ali-icon-likefill':
-              draw.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key,
-            'primary-text': draw.focus === $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key,
+            'ali-icon-like': picture.focus !== $enum.CollectState.CONCERNED.key,
+            'primary-text': picture.focus === $enum.CollectState.CONCERNED.key
           }"
+          class="icon"
         ></i> </Btn
     ></CornerButtons>
     <Model v-model="editShow" v-loading="editLoading">
       <div class="edit-model">
         <header class="edit-header">
           <nav class="row">
-            <div class="col-3 center" @click="editShow = false">
+            <div @click="editShow = false" class="col-3 center">
               <i class="icon ali-icon-edit"></i>
             </div>
             <div class="col-18 center title">
@@ -120,11 +124,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
 import Model from "../../components/global/Model"
 import Tag from "../../components/global/Tag"
 import CornerButtons from "../../components/pages/shared/CornerButtons"
 import { CommentForm } from "../../assets/script/model"
+import { mapActions, mapState } from "vuex"
 export default {
   components: {
     Model,
@@ -144,28 +148,28 @@ export default {
       return this.user && this.user.id
     },
     proportion() {
-      return this.draw.height / this.draw.width
+      return this.picture.height / this.picture.width
     }
   },
   async asyncData({ store, route, $axios }) {
     store.commit("menu/MChangeName", "detail")
     const id = route.params.id
-    const res = await $axios.get(`/draw/get`, {
+    const res = await $axios.get(`/picture/get`, {
       params: { id }
     })
     const result = res.data
-    let drawForm
+    let pictureForm
     let inputTag
     let commentForm
     if (result.status === 200) {
-      drawForm = Object.assign({}, result.data)
-      inputTag = drawForm.tagList.join(" ")
+      pictureForm = Object.assign({}, result.data)
+      inputTag = pictureForm.tagList.join(" ")
       commentForm = new CommentForm(result.data.user.id, result.data.id)
     }
     return {
       status: result.status,
-      draw: result.data,
-      drawForm,
+      picture: result.data,
+      pictureForm,
       inputTag,
       commentForm
     }
@@ -173,7 +177,7 @@ export default {
   head() {
     let title = "想你所想 - Secdra"
     if (this.status === 200) {
-      title = this.draw.name + " - Secdra"
+      title = this.picture.name + " - Secdra"
     } else if (this.status === 403) {
       title = "无权查看该图片"
     } else if (this.status === 404) {
@@ -185,21 +189,21 @@ export default {
     // 写入足迹
     this.status === 200 &&
       this.signedIn &&
-      this.ASaveFootprint({ drawId: this.draw.id })
+      this.ASaveFootprint({ pictureId: this.picture.id })
   },
   methods: {
-    ...mapActions("draw", ["ACollection", "AUpdate"]),
+    ...mapActions("picture", ["ACollection", "AUpdate"]),
     ...mapActions("footprint", { ASaveFootprint: "ASave" }),
     ...mapActions("user", ["AFollow"]),
-    async collection(draw) {
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$tooltip({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     },
     async follow(id) {
       const result = await this.AFollow({
@@ -209,13 +213,13 @@ export default {
         this.$tooltip({ message: result.message })
         return
       }
-      this.draw.user.focus = result.data
+      this.picture.user.focus = result.data
     },
     async save() {
       this.editLoading = true
       const tagList = this.inputTag.split(" ").filter((item) => item !== "")
-      this.drawForm.tagList = [...new Set(tagList)]
-      const result = await this.AUpdate(this.drawForm)
+      this.pictureForm.tagList = [...new Set(tagList)]
+      const result = await this.AUpdate(this.pictureForm)
       this.editLoading = false
       if (result.status !== 200) {
         this.$tooltip({ message: result.message })
@@ -223,11 +227,11 @@ export default {
       }
       this.$tooltip({ message: `修改成功` })
       this.editShow = false
-      this.draw = result.data
+      this.picture = result.data
       this.reset()
     },
     reset() {
-      this.drawForm = Object.assign({}, this.draw)
+      this.pictureForm = Object.assign({}, this.picture)
     }
   }
 }

@@ -1,16 +1,16 @@
 <template>
-  <div v-ripple="clickable" class="tag" :class="classObject" @click="_click">
+  <div v-ripple="clickable" :class="classObject" @click="_click" class="tag">
     <span class="content ellipsis">
       {{ content }}
     </span>
     <Btn
       v-if="closable"
-      flat
-      icon
       :color="color"
-      class="close"
       @click.stop="close"
       @mousedown.native.stop="() => {}"
+      flat
+      icon
+      class="close"
     >
       <i class="icon ali-icon-close"></i>
     </Btn>

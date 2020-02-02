@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
 import { Pageable } from "../../../assets/script/model"
 import UserList from "../../../components/pages/shared/UserList"
 import CornerButtons from "../../../components/pages/shared/CornerButtons"
+import { mapActions } from "vuex"
 
 export default {
   components: { CornerButtons, UserList },

@@ -15,12 +15,12 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapActions, mapState } from "vuex"
 import Header from "../components/pages/shared/Header"
 import Menu from "../components/pages/shared/Menu"
 import Search from "../components/pages/shared/Search"
 import stompMixin from "../assets/script/mixin/stompMixin"
 import { StompSubscribe } from "../assets/script/model"
+import { mapMutations, mapActions, mapState } from "vuex"
 
 export default {
   middleware: ["messageRedirect"],

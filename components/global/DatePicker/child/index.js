@@ -1,7 +1,7 @@
-import Vue from "vue"
 import YearComponent from "./Year"
 import MonthComponent from "./Month"
 import CalendarComponent from "./Calendar"
+import Vue from "vue"
 
 const YearConstructor = Vue.extend(YearComponent)
 const MonthConstructor = Vue.extend(MonthComponent)

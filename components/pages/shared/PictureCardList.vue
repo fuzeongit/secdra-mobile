@@ -1,27 +1,34 @@
 <template>
   <div class="grid-column">
-    <div v-for="(draw, index) in list" :key="index" class="card">
-      <nuxt-link v-ripple :to="`/draw/${draw.id}`" style="display: block;">
-        <img v-lazy="$img.secdra(draw.url, 'specifiedWidth')" class="cover" />
+    <div v-for="(picture, index) in list" :key="index" class="card">
+      <nuxt-link
+        v-ripple
+        :to="`/picture/${picture.id}`"
+        style="display: block;"
+      >
+        <img
+          v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
+          class="cover"
+        />
       </nuxt-link>
       <Btn
-        flat
-        icon
         :color="
-          draw.focus === $enum.CollectState.CONCERNED.key
+          picture.focus === $enum.CollectState.CONCERNED.key
             ? `primary`
             : `default`
         "
+        @click.stop="$emit(`collection`, picture, index)"
+        flat
+        icon
         class="like"
-        @click.stop="$emit(`collection`, draw, index)"
       >
         <i
-          class="icon"
           :class="{
             'ali-icon-likefill':
-              draw.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': draw.focus !== $enum.CollectState.CONCERNED.key
+              picture.focus === $enum.CollectState.CONCERNED.key,
+            'ali-icon-like': picture.focus !== $enum.CollectState.CONCERNED.key
           }"
+          class="icon"
         ></i>
       </Btn>
     </div>
@@ -32,7 +39,7 @@
 import windowMixin from "../../../assets/script/mixin/windowMixin"
 
 export default {
-  componentName: "DrawCardList",
+  componentName: "PictureCardList",
   mixins: [windowMixin],
   props: {
     list: {

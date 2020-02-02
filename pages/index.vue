@@ -6,11 +6,15 @@
       <Btn round flat small color="primary" to="/find">更多>></Btn>
     </p>
     <div class="image-grid-row">
-      <div v-for="(draw, index) in likeList" :key="index" class="item">
+      <div v-for="(picture, index) in likeList" :key="index" class="item">
         <div class="img-box">
-          <nuxt-link v-ripple :to="`/draw/${draw.id}`" :title="draw.name">
+          <nuxt-link
+            v-ripple
+            :to="`/picture/${picture.id}`"
+            :title="picture.name"
+          >
             <img
-              v-lazy="$img.secdra(draw.url, 'specifiedWidth')"
+              v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
               class="cover"
             />
           </nuxt-link>
@@ -19,40 +23,40 @@
           <nuxt-link
             slot="reference"
             v-ripple
-            :to="`/user/${draw.user.id}`"
+            :to="`/user/${picture.user.id}`"
+            :title="picture.user.name"
             class="head-image"
-            :title="draw.user.name"
           >
-            <img v-lazy="$img.head(draw.user.head, 'small50')" />
+            <img v-lazy="$img.head(picture.user.head, 'small50')" />
           </nuxt-link>
           <div class="tool-btn-group">
             <Btn flat icon small title="浏览">
               <i class="icon ali-icon-attention"></i>
             </Btn>
-            <span>{{ draw.viewAmount }}</span>
+            <span>{{ picture.viewAmount }}</span>
             <Btn
-              flat
-              icon
               :color="
-                draw.focus === $enum.CollectState.CONCERNED.key
+                picture.focus === $enum.CollectState.CONCERNED.key
                   ? `primary`
                   : `default`
               "
+              @click.stop="collection(picture)"
+              flat
+              icon
               small
               title="收藏"
-              @click.stop="collection(draw)"
             >
               <i
-                class="icon"
                 :class="{
                   'ali-icon-likefill':
-                    draw.focus === $enum.CollectState.CONCERNED.key,
+                    picture.focus === $enum.CollectState.CONCERNED.key,
                   'ali-icon-like':
-                    draw.focus !== $enum.CollectState.CONCERNED.key
+                    picture.focus !== $enum.CollectState.CONCERNED.key
                 }"
+                class="icon"
               ></i>
             </Btn>
-            <span>{{ draw.likeAmount }}</span>
+            <span>{{ picture.likeAmount }}</span>
           </div>
         </div>
       </div>
@@ -63,11 +67,15 @@
       <Btn round flat small color="primary" to="/new"> 更多>></Btn>
     </p>
     <div class="image-grid-row">
-      <div v-for="(draw, index) in newList" :key="index" class="item">
+      <div v-for="(picture, index) in newList" :key="index" class="item">
         <div class="img-box">
-          <nuxt-link v-ripple :to="`/draw/${draw.id}`" :title="draw.name">
+          <nuxt-link
+            v-ripple
+            :to="`/picture/${picture.id}`"
+            :title="picture.name"
+          >
             <img
-              v-lazy="$img.secdra(draw.url, 'specifiedWidth')"
+              v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
               class="cover"
             />
           </nuxt-link>
@@ -75,40 +83,40 @@
         <div class="tool flex-text">
           <nuxt-link
             v-ripple
-            :to="`/user/${draw.user.id}`"
+            :to="`/user/${picture.user.id}`"
+            :title="picture.user.name"
             class="head-image"
-            :title="draw.user.name"
           >
-            <img v-lazy="$img.head(draw.user.head, 'small50')" />
+            <img v-lazy="$img.head(picture.user.head, 'small50')" />
           </nuxt-link>
           <div class="tool-btn-group">
             <Btn flat icon small title="浏览">
               <i class="icon ali-icon-attention"></i>
             </Btn>
-            <span>{{ draw.viewAmount }}</span>
+            <span>{{ picture.viewAmount }}</span>
             <Btn
-              flat
-              icon
               :color="
-                draw.focus === $enum.CollectState.CONCERNED.key
+                picture.focus === $enum.CollectState.CONCERNED.key
                   ? `primary`
                   : `default`
               "
+              @click.stop="collection(picture)"
+              flat
+              icon
               small
               title="收藏"
-              @click.stop="collection(draw)"
             >
               <i
-                class="icon"
                 :class="{
                   'ali-icon-likefill':
-                    draw.focus === $enum.CollectState.CONCERNED.key,
+                    picture.focus === $enum.CollectState.CONCERNED.key,
                   'ali-icon-like':
-                    draw.focus !== $enum.CollectState.CONCERNED.key
+                    picture.focus !== $enum.CollectState.CONCERNED.key
                 }"
+                class="icon"
               ></i>
             </Btn>
-            <span>{{ draw.likeAmount }}</span>
+            <span>{{ picture.likeAmount }}</span>
           </div>
         </div>
       </div>
@@ -122,8 +130,8 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex"
 import { Pageable } from "../assets/script/model"
+import { mapActions } from "vuex"
 
 export default {
   data() {
@@ -132,14 +140,14 @@ export default {
     }
   },
   // 在这里不能使用httpUtil
-  async asyncData({ store, req, redirect, route, $axios }) {
+  async asyncData({ store, $axios }) {
     store.commit("menu/MChangeName", "home")
     const taskList = []
     taskList.push(
-      $axios.get(`/draw/pagingByRecommend`, { params: new Pageable(0, 10) })
+      $axios.get(`/picture/pagingByRecommend`, { params: new Pageable(0, 10) })
     )
     taskList.push(
-      $axios.get(`/draw/paging`, {
+      $axios.get(`/picture/paging`, {
         params: new Pageable(0, 10, "createDate,desc")
       })
     )
@@ -150,16 +158,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions("draw", ["ACollection"]),
-    async collection(draw) {
+    ...mapActions("picture", ["ACollection"]),
+    async collection(picture) {
       const result = await this.ACollection({
-        drawId: draw.id
+        pictureId: picture.id
       })
       if (result.status !== 200) {
         this.$tooltip({ message: result.message })
         return
       }
-      draw.focus = result.data
+      picture.focus = result.data
     }
   }
 }

@@ -1,13 +1,12 @@
 <template>
-  <div class="input" :class="classObject">
+  <div :class="classObject" class="input">
     <div class="placeholder">
       <slot name="left"></slot>
     </div>
     <textarea
-      v-if="type === `textarea`"
       ref="input"
+      v-if="type === `textarea`"
       v-model="normalizedInput"
-      class="input-inner"
       :rows="rows"
       :title="title"
       :disabled="disabled"
@@ -16,21 +15,22 @@
       @change="_change"
       @focus="focus = true"
       @blur="focus = false"
+      class="input-inner"
     ></textarea>
     <input
-      v-else
       ref="input"
+      v-else
       v-model="normalizedInput"
-      class="input-inner"
       :type="type"
       :title="title"
       :disabled="disabled"
       :placeholder="placeholder"
       :readonly="readonly"
-      autocomplete="on"
       @change="_change"
       @focus="focus = true"
       @blur="focus = false"
+      class="input-inner"
+      autocomplete="on"
     />
     <div class="placeholder">
       <slot name="right"></slot>

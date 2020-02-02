@@ -1,12 +1,12 @@
 <template>
-  <label class="checkbox switch" :class="classObject">
+  <label :class="classObject" class="checkbox switch">
     <slot>
       <template v-if="isSwitch">
-        <div class="switch-box" :class="{ active: model }">
+        <div :class="{ active: model }" class="switch-box">
           <div
             v-ripple="!disabled && { class: `${color}-text` }"
-            class="checkbox-inner"
             :class="{ 'dark-fade-text': !model }"
+            class="checkbox-inner"
           >
             <div class="content">
               <i class="icon"></i>
@@ -17,16 +17,16 @@
       <template v-else>
         <div
           v-ripple="{ class: `${color}-text` }"
-          class="checkbox-inner"
           :class="{ 'dark-fade-text': !model }"
+          class="checkbox-inner"
         >
           <div class="content">
             <i
-              class="icon"
               :class="{
                 'ali-icon-check-box': !model,
                 'ali-icon-check-box-fill': model
               }"
+              class="icon"
             ></i>
           </div>
         </div>
@@ -34,15 +34,15 @@
     </slot>
     <span
       v-if="label !== null"
-      class="checkbox-label"
       :class="{ 'dark-text': !model }"
+      class="checkbox-label"
       >{{ label }}</span
     >
     <input
       v-model="model"
+      :disabled="disabled"
       type="checkbox"
       class="checkbox-original"
-      :disabled="disabled"
     />
   </label>
 </template>

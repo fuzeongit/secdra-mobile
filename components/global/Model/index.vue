@@ -1,9 +1,9 @@
 <template>
   <transition
+    @after-leave="destroyElement"
     name="fade"
     enter-active-class="fadeInUp short-duration"
     leave-active-class="fadeOutDown short-duration"
-    @after-leave="destroyElement"
   >
     <div v-show="visible" class="model">
       <slot></slot>

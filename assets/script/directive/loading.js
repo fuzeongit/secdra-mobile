@@ -1,9 +1,9 @@
-import Vue from "vue"
 import LoadingComponent from "../../../components/global/Loading/Main"
+import Vue from "vue"
 
 const LoadingConstructor = Vue.extend(LoadingComponent)
 
-function loading(el, binding) {
+function loading(el) {
   const instance = new LoadingConstructor()
   instance.vm = instance.$mount()
   const elPosition = window.getComputedStyle(el).position
@@ -20,10 +20,10 @@ function loading(el, binding) {
 }
 
 export default {
-  inserted(el, binding, vnode) {
+  inserted(el, binding) {
     binding.value && loading(el, binding)
   },
-  update(el, binding, vnode) {
+  update(el, binding) {
     if (binding.value !== binding.oldValue) {
       if (binding.value) {
         loading(el, binding)

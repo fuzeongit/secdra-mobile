@@ -1,6 +1,6 @@
 <template>
   <section class="container bk cover">
-    <form class="card" @submit.prevent="login">
+    <form @submit.prevent="login" class="card">
       <nuxt-link to="/" replace>
         <img src="../assets/image/svg/logo.svg" />
       </nuxt-link>
@@ -23,7 +23,7 @@
         ></Field>
       </div>
       <div class="input-group center">
-        <Btn block color="primary" :disabled="loginLoading" type="submit">{{
+        <Btn :disabled="loginLoading" block color="primary" type="submit">{{
           !loginLoading ? `登录` : `登录中...`
         }}</Btn>
       </div>

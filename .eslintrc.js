@@ -2,7 +2,9 @@ module.exports = {
   root: true,
   env: {
     browser: true,
-    node: true
+    node: true,
+    commonjs: true,
+    es6: true
   },
   parserOptions: {
     parser: 'babel-eslint'
@@ -22,6 +24,7 @@ module.exports = {
     "no-console":0,
     "vue/no-v-html":0,
     "vue/this-in-template":0,
+    "vue/valid-template-root":0,
     "vue/require-prop-type-constructor":0,
     "vue/no-side-effects-in-computed-properties":0,
     "no-extend-native":0

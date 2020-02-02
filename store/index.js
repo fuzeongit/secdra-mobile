@@ -1,6 +1,6 @@
+import { Result } from "../assets/script/model"
 import Vue from "vue"
 import vuex from "vuex"
-import { Result } from "../assets/script/model"
 
 /**
  * vuex仓库入口

@@ -4,22 +4,22 @@
     enter-active-class="fadeIn mask-duration"
     leave-active-class="fadeOut  mask-duration"
   >
-    <div v-show="visible" class="mask" @click="onPersistent">
+    <div v-show="visible" @click="onPersistent" class="mask">
       <transition
+        @after-leave="destroyElement"
         name="zoom"
         enter-active-class="zoomIn duration"
         leave-active-class="zoomOut duration"
-        @after-leave="destroyElement"
       >
         <div
           v-show="visible"
-          class="card"
           :class="{
             'dialog-persistent-animate': persistentAnimate,
             duration: persistentAnimate
           }"
           @animationend="persistentAnimationend()"
           @click.stop="(_) => {}"
+          class="card"
         >
           <h3>
             {{ title }}
@@ -28,10 +28,10 @@
             {{ message }}
           </p>
           <div class="btn-group">
-            <Btn flat color="primary" @click.stop="close">
+            <Btn @click.stop="close" flat color="primary">
               {{ noDesc }}
             </Btn>
-            <Btn flat color="primary" @click.stop="ok">
+            <Btn @click.stop="ok" flat color="primary">
               {{ okDesc }}
             </Btn>
           </div>

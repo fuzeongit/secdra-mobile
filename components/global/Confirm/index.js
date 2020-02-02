@@ -1,5 +1,5 @@
-import Vue from "vue"
 import ConfirmComponent from "./Main"
+import Vue from "vue"
 
 const ConfirmConstructor = Vue.extend(ConfirmComponent)
 

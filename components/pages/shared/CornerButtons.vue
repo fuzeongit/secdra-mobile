@@ -1,8 +1,8 @@
 <template>
   <div class="corner-buttons">
     <div
-      class="customize-buttons"
       :class="{ active: showGoTop && scrollTop > 150 }"
+      class="customize-buttons"
     >
       <slot></slot>
     </div>
@@ -14,11 +14,11 @@
       <Btn
         v-if="showGoTop"
         v-show="scrollTop > 150"
+        @click="goTop"
         icon
         big
         shadow
         color="white"
-        @click="goTop"
       >
         <i class="icon ali-icon-up"></i>
       </Btn>

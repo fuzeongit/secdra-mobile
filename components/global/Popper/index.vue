@@ -1,17 +1,17 @@
 <template>
   <span>
     <transition
+      @after-enter="handleAfterEnter"
+      @after-leave="handleAfterLeave"
       name="fade"
       enter-active-class="fadeIn short-duration"
       leave-active-class="fadeOut short-duration"
-      @after-enter="handleAfterEnter"
-      @after-leave="handleAfterLeave"
     >
       <div
-        v-show="showPopper"
         ref="popper"
-        class="card popper"
+        v-show="showPopper"
         :style="{ width: width + 'vw' }"
+        class="card popper"
         role="tooltip"
       >
         <slot></slot>

@@ -1,9 +1,9 @@
 <template>
   <transition
-    name="fade"
     :enter-active-class="enterActiveClass"
     :leave-active-class="leaveActiveClass"
     @after-leave="destroyElement"
+    name="fade"
   >
     <div v-show="visible" class="month short-duration">
       <div
@@ -12,11 +12,11 @@
         class="month-item"
       >
         <Btn
+          :color="item.active ? `primary` : `default`"
+          @click="changeDate(index)"
           flat
           round
           icon
-          :color="item.active ? `primary` : `default`"
-          @click="changeDate(index)"
           >{{ item.value }}</Btn
         >
       </div>

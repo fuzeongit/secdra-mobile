@@ -6,27 +6,27 @@
   >
     <div v-show="visible" class="mask">
       <transition
+        @after-leave="destroyElement"
         name="zoom"
         enter-active-class="zoomIn duration"
         leave-active-class="zoomOut duration"
-        @after-leave="destroyElement"
       >
         <div
           v-show="visible"
-          class="card"
           :class="{
             'dialog-persistent-animate': persistentAnimate,
             duration: persistentAnimate
           }"
           @animationend="persistentAnimationend()"
           @click.stop="(_) => {}"
+          class="card"
         >
           <h3>{{ title }}</h3>
           <p>
             {{ message }}
           </p>
           <div class="btn-group">
-            <Btn flat color="primary" @click="close">
+            <Btn @click="close" flat color="primary">
               {{ btnDesc }}
             </Btn>
           </div>

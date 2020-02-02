@@ -1,18 +1,18 @@
 <template>
   <header
-    class="animated duration"
     :class="{
       fadeInDown: show && hid,
       fadeOutUp: !show,
       transparent: activeName === `detail`
     }"
+    class="animated duration"
   >
     <nav class="flex-text">
       <template>
-        <Btn v-if="canBack" icon flat @click="$router.back()">
+        <Btn v-if="canBack" @click="$router.back()" icon flat>
           <i class="icon ali-icon-back"></i>
         </Btn>
-        <Btn v-else icon flat @click="changeMenu">
+        <Btn v-else @click="changeMenu" icon flat>
           <i class="icon ali-icon-menu"></i>
         </Btn>
       </template>
@@ -21,17 +21,17 @@
       </div>
       <Btn icon flat to="/">
         <i
-          class="icon ali-icon-home"
           :class="{ active: activeName === `home` }"
+          class="icon ali-icon-home"
         ></i>
       </Btn>
       <Btn icon flat to="/find">
         <i
-          class="icon ali-icon-hot"
           :class="{ active: activeName === `find` }"
+          class="icon ali-icon-hot"
         ></i>
       </Btn>
-      <Btn icon flat @click="MChangeSearchShow(true)">
+      <Btn @click="MChangeSearchShow(true)" icon flat>
         <i class="icon ali-icon-search"></i>
       </Btn>
     </nav>
@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex"
 import { Menu } from "../../../assets/script/constant"
 import windowMixin from "../../../assets/script/mixin/windowMixin"
+import { mapState, mapActions, mapMutations } from "vuex"
 
 export default {
   componentName: "Header",
@@ -96,7 +96,7 @@ export default {
     ...mapMutations("menu", ["MChangeShow", "MChangeSearchShow"]),
     ...mapActions("message", ["ACount"]),
     search() {
-      this.$router.push(`/draw/search/${this.tag}`)
+      this.$router.push(`/picture/search/${this.tag}`)
     },
     async countUnread() {
       const result = await this.ACount()

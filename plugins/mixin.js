@@ -1,5 +1,3 @@
-import Vue from "vue"
-import VueLazyload from "vue-lazyload"
 import { Alert, Confirm, Tooltip } from "../components/global"
 import Popper from "../components/global/Popper"
 import Model from "../components/global/Model"
@@ -19,6 +17,8 @@ import Img from "../assets/script/util/imgUrlUtil"
 import filters from "../assets/script/filter"
 import directive from "../assets/script/directive"
 import { enumObjectList } from "../assets/script/constant"
+import VueLazyload from "vue-lazyload"
+import Vue from "vue"
 
 Vue.prototype.$alert = Alert
 Vue.prototype.$confirm = Confirm

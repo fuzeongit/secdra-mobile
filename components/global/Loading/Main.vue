@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-mack flex-box" :class="{ fixed }">
+  <div :class="{ fixed }" class="loading-mack flex-box">
     <img src="../../../assets/image/svg/loading.svg" />
   </div>
 </template>
