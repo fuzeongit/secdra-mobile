@@ -47,15 +47,15 @@ export default {
     stompSubscribeList() {
       return [
         new StompSubscribe("/user/comment/send", (result) => {
-          if (result.message) this.$notify({ message: result.message })
+          if (result.message) this.$tooltip({ message: result.message })
           this.MChangeCount({ type: "comment", count: result.data })
         }),
         new StompSubscribe("/user/reply/send", (result) => {
-          if (result.message) this.$notify({ message: result.message })
+          if (result.message) this.$tooltip({ message: result.message })
           this.MChangeCount({ type: "reply", count: result.data })
         }),
         new StompSubscribe("/user/following/focus", (result) => {
-          if (result.message) this.$notify({ message: result.message })
+          if (result.message) this.$tooltip({ message: result.message })
           this.MChangeCount({ type: "follow", count: result.data })
         })
       ]

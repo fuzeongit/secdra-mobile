@@ -1,12 +1,18 @@
 <template>
-  <div class="page"></div>
+  <div class="page">
+    <SelfHome v-if="self"></SelfHome>
+    <OtherHome v-else :user="user" @follow="follow"></OtherHome>
+    <CornerButtons></CornerButtons>
+  </div>
 </template>
 
 <script>
-import { mapActions } from "vuex"
-
+import CornerButtons from "../../components/pages/shared/CornerButtons"
+import SelfHome from "../../components/pages/user/SelfHome"
+import OtherHome from "../../components/pages/user/OtherHome"
+import { mapActions, mapMutations } from "vuex"
 export default {
-  components: {},
+  components: { CornerButtons, SelfHome, OtherHome },
   computed: {
     self() {
       return (
@@ -17,6 +23,7 @@ export default {
   },
   // 在这里不能使用httpUtil
   async asyncData({ store, redirect, route, $axios }) {
+    store.commit("menu/MChangeName", "detail")
     const myself = store.state.user.user
     const taskList = []
     taskList.push(
@@ -34,14 +41,11 @@ export default {
     }
     const user = resultList[0].data
     if (myself.id === user.id) {
-      store.commit("menu/MChangeName", "user")
       store.commit("user/MSetUserInfo", user)
       store.commit(
         "user/MSetUploadToken",
         resultList[1] ? resultList[1].data : null
       )
-    } else {
-      store.commit("menu/MChangeName", "")
     }
     return {
       user
@@ -49,16 +53,18 @@ export default {
   },
   head() {
     const title = this.self ? "我的个人中心" : this.user.name + "的个人中心"
+    this.MChangeTitle(this.user.name)
     return { title: title + " - Secdra" }
   },
   methods: {
+    ...mapMutations("menu", ["MChangeTitle"]),
     ...mapActions("user", ["AFollow"]),
     async follow() {
       const result = await this.AFollow({
         followingId: this.user.id
       })
       if (result.status !== 200) {
-        this.$notify({ message: result.message })
+        this.$tooltip({ message: result.message })
         return
       }
       this.user.focus = result.data

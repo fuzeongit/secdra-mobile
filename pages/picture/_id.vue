@@ -1,125 +1,141 @@
 <template>
   <div class="page">
-    <div :style="{ height: `${100 * proportion}vw` }" class="img-box">
-      <img v-lazy="$img.secdraLazy(picture, 500, true)" />
-    </div>
-    <template v-if="picture.user.id !== user.id">
-      <div class="flex-text user-info-box">
-        <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
-          <img
-            v-lazy="$img.headLazy(picture.user.head, 'small50')"
-            :title="picture.user.name"
-          />
-        </nuxt-link>
-        <nuxt-link
-          :to="`/user/${picture.user.id}`"
-          class="nickname primary-hover"
-        >
-          {{ picture.user.name }}
-        </nuxt-link>
-        <Btn
-          @click="follow(picture.user.id)"
-          block
-          color="primary"
-          class="following-btn"
-        >
-          {{
-            picture.user.focus === $enum.FollowState.CONCERNED.key
-              ? `已关注`
-              : `关注`
-          }}
-        </Btn>
+    <template v-if="status === 200">
+      <div :style="{ height: `${100 * proportion}vw` }" class="img-box">
+        <img v-lazy="$img.secdraLazy(picture, 500, true)" />
+      </div>
+      <template v-if="picture.user.id !== user.id">
+        <div class="flex-text user-info-box">
+          <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
+            <img
+              v-lazy="$img.headLazy(picture.user.head, 'small50')"
+              :title="picture.user.name"
+            />
+          </nuxt-link>
+          <nuxt-link
+            :to="`/user/${picture.user.id}`"
+            class="nickname primary-hover"
+          >
+            {{ picture.user.name }}
+          </nuxt-link>
+          <Btn
+            @click="follow(picture.user.id)"
+            block
+            color="primary"
+            class="following-btn"
+          >
+            {{
+              picture.user.focus === $enum.FollowState.CONCERNED.key
+                ? `已关注`
+                : `关注`
+            }}
+          </Btn>
+        </div>
+        <div class="line"></div>
+      </template>
+      <div class="info-box">
+        <h3 class="name">
+          <strong>{{ picture.name }}</strong>
+        </h3>
+        <p class="introduction">{{ picture.introduction }}</p>
+        <div class="flex-text tool-row">
+          <div class="flex-text">
+            <Btn flat icon small title="浏览">
+              <i class="icon ali-icon-attention"></i>
+            </Btn>
+            <span>{{ picture.viewAmount }}</span>
+          </div>
+          <div class="flex-text">
+            <Btn
+              :color="
+                picture.focus === $enum.CollectState.CONCERNED.key
+                  ? `primary`
+                  : `default`
+              "
+              @click="collection(picture)"
+              flat
+              icon
+              small
+              title="收藏"
+            >
+              <i
+                :class="{
+                  'ali-icon-likefill':
+                    picture.focus === $enum.CollectState.CONCERNED.key,
+                  'ali-icon-like':
+                    picture.focus !== $enum.CollectState.CONCERNED.key
+                }"
+                class="icon"
+              ></i>
+            </Btn>
+            <span>{{ picture.likeAmount }}</span>
+          </div>
+        </div>
+        <div class="date">创建于：{{ picture.createDate | date }}</div>
       </div>
       <div class="line"></div>
+      <div class="tag-list">
+        <Tag
+          v-for="(item, index) in picture.tagList"
+          :key="index"
+          :content="item"
+          @click="$router.push(`/picture/search/${encodeURIComponent(item)}`)"
+          class="tag"
+          color="primary"
+          clickable
+        ></Tag>
+      </div>
+      <CornerButtons>
+        <Btn
+          v-if="picture.user.id === user.id"
+          @click="editShow = true"
+          icon
+          big
+          shadow
+          color="white"
+        >
+          <i class="icon ali-icon-edit"></i>
+        </Btn>
+        <Btn v-else @click="collection(picture)" icon big shadow color="white">
+          <i
+            :class="{
+              'ali-icon-likefill':
+                picture.focus === $enum.CollectState.CONCERNED.key,
+              'ali-icon-like':
+                picture.focus !== $enum.CollectState.CONCERNED.key,
+              'primary-text': picture.focus === $enum.CollectState.CONCERNED.key
+            }"
+            class="icon"
+          ></i> </Btn
+      ></CornerButtons>
+      <Model v-model="editShow" v-loading="editLoading">
+        <div class="edit-model">
+          <header class="edit-header">
+            <nav class="flex-text">
+              <Btn @click="editShow = false" icon flat>
+                <i class="icon ali-icon-back"></i>
+              </Btn>
+              <div class="title center">
+                编辑
+              </div>
+              <Btn @click="editShow = false" icon flat>
+                <i class="icon ali-icon-edit"></i>
+              </Btn>
+            </nav>
+          </header>
+        </div>
+      </Model>
     </template>
-    <div class="info-box">
-      <h3 class="name">
-        <strong>{{ picture.name }}</strong>
-      </h3>
-      <p class="introduction">{{ picture.introduction }}</p>
-      <div class="flex-text tool-row">
-        <div class="flex-text">
-          <Btn flat icon small title="浏览">
-            <i class="icon ali-icon-attention"></i>
-          </Btn>
-          <span>{{ picture.viewAmount }}</span>
-        </div>
-        <div class="flex-text">
-          <Btn
-            :color="
-              picture.focus === $enum.CollectState.CONCERNED.key
-                ? `primary`
-                : `default`
-            "
-            @click="collection(picture)"
-            flat
-            icon
-            small
-            title="收藏"
-          >
-            <i
-              :class="{
-                'ali-icon-likefill':
-                  picture.focus === $enum.CollectState.CONCERNED.key,
-                'ali-icon-like':
-                  picture.focus !== $enum.CollectState.CONCERNED.key
-              }"
-              class="icon"
-            ></i>
-          </Btn>
-          <span>{{ picture.likeAmount }}</span>
-        </div>
+    <template v-else-if="status === 403">
+      <div class="empty">
+        <img src="../../assets/image/svg/default-picture.svg" />
       </div>
-      <div class="date">创建于：{{ picture.createDate | date }}</div>
-    </div>
-    <div class="line"></div>
-    <div class="tag-list">
-      <Tag
-        v-for="(item, index) in picture.tagList"
-        :key="index"
-        :content="item"
-        @click="$router.push(`/picture/search/${encodeURIComponent(item)}`)"
-        class="tag"
-        color="primary"
-        clickable
-      ></Tag>
-    </div>
-    <CornerButtons>
-      <Btn
-        v-if="picture.user.id === user.id"
-        @click="editShow = true"
-        icon
-        big
-        shadow
-        color="white"
-      >
-        <i class="icon ali-icon-edit"></i>
-      </Btn>
-      <Btn v-else @click="collection(picture)" icon big shadow color="white">
-        <i
-          :class="{
-            'ali-icon-likefill':
-              picture.focus === $enum.CollectState.CONCERNED.key,
-            'ali-icon-like': picture.focus !== $enum.CollectState.CONCERNED.key,
-            'primary-text': picture.focus === $enum.CollectState.CONCERNED.key
-          }"
-          class="icon"
-        ></i> </Btn
-    ></CornerButtons>
-    <Model v-model="editShow" v-loading="editLoading">
-      <div class="edit-model">
-        <header class="edit-header">
-          <nav class="row">
-            <div @click="editShow = false" class="col-3 center">
-              <i class="icon ali-icon-edit"></i>
-            </div>
-            <div class="col-18 center title">
-              编辑
-            </div>
-          </nav>
-        </header>
+    </template>
+    <template v-else-if="status === 404">
+      <div class="empty">
+        <img src="../../assets/image/svg/default-picture.svg" />
       </div>
-    </Model>
+    </template>
   </div>
 </template>
 
@@ -128,7 +144,7 @@ import Model from "../../components/global/Model"
 import Tag from "../../components/global/Tag"
 import CornerButtons from "../../components/pages/shared/CornerButtons"
 import { CommentForm } from "../../assets/script/model"
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState, mapMutations } from "vuex"
 export default {
   components: {
     Model,
@@ -180,8 +196,10 @@ export default {
       title = this.picture.name + " - Secdra"
     } else if (this.status === 403) {
       title = "无权查看该图片"
+      this.MChangeTitle(title)
     } else if (this.status === 404) {
       title = "图片不存在"
+      this.MChangeTitle(title)
     }
     return { title }
   },
@@ -192,6 +210,7 @@ export default {
       this.ASaveFootprint({ pictureId: this.picture.id })
   },
   methods: {
+    ...mapMutations("menu", ["MChangeTitle"]),
     ...mapActions("picture", ["ACollection", "AUpdate"]),
     ...mapActions("footprint", { ASaveFootprint: "ASave" }),
     ...mapActions("user", ["AFollow"]),
@@ -308,6 +327,43 @@ export default {
     .tag {
       margin-right: 1.5vw;
       margin-bottom: 1.5vw;
+    }
+  }
+  .edit-model {
+    @padding: 3vw;
+    width: 100%;
+    height: @herder-height;
+    font-size: @big-font-size;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 0.2vw 0 rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    user-select: none;
+    nav {
+      width: 100%;
+      margin: 0 auto;
+      font-size: 0;
+      height: @herder-height;
+      line-height: @herder-height;
+      padding: 0 @padding;
+      background-color: white;
+      .title {
+        flex: 1;
+        font-size: @big-font-size;
+        color: @font-color-dark;
+        .ellipsis();
+      }
+    }
+  }
+  .empty {
+    height: 100vh;
+    width: @window-min-width;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
     }
   }
 }

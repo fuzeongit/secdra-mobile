@@ -108,7 +108,7 @@ export default {
       this.pageLoading = false
       const data = result.data
       if (result.status !== 200) {
-        this.$notify({ message: result.message })
+        this.$tooltip({ message: result.message })
         this.pageable.page = sourcePage
         return
       }
@@ -120,7 +120,7 @@ export default {
         pictureId: picture.id
       })
       if (result.status !== 200) {
-        this.$notify({ message: result.message })
+        this.$tooltip({ message: result.message })
         return
       }
       picture.focus = result.data
@@ -130,7 +130,7 @@ export default {
         followingId: id
       })
       if (result.status !== 200) {
-        this.$notify({ message: result.message })
+        this.$tooltip({ message: result.message })
         return
       }
       this.list.forEach((item) => {

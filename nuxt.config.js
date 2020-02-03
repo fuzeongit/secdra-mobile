@@ -67,7 +67,7 @@ module.exports = {
   },
   css: [{ src: "~/assets/style/index.less", lang: "less" }],
   loading: "~/components/Loading.vue",
-  plugins: ["~/plugins/mixin", "~/plugins/extend"],
+  plugins: ["~/plugins/mixin", "~/plugins/extend", "~/plugins/route"],
   modules: ["@nuxtjs/proxy", "@nuxtjs/axios"],
   proxy: [
     [

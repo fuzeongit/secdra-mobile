@@ -66,11 +66,11 @@ export const actions = {
     return httpUtil.post("/following/focus", params)
   },
   // 按id分页获取id的关注用户列表
-  APagingFollowing(context, params) {
+  APagingByFollowerId(context, params) {
     return httpUtil.get("/following/paging", params)
   },
   // 按id分页获取id的粉丝列表
-  APagingFollower(context, params) {
+  APagingByFollowingId(context, params) {
     return httpUtil.get("/follower/paging", params)
   }
 }
