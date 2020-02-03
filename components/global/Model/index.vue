@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     destroyElement() {
+      window.removeEventListener("popstate", this.pushState())
       removeClass(document.body, "not-scroll")
       this.$emit("change", false)
     }

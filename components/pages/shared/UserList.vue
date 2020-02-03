@@ -3,13 +3,16 @@
     <div v-for="(item, index) in list" :key="index" class="card">
       <nuxt-link v-ripple :to="`/user/${item.id}`" style="display: block;">
         <img
-          v-lazy="$img.back(item.background, `specifiedWidth500`)"
+          v-lazy="$img.backLazy(item.background, `backCard`)"
           class="cover"
         />
       </nuxt-link>
       <div class="flex-text user-info-box">
         <nuxt-link v-ripple :to="`/user/${item.id}`" class="head-box">
-          <img v-lazy="$img.head(item.head)" :title="item.name" />
+          <img
+            v-lazy="$img.headLazy(item.head, `small100`)"
+            :title="item.name"
+          />
         </nuxt-link>
         <nuxt-link :to="`/user/${item.id}`" class="nickname primary-hover">
           {{ item.name }}

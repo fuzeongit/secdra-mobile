@@ -14,7 +14,7 @@
     >
       <nuxt-link v-ripple :to="`/picture/${picture.id}`" class="img-box">
         <img
-          v-lazy="$img.secdra(picture.url, `specifiedWidth`)"
+          v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth500')"
           :style="{
             width: listConstant.colWidth + `vw`,
             height: getHeight(picture) + `vw`
@@ -50,7 +50,7 @@
         class="flex-text info-box"
       >
         <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
-          <img v-lazy="$img.head(picture.user.head, 'small50')" />
+          <img v-lazy="$img.headLazy(picture.user.head, 'small50')" />
         </nuxt-link>
         <p class="nickname">
           {{ picture.user.name }}
@@ -200,6 +200,7 @@ export default {
     .img-box {
       display: block;
       img {
+        object-fit: cover;
         transition: 0.5s;
         width: 100%;
       }

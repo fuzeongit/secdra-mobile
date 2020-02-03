@@ -7,7 +7,7 @@
         style="display: block;"
       >
         <img
-          v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
+          v-lazy="$img.secdraLazy(picture.url, 'specifiedWidth500')"
           class="cover"
         />
       </nuxt-link>

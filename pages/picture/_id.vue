@@ -1,13 +1,13 @@
 <template>
   <div class="page">
     <div :style="{ height: `${100 * proportion}vw` }" class="img-box">
-      <img :src="$img.secdra(picture.url, `specifiedWidth500`)" />
+      <img v-lazy="$img.secdraLazy(picture, 500, true)" />
     </div>
     <template v-if="picture.user.id !== user.id">
       <div class="flex-text user-info-box">
         <nuxt-link v-ripple :to="`/user/${picture.user.id}`" class="head-box">
           <img
-            :src="$img.head(picture.user.head, 'small50')"
+            v-lazy="$img.headLazy(picture.user.head, 'small50')"
             :title="picture.user.name"
           />
         </nuxt-link>
@@ -245,10 +245,13 @@ export default {
   min-height: 100vh;
   margin-top: 0;
   .img-box {
-    background-color: @img-background-color;
     width: 100vw;
+    display: flex;
+    align-items: center;
     img {
+      object-fit: cover;
       width: 100%;
+      height: 100%;
     }
   }
   @padding-size: 4vw;

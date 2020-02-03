@@ -13,10 +13,7 @@
             :to="`/picture/${picture.id}`"
             :title="picture.name"
           >
-            <img
-              v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
-              class="cover"
-            />
+            <img v-lazy="$img.secdraLazy(picture, 240, true)" class="cover" />
           </nuxt-link>
         </div>
         <div class="tool">
@@ -27,7 +24,7 @@
             :title="picture.user.name"
             class="head-image"
           >
-            <img v-lazy="$img.head(picture.user.head, 'small50')" />
+            <img v-lazy="$img.headLazy(picture.user.head, 'small50')" />
           </nuxt-link>
           <div class="tool-btn-group">
             <Btn flat icon small title="浏览">
@@ -74,10 +71,7 @@
             :to="`/picture/${picture.id}`"
             :title="picture.name"
           >
-            <img
-              v-lazy="$img.secdra(picture.url, 'specifiedWidth')"
-              class="cover"
-            />
+            <img v-lazy="$img.secdraLazy(picture, 240, true)" class="cover" />
           </nuxt-link>
         </div>
         <div class="tool flex-text">
@@ -87,7 +81,7 @@
             :title="picture.user.name"
             class="head-image"
           >
-            <img v-lazy="$img.head(picture.user.head, 'small50')" />
+            <img v-lazy="$img.headLazy(picture.user.head, 'small50')" />
           </nuxt-link>
           <div class="tool-btn-group">
             <Btn flat icon small title="浏览">
