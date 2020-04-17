@@ -12,8 +12,8 @@ export const mutations = {
 }
 
 export const actions = {
-  AListTagTop30(context, params) {
-    return httpUtil.get("/tag/listTagTop30", params)
+  AListTagAndPictureTop30(context, params) {
+    return httpUtil.get("/tag/listTagAndPictureTop30", params)
   },
   // 分页获取数据
   APaging(context, params) {

@@ -44,8 +44,8 @@
           v-for="(item, index) in tagList"
           :key="index"
           :closable="false"
-          :content="item"
-          @click="search(item)"
+          :content="item.tag"
+          @click="search(item.tag)"
           clickable
           round
           class="tag"
@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     ...mapMutations("menu", ["MChangeSearchShow"]),
-    ...mapActions("picture", ["AListTagTop30"]),
+    ...mapActions("picture", ["AListTagAndPictureTop30"]),
     close() {
       this.MChangeSearchShow(false)
     },
@@ -118,7 +118,7 @@ export default {
       this.$router.push(`/picture/search/${encodeURIComponent(tag)}`)
     },
     async listTagTop30() {
-      const result = await this.AListTagTop30()
+      const result = await this.AListTagAndPictureTop30()
       if (result.status !== 200) {
         this.$tooltip({ message: result.error })
         return

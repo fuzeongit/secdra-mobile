@@ -147,8 +147,8 @@ export default {
     )
     const resultList = (await Promise.all(taskList)).map((item) => item.data)
     return {
-      likeList: resultList[0].data.content,
-      newList: resultList[1].data.content
+      likeList: resultList[0]?.data?.content,
+      newList: resultList[1]?.data?.content
     }
   },
   methods: {
